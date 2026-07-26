@@ -1,0 +1,17 @@
+{
+  "name": "⌖HSUB⌖ Herramienta del Submarinista",
+  "short_name": "HSUB",
+  "description": "Cinemática, TMA, cálculo mental y punteo periscópico. Funciona sin conexión.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0d1319",
+  "theme_color": "#0d1319",
+  "lang": "es",
+  "icons": [
+    { "src": "./icon-180.png", "sizes": "180x180", "type": "image/png", "purpose": "any" },
+    { "src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
