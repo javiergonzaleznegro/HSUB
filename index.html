@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="HSUB">
+<meta name="apple-mobile-web-app-title" content="⌖HSUB⌖">
 <meta name="theme-color" content="#0d1319">
 <link rel="manifest" href="./manifest.json">
 <link rel="apple-touch-icon" href="./icon-180.png">
@@ -38,7 +38,7 @@ header.top{display:flex;align-items:center;justify-content:center;position:relat
 /* Selector de modo: conmutador tipo BRC */
 
 /* ==================== NAVEGACIÓN (pestañas) ==================== */
-nav.tabs{display:flex;gap:4px;padding:8px 12px;background:var(--panel2);
+nav.tabs{display:flex;justify-content:center;flex-wrap:wrap;gap:4px;padding:8px 12px;background:var(--panel2);
   border-bottom:1px solid var(--line);position:sticky;top:0;z-index:29}
 nav.tabs button{appearance:none;border:1px solid transparent;background:transparent;
   color:var(--dim);font:600 13px var(--sans);letter-spacing:.12em;
@@ -390,22 +390,136 @@ button.accion:hover{filter:brightness(1.08)}
 /* desplegables: filo izquierdo distinto de las tarjetas GDR */
 details.expl{border-left-color:var(--amber2)}
 
-/* ================= PWA · iPhone: táctil, safe-area, botones grandes ================= */
-html{-webkit-text-size-adjust:100%}
-body{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
-header.top{padding-top:calc(8px + env(safe-area-inset-top))}
-nav.tabs{padding-bottom:calc(6px + env(safe-area-inset-bottom))}
-button,summary,.cerrar,.fgrid li,.tarj{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
-button,summary,.cerrar{-webkit-user-select:none;user-select:none}
-button.accion,nav.tabs button,#selCalc button,#selMan button,#selAp button,#selNivel button,#selGrupo button{min-height:48px}
-input,select,textarea{font-size:16px}
-.cerrar{min-height:48px;display:flex;align-items:center;justify-content:center}
-.pwa-tools{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 0}
-.pwa-tools button{flex:1 1 46%;min-height:48px}
-#ioBox{width:100%;box-sizing:border-box;min-height:96px;background:var(--panel2);color:var(--ink);
- border:1px solid var(--line);border-radius:10px;padding:8px;font:11px var(--mono);margin-top:8px;display:none}
-.pwa-msg{font:11px var(--mono);color:var(--teal);text-align:center;margin:8px 0 0;min-height:14px}
-.pwa-nota{font:10px var(--mono);color:var(--dim);text-align:center;margin:6px 0 0}
+.ctrlFila{border:1px solid var(--line);border-radius:var(--rad);padding:10px 12px;margin:10px 0;background:var(--panel2)}
+.ctrlFila .cab{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.ctrlFila .cab b{font:600 12px var(--sans);letter-spacing:.08em;color:var(--ink);flex:1}
+.ctrlFila .del{appearance:none;background:none;border:1px solid var(--line);color:var(--dim);
+  border-radius:6px;padding:2px 8px;font:600 11px var(--sans);cursor:pointer}
+.ctrlEnt{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end}
+.ctrlEnt label{display:block;font:600 9.5px var(--sans);letter-spacing:.16em;color:var(--faint);margin-bottom:3px}
+.ctrlEnt input,.ctrlEnt select{appearance:none;background:var(--bg);border:1px solid var(--line);
+  color:var(--ink);border-radius:8px;padding:8px 9px;font:600 14px var(--mono);min-width:0}
+.ctrlEnt input{width:88px} .ctrlEnt input.itn{width:74px} .ctrlEnt select{font-family:var(--sans);font-size:13px}
+.ctrlEnt input:focus,.ctrlEnt select:focus{outline:none;border-color:var(--amber2)}
+.ctrlDatos{font:11.5px var(--mono);color:var(--dim);margin:8px 0 6px}
+.ctrlDatos b{color:var(--teal);font-weight:600}
+.ctrlPie{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.ctrlCta{font:700 30px var(--mono);letter-spacing:.04em;font-variant-numeric:tabular-nums;
+  color:var(--ok);min-width:104px}
+.ctrlCta.warn{color:var(--warn)} .ctrlCta.bad{color:var(--bad)} .ctrlCta.nula{color:var(--faint);font-size:20px}
+.ctrlObs{appearance:none;background:var(--amber2);border:1px solid var(--amber);color:#12181e;
+  border-radius:8px;padding:10px 16px;font:700 12px var(--sans);letter-spacing:.1em;cursor:pointer}
+.ctrlObs:active{filter:brightness(1.15)}
+.ctrlSel{font:11px var(--mono);color:var(--faint)}
+.ctrlBan{margin-top:10px;border:1px solid var(--amber2);border-radius:var(--rad);
+  padding:8px 12px;font:600 12px var(--sans);color:var(--amber);letter-spacing:.04em}
+.ctrlBan.bad{border-color:var(--bad);color:var(--bad)}
+
+#ctrlLista{display:grid;grid-template-columns:1fr;gap:10px}
+#ctrlLista .ctrlFila{margin:0}
+@media (min-width:820px){ #ctrlLista{grid-template-columns:1fr 1fr} }
+.ctrlRosaWrap{display:flex;justify-content:center;padding:4px 0}
+#rosaCr{width:100%;max-width:340px;height:auto}
+#rosaCr .aro{fill:none;stroke:var(--line);stroke-width:1}
+#rosaCr .aro2{fill:none;stroke:var(--line);stroke-width:1;stroke-dasharray:3 5;opacity:.7}
+#rosaCr .eje{stroke:var(--line);stroke-width:1;opacity:.55}
+#rosaCr .card{fill:var(--faint);font:600 9px var(--sans);letter-spacing:.1em;text-anchor:middle}
+#rosaCr .prop{fill:var(--teal)}
+#rosaCr .vec{stroke-width:1.6;opacity:.85}
+#rosaCr .marca{stroke-width:1.6}
+#rosaCr .num{font:700 11px var(--mono);text-anchor:middle;dominant-baseline:central;fill:#0d1319}
+#rosaCr .min{font:9px var(--mono);text-anchor:middle;fill:var(--faint)}
+#rosaCr .vs{fill:none;stroke-width:1.4;stroke-dasharray:6 4;opacity:.9}
+#rosaCr .vsr{font:700 9px var(--sans);letter-spacing:.12em;text-anchor:middle}
+#rosaCr .vieja{stroke:var(--faint);stroke-width:1.2;stroke-dasharray:3 3}
+#rosaCr .marcaV{fill:none;stroke:var(--faint);stroke-width:1.4}
+.selGrp.multi{flex-wrap:wrap}
+.selGrp.multi button{position:relative}
+.selGrp.multi button:not(.on){opacity:.5}
+.selGrp.fte{display:inline-flex}
+.selGrp.fte button{padding:7px 10px;font-size:10.5px;letter-spacing:.08em}
+.ctrlLey{font:11.5px var(--mono);color:var(--dim);margin:0 0 6px}
+.ctrlLey b{color:var(--amber);font-weight:600}
+.ctrlLey .nobs{color:var(--faint);font-size:10.5px}
+.ctrlLey.cte{color:var(--bad)} .ctrlLey.cte b{color:var(--bad)}
+.ctrlProx{list-style:none;margin:0;padding:0}
+.ctrlProx li{display:flex;align-items:baseline;gap:10px;padding:7px 2px;border-bottom:1px solid var(--line)}
+.ctrlProx li:last-child{border-bottom:none}
+.ctrlProx .or{font:700 11px var(--mono);color:var(--faint);min-width:16px}
+.ctrlProx .qu{flex:1;font:600 12.5px var(--sans);letter-spacing:.04em;color:var(--ink)}
+.ctrlProx .tm{font:700 17px var(--mono);font-variant-numeric:tabular-nums;color:var(--ok)}
+.ctrlProx .tm.warn{color:var(--warn)} .ctrlProx .tm.bad{color:var(--bad)}
+.ctrlProx .tm.nula{color:var(--faint);font-size:13px}
+.regTab{width:100%;border-collapse:collapse;font:12px var(--mono)}
+.regTab th{font:600 9.5px var(--sans);letter-spacing:.14em;color:var(--faint);
+  text-align:left;padding:4px 6px;border-bottom:1px solid var(--line)}
+.regTab td{padding:5px 6px;border-bottom:1px solid var(--line);color:var(--dim)}
+.regTab tr:last-child td{border-bottom:none}
+.regTab td.n{color:var(--teal);font-weight:600} .regTab td.d{color:var(--ink);font-weight:600}
+.regVacio{color:var(--faint);font:11.5px var(--mono);padding:6px 2px}
+.rosaVacia{color:var(--faint);font:11.5px var(--mono);text-align:center;padding:10px 0}
+
+#v-pd .pdBarra{display:flex;flex-wrap:wrap;align-items:flex-end;gap:14px;
+  border:1px solid var(--line);border-radius:var(--rad);background:var(--panel2);padding:10px 14px;margin-bottom:12px}
+#v-pd .pdTramoAct b{font:700 26px var(--mono);color:var(--amber);letter-spacing:.06em}
+#v-pd .pdReloj b{font:700 20px var(--mono);color:var(--teal);font-variant-numeric:tabular-nums}
+#v-pd .pdTramoAct,#v-pd .pdReloj{display:flex;align-items:baseline;gap:8px}
+#v-pd .pdCaida{display:flex;align-items:flex-end;gap:8px;margin-left:auto}
+#v-pd .pdCaida label{display:block;font:600 9.5px var(--sans);letter-spacing:.16em;color:var(--faint);margin-bottom:3px}
+#v-pd .pdCaida input{appearance:none;background:var(--bg);border:1px solid var(--line);color:var(--ink);
+  border-radius:8px;padding:8px 9px;font:700 18px var(--mono);width:80px;text-align:center}
+#v-pd .pdCaida input:focus{outline:none;border-color:var(--amber2)}
+#v-pd .pdCaida button{appearance:none;background:var(--amber2);border:1px solid var(--amber);color:#12181e;
+  border-radius:8px;padding:10px 18px;font:700 12px var(--sans);letter-spacing:.1em;cursor:pointer}
+#v-pd .pdCols{display:grid;grid-template-columns:1fr;gap:12px;align-items:start}
+@media (min-width:900px){ #v-pd .pdCols{grid-template-columns:minmax(0,1.55fr) minmax(0,1fr)} }
+#pdLista{display:grid;grid-template-columns:1fr;gap:10px}
+@media (min-width:1280px){ #pdLista{grid-template-columns:1fr 1fr} }
+.pdFicha{border:1px solid var(--line);border-radius:var(--rad);padding:10px 12px;background:var(--panel2)}
+.pdFicha .cab{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.pdFicha .cab b{flex:1;font:600 12.5px var(--sans);letter-spacing:.07em;color:var(--ink)}
+.pdFicha .del{appearance:none;background:none;border:1px solid var(--line);color:var(--dim);
+  border-radius:6px;padding:2px 8px;font:600 11px var(--sans);cursor:pointer}
+.pdEnt{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end;margin-bottom:8px}
+.pdEnt label{display:block;font:600 9.5px var(--sans);letter-spacing:.16em;color:var(--faint);margin-bottom:3px}
+.pdEnt input,.pdEnt select{appearance:none;background:var(--bg);border:1px solid var(--line);color:var(--ink);
+  border-radius:8px;padding:7px 9px;font:600 14px var(--mono);min-width:0}
+.pdEnt input{width:72px} .pdEnt select{font-family:var(--sans);font-size:12.5px}
+.pdEnt input:focus,.pdEnt select:focus{outline:none;border-color:var(--amber2)}
+.pdObs{display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap}
+.pdObs button.obs{appearance:none;background:var(--amber2);border:1px solid var(--amber);color:#12181e;
+  border-radius:8px;padding:11px 18px;font:700 12px var(--sans);letter-spacing:.1em;cursor:pointer}
+.pdDeriv{font:12px var(--mono);color:var(--dim);margin:9px 0 4px;line-height:1.7}
+.pdDeriv b{color:var(--teal);font-weight:600}
+.pdDeriv .sig{color:var(--amber);font-weight:700;letter-spacing:.08em}
+.pdDeriv .nobs{color:var(--faint);font-size:10.5px}
+.pdEkBtn{appearance:none;background:none;border:1px solid var(--line);color:var(--dim);
+  border-radius:6px;padding:4px 10px;font:600 10.5px var(--sans);letter-spacing:.08em;cursor:pointer}
+.pdEk{border-top:1px solid var(--line);margin-top:8px;padding-top:8px}
+.pdEkFila{display:flex;gap:6px;align-items:flex-end;margin-bottom:6px;flex-wrap:wrap}
+.pdEkFila .t{font:700 10px var(--sans);letter-spacing:.1em;color:var(--faint);width:52px}
+.pdEkFila input{width:62px;appearance:none;background:var(--bg);border:1px solid var(--line);
+  color:var(--ink);border-radius:7px;padding:6px 7px;font:600 13px var(--mono)}
+.pdEkFila input:focus{outline:none;border-color:var(--amber2)}
+.pdEkRes{font:13px var(--mono);color:var(--ink);margin-top:6px}
+.pdEkRes b{color:var(--amber);font-weight:700;font-size:16px}
+.pdEkAviso{font:11.5px var(--mono);color:var(--bad);margin-top:4px;line-height:1.6}
+.pdTramoFila{display:flex;align-items:baseline;gap:10px;padding:6px 2px;border-bottom:1px solid var(--line);
+  font:12px var(--mono);color:var(--dim)}
+.pdTramoFila:last-child{border-bottom:none}
+.pdTramoFila .r{font:700 15px var(--mono);color:var(--amber);min-width:44px}
+.pdTramoFila.act .r{color:var(--ok)}
+#rosaPD{width:100%;max-width:330px;height:auto}
+#rosaPD .aro{fill:none;stroke:var(--line);stroke-width:1}
+#rosaPD .aro2{fill:none;stroke:var(--line);stroke-width:1;stroke-dasharray:3 5;opacity:.7}
+#rosaPD .eje{stroke:var(--line);stroke-width:1;opacity:.55}
+#rosaPD .card{fill:var(--faint);font:600 9px var(--sans);letter-spacing:.1em;text-anchor:middle}
+#rosaPD .proa{stroke:var(--teal);stroke-width:1.6;opacity:.9}
+#rosaPD .prop{fill:var(--teal)}
+#rosaPD .vec{stroke-width:1.6;opacity:.85}
+#rosaPD .marca{stroke-width:1.6}
+#rosaPD .num{font:700 11px var(--mono);text-anchor:middle;dominant-baseline:central;fill:#0d1319}
+#rosaPD .min{font:9px var(--mono);text-anchor:middle;fill:var(--faint)}
 </style>
 </head>
 <body>
@@ -416,15 +530,16 @@ input,select,textarea{font-size:16px}
 </header>
 
 <nav class="tabs" role="tablist" aria-label="Secciones">
-  <button role="tab" aria-selected="false" data-v="entrenar" type="button">ENTRENAR</button>
+  <button role="tab" aria-selected="true"  data-v="entrenar" type="button">ENTRENAR</button>
   <button role="tab" aria-selected="false" data-v="calcular" type="button">CALCULADORA</button>
-  <button role="tab" aria-selected="true"  data-v="referencia" type="button">APUNTES</button>
+<button role="tab" aria-selected="false" data-v="pd" type="button">PD</button>
+  <button role="tab" aria-selected="false" data-v="referencia" type="button">APUNTES</button>
 </nav>
 
 <main>
 
 <!-- ============================ ENTRENAR ============================ -->
-<section class="vista" id="v-entrenar" role="tabpanel">
+<section class="vista act" id="v-entrenar" role="tabpanel">
 
   <div class="intro-est">
     <b>EJERCICIOS DE CÁLCULO MENTAL, CINEMÁTICA Y TMA</b>
@@ -445,9 +560,9 @@ input,select,textarea{font-size:16px}
     </ul>
     <div class="ajuste"><span class="eti">NIVEL</span>
       <div class="selGrp" id="selNivel">
-        <button type="button" data-v="1" class="on">BÁSICO</button>
+        <button type="button" data-v="1">BÁSICO</button>
         <button type="button" data-v="2">INTERMEDIO</button>
-        <button type="button" data-v="3">EXPERTO</button>
+        <button type="button" data-v="3" class="on">EXPERTO</button>
       </div></div>
     <div class="ajuste"><span class="eti">GRUPO</span>
       <div class="selGrp" id="selGrupo">
@@ -562,14 +677,6 @@ input,select,textarea{font-size:16px}
     <h2>ESTADÍSTICA <span class="chip" id="stSesion"></span></h2>
     <table class="pnt" id="tStats"></table>
     <p><button class="accion sec" id="btnResetStats" type="button">BORRAR ESTADÍSTICA GUARDADA</button></p>
-    <div class="pwa-tools">
-      <button class="accion sec" id="btnExp" type="button">EXPORTAR</button>
-      <button class="accion sec" id="btnImp" type="button">RESTAURAR</button>
-      <button class="accion sec" id="btnRep" type="button">REEMPLAZAR</button>
-    </div>
-    <textarea id="ioBox" placeholder="Aquí aparece la copia al exportar. Para restaurar, pega aquí el JSON y pulsa RESTAURAR." spellcheck="false"></textarea>
-    <p class="pwa-msg" id="pwaMsg"></p>
-    <p class="pwa-nota">Los datos se guardan solo en este iPhone. RESTAURAR suma al progreso actual; REEMPLAZAR lo sustituye.</p>
     <p class="nota" id="stAviso"></p>
   </div>
 
@@ -585,11 +692,11 @@ input,select,textarea{font-size:16px}
   </div>
 
   <div class="ajuste" style="margin:0 0 12px"><span class="eti">MOSTRAR</span>
-    <div class="selGrp" id="selCalc">
-      <button type="button" data-v="todas" class="on">TODAS</button>
-      <button type="button" data-v="brc">BRC</button>
-      <button type="button" data-v="cpa">CPA · MANIOBRA</button>
-      <button type="button" data-v="dist">ESTADIMETRÍA</button>
+    <div class="selGrp multi" id="selCalc">
+      <button type="button" data-v="brc" class="on">BRC</button>
+      <button type="button" data-v="cpa" class="on">CPA · MANIOBRA</button>
+      <button type="button" data-v="dist" class="on">ESTADIMETRÍA</button>
+      <button type="button" data-v="cronos" class="on">CRONOS</button>
     </div></div>
 
   <div class="grid" id="calcGrid">
@@ -696,10 +803,104 @@ input,select,textarea{font-size:16px}
     <table class="pnt" id="tPeriFull"></table>
   </div>
 
+
+  <div id="calcCronos">
+
+<div class="card">
+    <h2>SITUACIÓN</h2>
+    <div class="ctrlRosaWrap"><svg id="rosaCr" viewBox="-116 -116 232 232" role="img"
+      aria-label="Rosa con los contactos en su demora"></svg></div>
+    <div class="rosaVacia" id="rosaAviso">añade la demora de un contacto para verlo aquí</div>
+  </div>
+
+  <div class="card">
+    <h2>PRÓXIMAS OBSERVACIONES</h2>
+    <ol class="ctrlProx" id="ctrlProx"></ol>
+    <p class="nota" id="ctrlProxVacio">nada en marcha todavía: pulsa OBSERVADO en la vuelta de
+      seguridad o en un contacto para arrancar su cuenta.</p>
+  </div>
+
+  <div class="card">
+    <h2>CONTROL DE TIEMPOS</h2>
+    <p class="nota">Intervalo = distancia ÷ GDC − margen. GDC = (7 + velocidad del contacto) × 100/3,
+      en yardas por minuto. La velocidad propia está fijada en <b>7 nudos</b>: es el dato original de la
+      tabla y de él depende todo el encuadre por familias.</p>
+    <div class="ajuste">
+      <span class="eti">MANDO</span>
+      <div class="selGrp" id="selMando">
+        <button type="button" data-v="2" class="on">AUSENTE M&amp;C</button>
+        <button type="button" data-v="1">PRESENTE</button>
+      </div>
+      <span class="k" id="ctrlMargen">margen 2 min</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>VUELTA DE SEGURIDAD</h2>
+    <p class="nota">El contacto más rápido que quepa esperar en la zona, a su distancia de visibilidad.</p>
+    <div id="ctrlVS"></div>
+  </div>
+
+  <div class="card">
+    <h2>CONTACTOS</h2>
+    <div id="ctrlLista"></div>
+    <div class="drillBtns">
+      <button type="button" id="btnCtrlAdd">AÑADIR CONTACTO</button>
+      <button type="button" id="btnCtrlSon">AVISO: APAGADO</button>
+    </div>
+    <p class="nota">El aviso acústico solo suena con esta pestaña abierta y la pantalla encendida:
+      un PWA de iOS no puede sonar en segundo plano ni con el móvil bloqueado.</p>
+  </div>
+
+  <div class="card">
+    <h2>REGISTRO DE OBSERVACIONES</h2>
+    <div id="ctrlReg"></div>
+    <div class="drillBtns"><button type="button" id="btnCtrlReg">BORRAR REGISTRO</button></div>
+  </div>
+  </div>
+
 </section>
 
 <!-- ============================ REFERENCIA ============================ -->
-<section class="vista act" id="v-referencia" role="tabpanel">
+<section class="vista" id="v-pd" role="tabpanel">
+  <div class="pdBarra">
+    <div class="pdTramoAct">
+      <span class="eti">TRAMO</span>
+      <b id="pdRumboAct">—</b>
+      <span class="k" id="pdTramoDesde"></span>
+    </div>
+    <div class="pdCaida">
+      <label>NUEVO RUMBO</label>
+      <input id="pdRumboNuevo" type="text" inputmode="numeric" maxlength="3" placeholder="000" autocomplete="off">
+      <button type="button" id="btnPdCaida">CAÍDA</button>
+    </div>
+    <div class="pdReloj"><span class="eti">EXPLORACIÓN</span><b id="pdCrono">—</b></div>
+  </div>
+
+  <div class="pdCols">
+    <div class="pdIzq">
+      <div class="card">
+        <h2>CONTACTOS</h2>
+        <div id="pdLista"></div>
+        <div class="drillBtns"><button type="button" id="btnPdAdd">AÑADIR CONTACTO</button></div>
+      </div>
+    </div>
+    <div class="pdDer">
+      <div class="card">
+        <h2>SITUACIÓN</h2>
+        <div class="ctrlRosaWrap"><svg id="rosaPD" viewBox="-116 -116 232 232" role="img"
+          aria-label="Demoras de los contactos"></svg></div>
+        <div class="rosaVacia" id="pdRosaPie">demoras verdaderas · norte arriba</div>
+      </div>
+      <div class="card">
+        <h2>TRAMOS</h2>
+        <div id="pdTramos"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="vista" id="v-referencia" role="tabpanel">
 
   <div class="intro-est">
     <b>TEORÍA Y TRUCOS DE CÁLCULO</b>
@@ -931,6 +1132,7 @@ input,select,textarea{font-size:16px}
 
 </section>
 
+
 <p class="pie"><span id="ver"></span></p>
 
 </main>
@@ -950,7 +1152,7 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
   else root.TMA = factory();
 })(typeof self !== "undefined" ? self : this, function () {
   "use strict";
-  const TMA = { version: "1.9.41" };
+  const TMA = { version: "1.12.0" };
 
   /*---------------- UTIL ----------------*/
   const norm360 = a => ((a % 360) + 360) % 360;
@@ -1137,22 +1339,23 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
   function T(def) { PEN.TYPES.push(def); }
 
   T({ id: "T01", nombre: "Inversa", grupo: "demoras", nivel: 1,
-    gen(r) { const D = ri(r, 1, 359);
-      return { enun: `Inversa de la demora ${g3(D)}.`,
-        campos: [{ k: "v", label: "Inversa", uni: "°", tipo: "num" }],
-        sol: { v: TMA.inversa(D) }, tol: { v: "a" },
-        pasos: [`${g3(D)} ${D<=180?"+ 180":"− 180"} = ${g3(TMA.inversa(D))}`],
-        pista: "D±200∓20 · centena+decena iguales en el cuadrante opuesto" }; } });
-
-  T({ id: "T02", nombre: "Rumbo del blanco (LOS+β)", grupo: "demoras", nivel: 1,
-    gen(r) { const D = ri(r, 1, 359), b = ri(r, 4, 178), bd = pick(r, BANDA);
-      return { enun: `Contacto en demora ${g3(D)} con β ${b}° ${bd}. ¿Ct?`,
-        campos: [{ k: "v", label: "Ct", uni: "°", tipo: "num" }],
-        sol: { v: TMA.ct(D, b, bd) }, tol: { v: "a" },
-        pasos: [`inversa(${g3(D)}) = ${g3(TMA.inversa(D))}`, `β ${bd} → ${bd==="Er"?"resto":"sumo"} ${b}° = ${g3(TMA.ct(D,b,bd))}`],
-        pista: "Ct = inversa(D) + β(Br) / − β(Er)" }; } });
-
-  T({ id: "T09", nombre: "β desde LOS y Ct", grupo: "demoras", nivel: 2,
+    gen(r) { const cs = [];
+      for (let i = 0; i < 6; i++) { const D = ri(r, 1, 359);
+        cs.push({ label: g3(D), sol: TMA.inversa(D), tol: "a",
+          paso: `${g3(D)} ${D <= 180 ? "+ 180" : "\u2212 180"} = ${g3(TMA.inversa(D))}` }); }
+      return Object.assign(PEN.bat(cs, "\u00b0"), {
+        enun: "Demoras inversas de los seis vectores siguientes.",
+        pista: "D\u00b1200\u221320 \u00b7 centena+decena iguales en el cuadrante opuesto" }); } });
+  T({ id: "T02", nombre: "Rumbo del blanco (LOS+\u03b2)", grupo: "demoras", nivel: 1,
+    gen(r) { const cs = [];
+      for (let i = 0; i < 2; i++) {
+        const D = ri(r, 1, 359), b = ri(r, 4, 178), bd = pick(r, BANDA);
+        cs.push({ label: `LOS ${g3(D)} \u00b7 \u03b2 ${b}\u00b0 ${bd}`, sol: TMA.ct(D, b, bd), tol: "a",
+          paso: `inversa(${g3(D)}) = ${g3(TMA.inversa(D))} \u2192 \u03b2 ${bd}: ${bd === "Er" ? "resto" : "sumo"} ${b}\u00b0 = ${g3(TMA.ct(D, b, bd))}` }); }
+      return Object.assign(PEN.bat(cs, "\u00b0"), {
+        enun: "Rumbo del contacto en los dos casos siguientes, sabiendo LOS y \u03b2.",
+        pista: "Ct = inversa(D) + \u03b2(Br) / \u2212 \u03b2(Er)" }); } });
+  T({ id: "T03", nombre: "β desde LOS y Ct", grupo: "demoras", nivel: 2,
     gen(r) { const D = ri(r, 1, 359); const b = ri(r, 4, 178), bd = pick(r, BANDA);
       const Ct = TMA.ct(D, b, bd);
       return { enun: `Contacto en demora ${g3(D)} navega a rumbo ${g3(Ct)}. ¿β y banda?`,
@@ -1161,16 +1364,17 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
         pasos: [`inversa(${g3(D)}) = ${g3(TMA.inversa(D))}`, `β = separación entre ${g3(TMA.inversa(D))} y ${g3(Ct)} = ${b}° ${bd}`],
         pista: "β = diferencia entre inversa(D) y Ct; banda por el lado del giro" }; } });
 
-  T({ id: "T10", nombre: "Ángulo guía (marcación)", grupo: "demoras", nivel: 2,
+  T({ id: "T04", nombre: "Ángulo guía (marcación)", grupo: "demoras", nivel: 2,
     gen(r) { const Co = ri(r, 1, 359); const la = ri(r, 4, 176), bd = pick(r, BANDA);
       const D = norm360(Co + (bd === "Er" ? la : -la));
       return { enun: `Rumbo propio ${g3(Co)}, contacto en demora ${g3(D)}. ¿LA y banda?`,
         campos: [{ k: "v", label: "LA", uni: "°", tipo: "num" }, { k: "b", label: "Banda", tipo: "banda" }],
         sol: { v: la, b: bd }, tol: { v: "a", b: "label" },
+        dibujo: TMA.svgLA(Co, D, la, bd),
         pasos: [`LA = demora − rumbo = ${g3(D)} − ${g3(Co)} = ${la}° ${bd}`],
         pista: "LA = D − Co (por el camino corto); Er si el contacto cae a estribor" }; } });
 
-  T({ id: "T03", nombre: "Regla de los 3'", grupo: "velocidades", nivel: 1,
+  T({ id: "T06", nombre: "Regla de los 3'", grupo: "velocidades", nivel: 1,
     gen(r) { const k = ri(r, 3, 24), m = ri(r, 3, 30);
       return { enun: `Buque a ${k} nudos durante ${m} minutos. ¿Yardas recorridas?`,
         campos: [{ k: "v", label: "Distancia", uni: "yds", tipo: "num" }],
@@ -1178,7 +1382,7 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
         pasos: [`${k} kn × 100 = ${k*100} yds cada 3 min`, `× ${m}/3 = ${TMA.regla3yds(k,m)} yds`],
         pista: "yds en 3' = velocidad × 100" }; } });
 
-  T({ id: "T04", nombre: "Regla de los 6'", grupo: "velocidades", nivel: 1,
+  T({ id: "T07", nombre: "Regla de los 6'", grupo: "velocidades", nivel: 1,
     gen(r) { const k = ri(r, 4, 24), m = ri(r, 4, 20);
       return { enun: `Buque a ${k} nudos durante ${m} minutos. ¿Millas recorridas?`,
         campos: [{ k: "v", label: "Distancia", uni: "NM", tipo: "num" }],
@@ -1186,38 +1390,43 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
         pasos: [`millas en 6' = V ÷ 10 = ${k} ÷ 10 = ${fmt(k/10)} NM`, `× ${m}/6 = ${fmt(Math.round(k/10*m/6*100)/100)} NM`],
         pista: "millas en 6' = V ÷ 10" }; } });
 
-  T({ id: "T06", nombre: "Tabla de senos", grupo: "velocidades", nivel: 1,
-    gen(r) { const a = pick(r, HITOS.concat([85, 90]));
-      return { enun: `Seno de ${a}° (tabla mental).`,
-        campos: [{ k: "v", label: "sen", tipo: "num" }],
-        sol: { v: senM(a) }, tol: { v: 0.05 },
-        pasos: [`${a<=30?`${a} ÷ 3 = ${fmt(a/3)} → × 0,05 = ${fmt(senM(a))}`:a<=70?`(${a}+25)/100 = ${fmt(senM(a))}`:`más de 70° → 1`}`],
-        pista: "≤30°: 0,05 por cada 3° · 30–70°: (Φ+25)/100 · >70°: 1" }; } });
-
-  T({ id: "T07", nombre: "Lateral (ALOS)", grupo: "velocidades", nivel: 1,
+  T({ id: "T05", nombre: "Tabla de senos", grupo: "velocidades", nivel: 1,
+    gen(r) { const cs = [], usados = [];
+      for (let i = 0; i < 6; i++) { let a, g = 0;
+        do { a = pick(r, HITOS.concat([85, 90])); g++; } while (usados.indexOf(a) >= 0 && g < 12);
+        usados.push(a);
+        cs.push({ label: `sen ${a}\u00b0`, sol: senM(a), tol: 0.05,
+          paso: a <= 30 ? `${a} \u00f7 3 = ${fmt(a / 3)} \u2192 \u00d7 0,05 = ${fmt(senM(a))}`
+            : a <= 70 ? `(${a}+25)/100 = ${fmt(senM(a))}` : `${a}\u00b0 \u2192 m\u00e1s de 70\u00b0 \u2192 1` }); }
+      return Object.assign(PEN.bat(cs), {
+        enun: "Valor del seno de los seis \u00e1ngulos siguientes (tabla mental).",
+        pista: "\u226430\u00b0: 0,05 por cada 3\u00b0 \u00b7 30\u201370\u00b0: (\u03a6+25)/100 \u00b7 >70\u00b0: 1" }); } });
+  T({ id: "T09", nombre: "Lateral (ALOS)", grupo: "velocidades", nivel: 1,
     gen(r) { const v = ri(r, 3, 20), h0 = pick(r, HITOS);
       const obt = ri(r, 0, 1) === 1 && h0 < 90, a = obt ? 180 - h0 : h0, base = obt ? 180 - a : a;
       const usaBeta = ri(r, 0, 1) === 1;
       return { enun: `Velocidad ${v} kn con ${usaBeta ? `β ${a}°` : `ángulo ${a}° a la LOS`}. ¿Componente lateral?`,
         campos: [{ k: "v", label: "ALOS", uni: "kn", tipo: "num" }],
         sol: { v: TMA.alos(v, a, M0) }, tol: { v: "v" },
+        dibujo: TMA.svgComponentes(v, a, "alos", TMA.alos(v, a, M0), TMA.ilos(v, a, M0)),
         pasos: (obt ? [`${a}° > 90° → opero con 180 − ${a} = ${base}°`] : [])
           .concat([`ALOS = V · sen ${base}° = ${v} · ${fmt(senM(base))} = ${fmt(TMA.alos(v,a,M0))} kn`]),
         pista: "ALOS = V · sen(β) · si β > 90°: operar con 180 − β" }; } });
 
-  T({ id: "T11", nombre: "Radial (ILOS)", grupo: "velocidades", nivel: 2,
+  T({ id: "T10", nombre: "Radial (ILOS)", grupo: "velocidades", nivel: 2,
     gen(r) { const v = ri(r, 3, 20), h0 = pick(r, HITOS);
       const obt = ri(r, 0, 1) === 1 && h0 < 90, a = obt ? 180 - h0 : h0, base = obt ? 180 - a : a;
       const usaBeta = ri(r, 0, 1) === 1;
       return { enun: `Velocidad ${v} kn con ${usaBeta ? `β ${a}°` : `ángulo ${a}° a la LOS`}. ¿Componente radial?`,
         campos: [{ k: "v", label: "ILOS", uni: "kn", tipo: "num" }],
         sol: { v: TMA.ilos(v, a, M0) }, tol: { v: "v" },
+        dibujo: TMA.svgComponentes(v, a, "ilos", TMA.alos(v, a, M0), TMA.ilos(v, a, M0)),
         pasos: (obt ? [`${a}° > 90° → opero con 180 − ${a} = ${base}°`] : [])
           .concat([`ILOS = V · cos ${base}° = V · sen ${90-base}° = ${v} · ${fmt(senM(90-base))} = ${fmt(TMA.ilos(v,a,M0))} kn`])
           .concat(obt ? [`con β > 90° el contacto abre: la radial es de alejamiento`] : []),
         pista: "ILOS = V · cos(β) = V · sen(90−β) · si β > 90°: operar con 180 − β" }; } });
 
-  T({ id: "T16", nombre: "Resultante lateral (SrALOS)", grupo: "velocidades", nivel: 3,
+  T({ id: "T12", nombre: "Resultante lateral (SrALOS)", grupo: "velocidades", nivel: 3,
     gen(r) { const So = ri(r, 3, 8), la = pick(r, HITOS), lb = pick(r, BANDA);
       const St = ri(r, 4, 18), be = pick(r, HITOS), bb = pick(r, BANDA);
       const soA = TMA.alos(So, la, M0), stA = TMA.alos(St, be, M0);
@@ -1228,46 +1437,53 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
         pasos: [`SoALOS = ${So}·sen${la}° = ${fmt(soA)} ${lb}`, `StALOS = ${St}·sen${be}° = ${fmt(stA)} ${bb}`, `${lb===bb?"misma banda → suman":"distinta banda → restan"} = ${fmt(res.mag)} (${TMA.sentidoLateral(res.banda)})`],
         pista: "Misma banda suman; distinta restan (manda la mayor). Br→IZ, Er→DE" }; } });
 
-  T({ id: "T05", nombre: "Distancia a la derrota", grupo: "distancias", nivel: 1,
-    gen(r) { const R = ri(r, 4, 25) * 1000, b = pick(r, HITOS);
-      return { enun: `Contacto a ${fmt(R / 1000)} Kyds con β ${b}°. ¿DT?`,
-        campos: [{ k: "v", label: "DT", uni: "yds", tipo: "num" }],
-        sol: { v: TMA.dt(R, b, M0) }, tol: { v: "d" },
-        pasos: [`DT = R · sen β = ${R} · sen${b}° = ${R} · ${fmt(senM(b))} = ${Math.round(TMA.dt(R,b,M0))} yds`],
-        pista: "DT = R · sen β" }; } });
-
-  T({ id: "T08", nombre: "Distancia periscópica", grupo: "distancias", nivel: 1,
-    gen(r) { const enM = ri(r, 0, 1) === 1;
-      const hm = pick(r, [8, 11, 17, 19, 22, 27, 29, 32, 40]);
-      const h = enM ? Math.round(hm * 3.28) : pick(r, [25, 60, 65, 80, 100, 105, 120, 130]);
-      const N = pick(r, [0.5, 0.6, 1, 1.2, 1.5, 2, 2.5, 3, 4]);
-      const au = pick(r, [6, 1.5]);
-      const K = au === 6 ? 120 : 30;
-      const conv = [`h = ${hm} m × 3,28 = ${h} pies`];
-      return { enun: `Palo de ${enM ? hm + " m" : h + " pies"}, ${fmt(N)} divisiones en ${au === 6 ? "6" : "1,5"} aumentos. ¿Distancia?`,
-        campos: [{ k: "v", label: "R", uni: "yds", tipo: "num" }],
-        sol: { v: TMA.dPeriscopica(h, N, au) }, tol: { v: "d" },
-        pasos: (enM ? conv : []).concat([`R = ${K}·h/N = ${K}·${h}/${fmt(N)} = ${Math.round(TMA.dPeriscopica(h,N,au))} yds`]),
-        pista: "R = 120·h/N (6 aum.) · 30·h/N (1,5 aum.) — h siempre en pies (m × 3,28)" }; } });
-
-  T({ id: "T13", nombre: "Separación de escoltas (TSR)", grupo: "distancias", nivel: 2,
-    gen(r) { const tsr = ri(r, 2, 8), dB = pick(r, [12, 20, 25, 30, 40, 50, 60, 70]);
-      const S = TMA.tsrSep(tsr);
-      return { enun: `Dos escoltas con TSR ${tsr} Kyds; sus demoras difieren ${dB}°. ¿Distancia a ellos?`,
-        campos: [{ k: "v", label: "R", uni: "Kyds", tipo: "num" }],
-        sol: { v: TMA.rPorSep(S, dB) }, tol: { v: "d" },
-        pasos: [`S = 2·80%·${tsr} = ${fmt(S)} Kyds`, `R = 60·S/ΔB = 60·${fmt(S)}/${dB} = ${fmt(TMA.rPorSep(S,dB))} Kyds`],
-        pista: "S = 2·80%·TSR · R = 60·S/ΔB" }; } });
-
-  T({ id: "T12", nombre: "Distancia lateral", grupo: "distancias", nivel: 2,
+  T({ id: "T13", nombre: "Distancia a la derrota", grupo: "distancias", nivel: 1,
+    gen(r) { const cs = []; let d0 = null;
+      for (let i = 0; i < 3; i++) {
+        const R = ri(r, 4, 25) * 1000, b = pick(r, HITOS);
+        if (i === 0) d0 = TMA.svgDT(R, b, TMA.dt(R, b, M0));
+        cs.push({ label: `\u03b2 ${b}\u00b0 \u00b7 ${fmt(R / 1000)} Kyds`, sol: TMA.dt(R, b, M0), tol: "d",
+          paso: `DT = ${R} \u00b7 sen${b}\u00b0 = ${R} \u00b7 ${fmt(senM(b))} = ${Math.round(TMA.dt(R, b, M0))} yds` }); }
+      return Object.assign(PEN.bat(cs, "yds"), { dibujo: d0,
+        enun: "Distancia a la derrota (DT) en los tres casos siguientes.",
+        pista: "DT = R \u00b7 sen \u03b2" }); } });
+  T({ id: "T14", nombre: "Distancia perisc\u00f3pica", grupo: "distancias", nivel: 1,
+    gen(r) { const enM = ri(r, 0, 1) === 1, au = pick(r, [6, 1.5]), K = au === 6 ? 120 : 30;
+      const cs = [], conv = []; let d0 = null;
+      for (let i = 0; i < 4; i++) {
+        const hm = pick(r, [8, 11, 17, 19, 22, 27, 29, 32, 40]);
+        const h = enM ? Math.round(hm * 3.28) : pick(r, [25, 60, 65, 80, 100, 105, 120, 130]);
+        const N = pick(r, [0.5, 0.6, 1, 1.2, 1.5, 2, 2.5, 3, 4]);
+        if (i === 0) d0 = TMA.svgPeri(h, N, au, TMA.dPeriscopica(h, N, au));
+        if (enM) conv.push(`${hm} m \u00d7 3,28 = ${h} pies`);
+        cs.push({ label: `${enM ? hm + " m" : h + " pies"} \u00b7 ${fmt(N)} div`,
+          sol: TMA.dPeriscopica(h, N, au), tol: "d",
+          paso: `R = ${K}\u00b7${h}/${fmt(N)} = ${Math.round(TMA.dPeriscopica(h, N, au))} yds` }); }
+      const b = PEN.bat(cs, "yds");
+      return Object.assign(b, { dibujo: d0, pasos: conv.concat(b.pasos),
+        enun: `Distancia a los cuatro contactos, con el periscopio de ataque en ${au === 6 ? "6" : "1,5"} aumentos y su altura de palo.`,
+        pista: "R = 120\u00b7h/N (6 aum.) \u00b7 30\u00b7h/N (1,5 aum.) \u2014 h siempre en pies (m \u00d7 3,28)" }); } });
+  T({ id: "T15", nombre: "Separaci\u00f3n de escoltas (TSR)", grupo: "distancias", nivel: 2,
+    gen(r) { const cs = []; let d0 = null;
+      for (let i = 0; i < 3; i++) {
+        const tsr = ri(r, 2, 8), dB = pick(r, [12, 20, 25, 30, 40, 50, 60, 70]);
+        const S = TMA.tsrSep(tsr);
+        if (i === 0) d0 = TMA.svgTSR(tsr, dB, S, TMA.rPorSep(S, dB));
+        cs.push({ label: `\u03b1 ${dB}\u00b0 \u00b7 TSR ${tsr} Kyds`, sol: TMA.rPorSep(S, dB), tol: "d",
+          paso: `S = 2\u00b780%\u00b7${tsr} = ${fmt(S)} \u2192 R = 60\u00b7${fmt(S)}/${dB} = ${fmt(TMA.rPorSep(S, dB))} Kyds` }); }
+      return Object.assign(PEN.bat(cs, "Kyds"), { dibujo: d0,
+        enun: "Distancia aproximada a dos contactos por su TSR y el \u00e1ngulo entre ambos, en los tres casos siguientes.",
+        pista: "S = 2\u00b780%\u00b7TSR \u00b7 R = 60\u00b7S/\u0394B" }); } });
+  T({ id: "T16", nombre: "Distancia lateral", grupo: "distancias", nivel: 2,
     gen(r) { const sr = ri(r, 2, 24) / 2, bd = pick(r, [0.5, 1, 1.5, 2, 2.5, 3]);
       return { enun: `SrALOS = ${fmt(sr)} kn y Ḃ = ${fmt(bd)}°/min. ¿Distancia?`,
         campos: [{ k: "v", label: "R", uni: "NM", tipo: "num" }],
         sol: { v: TMA.dLat(sr, bd, 1) }, tol: { v: "d" },
+        dibujo: TMA.svgRitmo(sr, bd, TMA.dLat(sr, bd, 1)),
         pasos: [`R = SrALOS / Ḃ = ${fmt(sr)} / ${fmt(bd)} = ${fmt(TMA.dLat(sr,bd,1))} NM`, `(en yardas: ×2000 = ${Math.round(TMA.dLat(sr,bd,2000))} yds)`],
         pista: "R(NM) = SrALOS / Ḃ  (en yardas: ×2000)" }; } });
 
-  T({ id: "T18", nombre: "Dmin / Dmax", grupo: "distancias", nivel: 3,
+  T({ id: "T25", nombre: "Dmin / Dmax", grupo: "distancias", nivel: 3,
     gen(r) { const So = ri(r, 3, 8), la = pick(r, HITOS), bd = pick(r, [1, 1.5, 2, 3]);
       const stm = pick(r, [15, 20, 25]);
       const soA = TMA.alos(So, la, M0);
@@ -1275,10 +1491,11 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
         campos: [{ k: "mi", label: "Dmin", uni: "Kyds", tipo: "num" }, { k: "ma", label: "Dmax", uni: "Kyds", tipo: "num" }],
         sol: { mi: TMA.dMin(soA, bd, 2), ma: TMA.dMax(soA, stm, bd, 2) },
         tol: { mi: "d", ma: "d" },
+        dibujo: TMA.svgDminmax(soA, bd, stm, TMA.dMin(soA, bd, 2), TMA.dMax(soA, stm, bd, 2)),
         pasos: [`SoALOS = ${So}·sen${la}° = ${fmt(soA)} kn`, `Dmin = 2·SoALOS/Ḃ = 2·${fmt(soA)}/${fmt(bd)} = ${fmt(TMA.dMin(soA,bd,2))} Kyds`, `Dmax = 2·(SoALOS+Stmáx)/Ḃ = 2·(${fmt(soA)}+${stm})/${fmt(bd)} = ${fmt(TMA.dMax(soA,stm,bd,2))} Kyds`],
         pista: "Dmin = 2·SoALOS/Ḃ · Dmax = 2·(SoALOS+Stmax)/Ḃ" }; } });
 
-  T({ id: "T19", nombre: "Ekelund", grupo: "distancias", nivel: 3,
+  T({ id: "T20", nombre: "Ekelund (1 tramo)", grupo: "distancias", nivel: 3,
     gen(r) { const sd = x => x > 0 ? "dcha" : "izq";
       const R0 = pick(r, [4, 5, 6, 8, 10]);
       const s1 = ri(r, 2, 9) * (ri(r, 0, 1) ? 1 : -1);
@@ -1295,6 +1512,7 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
           `Ḃ ${b1 * b2 < 0 ? "contrarios → suman" : "iguales → restan"}: ΔḂ = ${fmt(dB)}°/min`,
           `R = ΔSoALOS / ΔḂ = ${dS} / ${fmt(dB)} = ${fmt(R)} NM`,
           `comprobación: StALOS = Ḃ·R − SoALOS = ${fmt(Math.abs(st))} kn a la ${sd(st)} en los dos tramos`],
+        dibujo: TMA.svgEkelund(s1, b1, s2, b2, R),
         pista: "R = ΔSoALOS/ΔḂ — contrarias suman, iguales restan" }; } });
 
   /* Rumbo para anular la Ḃ (ZBR). Regla validada con 2A-75/77/79:
@@ -1306,7 +1524,7 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
     return norm360(D + (b.banda === "Er" ? la : -la));
   };
 
-  T({ id: "T20", nombre: "Rumbo para Ḃ = 0 (ZBR)", grupo: "demoras", nivel: 3,
+  T({ id: "T22", nombre: "Rumbo para Ḃ = 0 (ZBR)", grupo: "demoras", nivel: 3,
     gen(r) { let D, So, be, bb, St;
       for (let i = 0; i < 20; i++) {
         D = ri(r, 1, 359); So = ri(r, 5, 10);
@@ -1319,10 +1537,11 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
       return { enun: `Contacto en demora ${g3(D)} a rumbo ${g3(Ct)} y ${St} kn. Velocidad propia ${So} kn. ¿Rumbo para anular la Ḃ?`,
         campos: [{ k: "v", label: "Co", uni: "°", tipo: "num" }],
         sol: { v: Co }, tol: { v: "a" },
+        dibujo: TMA.svgZBR(D, Ct, St, So, Co, TMA.alos(St, be, M0), TMA.alos(So, Math.abs(((Co - D + 540) % 360) - 180), M0)),
         pasos: [`StALOS = St·senβ = ${St}·sen${be}° = ${fmt(TMA.alos(St,be,M0))} kn`, `senLA = StALOS/So = ${fmt(TMA.alos(St,be,M0))}/${So} = ${fmt(TMA.alos(St,be,M0)/So)} → LA = ${TMA.asenM(TMA.alos(St,be,M0)/So)}°`, `LA a la banda contraria de β → rumbo ${g3(Co)}`],
         pista: "Igualar laterales: senLA = St·senβ/So; contacto a la banda contraria de su β" }; } });
 
-  T({ id: "T17", nombre: "St desde R, Ḃ y β (POINTING)", grupo: "velocidades", nivel: 3,
+  T({ id: "T19", nombre: "St desde R, Ḃ y β (POINTING)", grupo: "velocidades", nivel: 3,
     gen(r) { const StObj = ri(r, 8, 44) / 2;                 // 4–22 kn
       const be = ri(r, 95, 160);
       const R = ri(r, 2, 10);
@@ -1332,10 +1551,11 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
       return { enun: `En POINTING (lateral propia nula): contacto a ${fmt(R)} NM, Ḃ = ${fmt(bd)}°/min, β = ${be}°. ¿St?`,
         campos: [{ k: "v", label: "St", uni: "kn", tipo: "num" }],
         sol: { v: st }, tol: { v: "v" },
+        dibujo: TMA.svgPointing(R, bd, be, st, bd * R),
         pasos: [`β = ${be}° > 90° → opero con sen ${180-be}°`, `SrALOS = Ḃ·R = ${fmt(bd)}·${fmt(R)} = ${fmt(bd*R)} kn`, `St = SrALOS/sen ${180-be}° = ${fmt(bd*R)}/${fmt(senM(be))} = ${fmt(st)} kn`],
         pista: "St = Ḃ·R/sen β · si β > 90°: operar con 180 − β" }; } });
 
-  T({ id: "T14", nombre: "Tcpa de mesa", grupo: "distancias", nivel: 2,
+  T({ id: "T26", nombre: "Tcpa de mesa", grupo: "distancias", nivel: 2,
     gen(r) { const R = ri(r, 5, 15) * 1000, be = pick(r, [12, 15, 18, 20, 24, 30, 40]);
       const St = pick(r, [8, 10, 12, 15, 18, 20]);
       return { enun: `Contacto a ${fmt(R / 1000)} Kyds, β ${be}°, St ${St} kn. ¿Tiempo al CPA?`,
@@ -1344,7 +1564,7 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
         pasos: [`St en yds/min = ${St}·100/3 = ${Math.round(St*100/3)}`, `Tcpa = R·cosβ/St = ${R}·sen${90-be}°/${Math.round(St*100/3)} = ${R}·${fmt(senM(90-be))}/${Math.round(St*100/3)} = ${fmt(TMA.tcpaMesa(R,be,St,M0))} min`],
         pista: "Tcpa = R·cosβ / St(yds/min) · St yds/min = kn·100/3" }; } });
 
-  T({ id: "T15", nombre: "Crono de punteo intermitente", grupo: "punteo", nivel: 2,
+  T({ id: "T27", nombre: "Crono de punteo intermitente", grupo: "punteo", nivel: 2,
     gen(r) { const d = ri(r, 6, 99) * 100; const tipo = pick(r, ["12/5", "10/6", "8/8", "5/12"]);
       const c = TMA.crono(d, tipo);
       return { enun: `Contacto tipo ${tipo} a ${d} yds. ¿Tiempo entre observaciones?`,
@@ -1370,12 +1590,27 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
     return okTol(tol === "a" ? norm360(g) : g, tol === "a" ? norm360(exp) : exp, tol);
   };
   PEN.corrige = (ej, resp) => {
-    const out = { ok: true, campos: {} };
+    const out = { ok: true, campos: {}, aciertos: 0, total: ej.campos.length };
     ej.campos.forEach(c => {
       const ok = PEN.okCampo(ej.tol[c.k], resp[c.k], ej.sol[c.k]);
-      out.campos[c.k] = ok; if (!ok) out.ok = false;
+      out.campos[c.k] = ok; if (ok) out.aciertos++; else out.ok = false;
     });
     return out;
+  };
+  /* Batería: un enunciado con varios casos. Cada caso es un campo cuyo rótulo
+     lleva los datos de ese caso. La corrección es campo a campo y el veredicto
+     muestra los aciertos parciales, pero el ejercicio solo cuenta como acertado
+     si están TODOS bien: es el criterio del mazo, donde la carta se resuelve
+     entera dentro del minuto peñiquero. */
+  PEN.bat = (casos, uni) => {
+    const campos = [], sol = {}, tol = {}, pasos = [];
+    casos.forEach((c, i) => {
+      const k = "c" + (i + 1);
+      campos.push({ k, label: c.label, uni: c.uni !== undefined ? c.uni : uni, tipo: "num" });
+      sol[k] = c.sol; tol[k] = c.tol === undefined ? "v" : c.tol;
+      if (c.paso) pasos.push(c.paso);
+    });
+    return { campos, sol, tol, pasos };
   };
   PEN.byId = id => PEN.TYPES.find(t => t.id === id);
   PEN.pool = (nivel, grupo) => PEN.TYPES.filter(t =>
@@ -1874,164 +2109,527 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
   /*---------------- t11: catálogo de reglas para estudio ------------------
   Cada regla: fórmula, glosario de sus términos, desarrollo numérico paso a
   paso sobre un ejemplo, la idea ("de dónde viene") y, si ayuda, un dibujo. */
-  const SVG_DT =
-    "<svg viewBox='0 0 240 132' class='rsvg'>" +
-    "<line x1='28' y1='42' x2='214' y2='42' stroke='#4a5b6b' stroke-width='1'/>" +
-    "<path d='M206,38 l8,4 l-8,4 z' fill='#c9d6e2'/>" +
-    "<text x='150' y='34' fill='#6f8498' font-size='9'>derrota del blanco</text>" +
-    "<rect x='116' y='38' width='8' height='8' fill='none' stroke='#c9d6e2' stroke-width='1.3'/>" +
-    "<text x='126' y='36' fill='#c9d6e2' font-size='10'>B</text>" +
-    "<line x1='62' y1='42' x2='62' y2='106' stroke='#ffb454' stroke-width='1.6' stroke-dasharray='4 3'/>" +
-    "<rect x='62' y='42' width='9' height='9' fill='none' stroke='#4a5b6b' stroke-width='1'/>" +
-    "<text x='34' y='78' fill='#ffb454' font-size='11'>DT</text>" +
-    "<line x1='62' y1='106' x2='120' y2='42' stroke='#5ad0c0' stroke-width='1.7'/>" +
-    "<text x='90' y='88' fill='#5ad0c0' font-size='11'>R</text>" +
-    "<path d='M108,42 A12,12 0 0 1 111.9,50.9' fill='none' stroke='#8a9bb0' stroke-width='1.2'/>" +
-    "<text x='103' y='56' fill='#8a9bb0' font-size='10'>\u03b2</text>" +
-    "<path d='M62,106 l-5,-10 l10,0 z' fill='#ffb454'/>" +
-    "<text x='40' y='120' fill='#6f8498' font-size='9'>propio</text>" +
-    "</svg>";
-  const SVG_COMP =
-    "<svg viewBox='0 0 240 132' class='rsvg'>" +
-    "<line x1='18' y1='74' x2='222' y2='74' stroke='#4a5b6b' stroke-width='1' stroke-dasharray='5 4'/>" +
-    "<text x='118' y='94' fill='#6f8498' font-size='8'>l\u00ednea de demora (LOS)</text>" +
-    "<circle cx='34' cy='74' r='3.2' fill='#ffb454'/>" +
-    "<line x1='34' y1='74' x2='92' y2='28' stroke='#ffb454' stroke-width='2'/>" +
-    "<path d='M92,28 l-9,1 l4,6 z' fill='#ffb454'/>" +
-    "<text x='60' y='22' fill='#ffb454' font-size='10'>So</text>" +
-    "<line x1='34' y1='74' x2='92' y2='74' stroke='#8a6430' stroke-width='1' stroke-dasharray='3 3'/>" +
-    "<line x1='92' y1='74' x2='92' y2='28' stroke='#8a6430' stroke-width='1' stroke-dasharray='3 3'/>" +
-    "<text x='96' y='52' fill='#ffb454' font-size='9'>SoALOS</text>" +
-    "<text x='50' y='70' fill='#8a6430' font-size='9'>SoILOS</text>" +
-    "<path d='M50,74 A16,16 0 0 0 46.5,64' fill='none' stroke='#c8842e' stroke-width='1.2'/>" +
-    "<text x='52' y='64' fill='#c8842e' font-size='9'>LA</text>" +
-    "<text x='116' y='16' fill='#5ad0c0' font-size='8'>ALOS = V \u00b7 sen (lateral)</text>" +
-    "<text x='10' y='124' fill='#8a9bb0' font-size='8'>ILOS = V \u00b7 cos (radial)</text>" +
-    "<rect x='205' y='70' width='7' height='7' fill='none' stroke='#c9d6e2'/><text x='204' y='64' fill='#6f8498' font-size='8'>blanco</text>" +
-    "<line x1='208' y1='74' x2='182' y2='42' stroke='#c9d6e2' stroke-width='2'/><path d='M182,42 l1,9 l7,-5 z' fill='#c9d6e2'/>" +
-    "<line x1='182' y1='74' x2='208' y2='74' stroke='#4a5b6b' stroke-width='1' stroke-dasharray='3 3'/>" +
-    "<line x1='182' y1='74' x2='182' y2='42' stroke='#c9d6e2' stroke-width='1.2'/>" +
-    "<text x='152' y='52' fill='#c9d6e2' font-size='8'>StALOS</text>" +
-    "</svg>";
-  const SVG_PERI =
-    "<svg viewBox='0 0 240 132' class='rsvg'>" +
-    "<line x1='20' y1='96' x2='220' y2='96' stroke='#4a5b6b' stroke-width='1'/>" +
-    "<text x='128' y='110' fill='#6f8498' font-size='7'>ret\u00edcula del periscopio</text>" +
-    (function(){var t="";for(var i=0;i<=8;i++){var x=40+i*20;t+="<line x1='"+x+"' y1='90' x2='"+x+"' y2='102' stroke='#4a5b6b' stroke-width='1'/>";}return t;})() +
-    "<line x1='40' y1='30' x2='40' y2='96' stroke='#c9d6e2' stroke-width='2.4'/>" +
-    "<text x='16' y='60' fill='#c9d6e2' font-size='10'>h</text>" +
-    "<line x1='34' y1='52' x2='46' y2='52' stroke='#ffb454' stroke-width='1'/>" +
-    "<line x1='34' y1='74' x2='46' y2='74' stroke='#ffb454' stroke-width='1'/>" +
-    "<line x1='50' y1='30' x2='50' y2='96' stroke='#ffb454' stroke-width='.8' stroke-dasharray='2 3'/>" +
-    "<line x1='47' y1='30' x2='53' y2='30' stroke='#ffb454' stroke-width='1'/>" +
-    "<line x1='47' y1='96' x2='53' y2='96' stroke='#ffb454' stroke-width='1'/>" +
-    "<text x='58' y='60' fill='#ffb454' font-size='9'>N divisiones</text>" +
-    "<text x='58' y='71' fill='#8a6430' font-size='8'>(retícula vertical)</text>" +
-    "<text x='104' y='24' fill='#5ad0c0' font-size='8'>lejos \u2192 menos divisiones</text>" +
-    "</svg>";
-  const SVG_ZBR =
-    "<svg viewBox='0 0 240 132' class='rsvg'>" +
-    "<line x1='20' y1='66' x2='222' y2='66' stroke='#4a5b6b' stroke-width='1' stroke-dasharray='5 4'/>" +
-    "<text x='150' y='60' fill='#6f8498' font-size='9'>LOS</text>" +
-    "<circle cx='60' cy='66' r='3' fill='#ffb454'/>" +
-    "<line x1='60' y1='66' x2='104' y2='30' stroke='#ffb454' stroke-width='2'/><path d='M104,30 l-9,2 l3,6 z' fill='#ffb454'/>" +
-    "<text x='60' y='24' fill='#ffb454' font-size='9'>So (propio)</text>" +
-    "<line x1='60' y1='66' x2='104' y2='66' stroke='#8a6430' stroke-width='1' stroke-dasharray='3 3'/>" +
-    "<line x1='104' y1='66' x2='104' y2='30' stroke='#ffb454' stroke-width='1.4'/>" +
-    "<text x='108' y='50' fill='#ffb454' font-size='9'>SoALOS</text>" +
-    "<rect x='150' y='66' width='7' height='7' fill='none' stroke='#c9d6e2'/><text x='150' y='63' fill='#c9d6e2' font-size='9'>B</text>" +
-    "<line x1='157' y1='66' x2='201' y2='102' stroke='#c9d6e2' stroke-width='2'/><path d='M201,102 l-3,-8 l-6,3 z' fill='#c9d6e2'/>" +
-    "<text x='170' y='118' fill='#c9d6e2' font-size='9'>St (blanco)</text>" +
-    "<line x1='157' y1='66' x2='201' y2='66' stroke='#4a5b6b' stroke-width='1' stroke-dasharray='3 3'/>" +
-    "<line x1='201' y1='66' x2='201' y2='102' stroke='#c9d6e2' stroke-width='1.4'/>" +
-    "<text x='176' y='84' fill='#c9d6e2' font-size='9'>StALOS</text>" +
-    "<text x='150' y='24' fill='#5ad0c0' font-size='9'>iguales \u2192 \u1e02 = 0</text>" +
-    "</svg>";
-  const SVG_EKEL =
-    "<svg viewBox='0 0 240 156' class='rsvg'>" +
-    "<text x='62' y='13' fill='#6f8498' font-size='9' text-anchor='middle'>TRAMO 1</text>" +
-    "<text x='182' y='13' fill='#6f8498' font-size='9' text-anchor='middle'>TRAMO 2</text>" +
-    "<rect x='58' y='24' width='8' height='8' fill='none' stroke='#c9d6e2' stroke-width='1.3'/>" +
-    "<line x1='62' y1='32' x2='62' y2='112' stroke='#4a5b6b' stroke-width='1' stroke-dasharray='5 4'/>" +
-    "<circle cx='62' cy='116' r='3' fill='#ffb454'/>" +
-    "<path d='M62,58 A15,15 0 0 1 74,70' fill='none' stroke='#5ad0c0' stroke-width='1.5'/>" +
-    "<path d='M74,70 l-7,-2 l2,7 z' fill='#5ad0c0'/>" +
-    "<text x='80' y='60' fill='#5ad0c0' font-size='8'>SoALOS dcha</text>" +
-    "<line x1='62' y1='100' x2='30' y2='100' stroke='#ffb454' stroke-width='2'/>" +
-    "<path d='M30,100 l8,-3 l0,6 z' fill='#ffb454'/>" +
-    "<text x='4' y='114' fill='#ffb454' font-size='7'>te mueves izq</text>" +
-    "<rect x='178' y='24' width='8' height='8' fill='none' stroke='#c9d6e2' stroke-width='1.3'/>" +
-    "<line x1='182' y1='32' x2='182' y2='112' stroke='#4a5b6b' stroke-width='1' stroke-dasharray='5 4'/>" +
-    "<circle cx='182' cy='116' r='3' fill='#ffb454'/>" +
-    "<path d='M182,58 A15,15 0 0 0 170,70' fill='none' stroke='#5ad0c0' stroke-width='1.5'/>" +
-    "<path d='M170,70 l7,-2 l-2,7 z' fill='#5ad0c0'/>" +
-    "<text x='164' y='60' fill='#5ad0c0' font-size='8' text-anchor='end'>SoALOS izq</text>" +
-    "<line x1='182' y1='100' x2='214' y2='100' stroke='#ffb454' stroke-width='2'/>" +
-    "<path d='M214,100 l-8,-3 l0,6 z' fill='#ffb454'/>" +
-    "<text x='186' y='114' fill='#ffb454' font-size='7'>te mueves dcha</text>" +
-    "<text x='120' y='136' fill='#8a9bb0' font-size='7' text-anchor='middle'>tu movimiento hace girar la demora al lado contrario</text>" +
-    "<text x='120' y='148' fill='#8a9bb0' font-size='7' text-anchor='middle'>el del blanco, hacia su propio lado</text>" +
-    "</svg>";
+  TMA.svgComponentes = (v, beta, destaca, vAlos, vIlos) => {
+    const nf = x => (Math.round(x * 100) / 100).toString().replace(".", ",");
+    const W = 240, H = beta > 90 ? 392 : 344, X0 = 58, Y0 = 232;   /* LOS vertical: propio abajo, contacto arriba */
+    const rad = beta * Math.PI / 180, sb = Math.sin(rad), cb = Math.cos(rad);
+    let L = 190;
+    if (sb > 0.02) L = Math.min(L, 168 / sb);
+    if (cb > 0.02) L = Math.min(L, (Y0 - 30) / cb);
+    if (cb < -0.02) L = Math.min(L, (H - 52 - Y0) / (-cb));
+    const tx = X0 + L * sb, ty = Y0 - L * cb, obt = beta > 90;
+    const xAl = X0 + L * sb, yIl = Y0 - L * cb;                    /* componentes desde el mismo origen */
+    const BLANCO = "#eef3f8", C_IL = "#ffb454", C_AL = "#5ad0c0";  /* V blanca · radial ámbar · lateral azul */
+    const gIl = 2.1, gAl = 2.1;   /* iguales entre sí y más finas que V */
+    const ROT = [];
+    const T = (x, y, anchor, fs, fill, txt) => { ROT.push({ x: +x, y: +y, a: anchor, fs: fs, c: fill, t: txt }); return ""; };
+    const punta = TMA._punta;
+    let g = "<svg viewBox='0 0 " + W + " " + H + "' class='rsvg'>";
+    /* línea de demora */
+    g += "<line x1='" + X0 + "' y1='" + (H - 16) + "' x2='" + X0 + "' y2='22' stroke='#4a5b6b' stroke-width='1.2' stroke-dasharray='6 5'/>";
+    g += "<path d='M" + X0 + ",14 l-4,9 l8,0 z' fill='#4a5b6b'/>";
+    g += T(X0 + 9, 18, "start", 8, "#6f8498", "LOS \u2192 contacto");
+    /* guías punteadas que cierran el rectángulo */
+    g += "<line x1='" + X0 + "' y1='" + yIl.toFixed(1) + "' x2='" + tx.toFixed(1) + "' y2='" + ty.toFixed(1) + "' stroke='#3d4c5c' stroke-width='0.9' stroke-dasharray='3 3'/>";
+    g += "<line x1='" + xAl.toFixed(1) + "' y1='" + Y0 + "' x2='" + tx.toFixed(1) + "' y2='" + ty.toFixed(1) + "' stroke='#3d4c5c' stroke-width='0.9' stroke-dasharray='3 3'/>";
+    /* componente radial (sobre la LOS) */
+    g += "<line x1='" + X0 + "' y1='" + Y0 + "' x2='" + X0 + "' y2='" + yIl.toFixed(1) + "' stroke='" + C_IL + "' stroke-width='" + gIl + "'/>";
+    g += punta(X0, yIl, cb >= 0 ? -Math.PI / 2 : Math.PI / 2, C_IL, 9);
+    /* componente lateral (perpendicular) */
+    g += "<line x1='" + X0 + "' y1='" + Y0 + "' x2='" + xAl.toFixed(1) + "' y2='" + Y0 + "' stroke='" + C_AL + "' stroke-width='" + gAl + "'/>";
+    g += punta(xAl, Y0, 0, C_AL, 9);
+    /* ángulo recto entre las dos componentes */
+    const q = cb >= 0 ? -9 : 9;
+    g += "<path d='M" + (X0 + 9) + "," + Y0 + " L" + (X0 + 9) + "," + (Y0 + q) + " L" + X0 + "," + (Y0 + q) + "' fill='none' stroke='#6f8498' stroke-width='0.9'/>";
+    /* vector velocidad absoluto, en blanco */
+    g += "<line x1='" + X0 + "' y1='" + Y0 + "' x2='" + tx.toFixed(1) + "' y2='" + ty.toFixed(1) + "' stroke='" + BLANCO + "' stroke-width='3.2'/>";
+    g += punta(tx, ty, Math.atan2(ty - Y0, tx - X0), BLANCO, 12.5);
+    g += "<circle cx='" + X0 + "' cy='" + Y0 + "' r='3.6' fill='" + BLANCO + "'/>";
+    g += T(X0 - 8, (Y0 + (obt ? -9 : 15)).toFixed(0), "end", 8, "#8a9bb0", "propio");
+    g += T(tx + 9, (ty + (obt ? 15 : -11)).toFixed(0), "start", 10, BLANCO, "V " + nf(v) + " kn");
+    /* arco de beta */
+    const R1 = 34;
+    g += "<path d='M" + X0 + "," + (Y0 - R1) + " A" + R1 + "," + R1 + " 0 0 1 " +
+         (X0 + R1 * sb).toFixed(1) + "," + (Y0 - R1 * cb).toFixed(1) + "' fill='none' stroke='#9fb3c8' stroke-width='1.4'/>";
+    const bx = X0 + (R1 + 18) * Math.sin(rad / 2), by = Y0 - (R1 + 18) * Math.cos(rad / 2);
+    g += T(bx, by.toFixed(0), "middle", 10, "#9fb3c8", "\u03b2 " + beta + "\u00b0");
+    if (obt) {
+      const R2 = 20, a2 = Math.PI - rad;
+      g += "<path d='M" + X0 + "," + (Y0 + R2) + " A" + R2 + "," + R2 + " 0 0 0 " +
+           (X0 + R2 * Math.sin(a2)).toFixed(1) + "," + (Y0 + R2 * Math.cos(a2)).toFixed(1) + "' fill='none' stroke='#7f8fa2' stroke-width='1.1'/>";
+      g += T(W - 6, 34, "end", 8, "#7f8fa2", "180\u2212\u03b2 = " + (180 - beta) + "\u00b0");
+    }
+    /* rótulos de las componentes, junto a su punta si el segmento es corto */
+    const cortaIl = Math.abs(L * cb) < 70, cortaAl = L * sb < 70;
+    g += T(cortaIl ? X0 - 8 : X0 - 8, (cortaIl ? yIl + (cb >= 0 ? -10 : 16) : (Y0 + yIl) / 2).toFixed(0),
+           "end", 10, C_IL, "ILOS " + nf(vIlos));
+    g += T(cortaAl ? xAl + 10 : (X0 + xAl) / 2, (cortaAl ? Y0 + 13 : Y0 + 17).toFixed(0),
+           cortaAl ? "start" : "middle", 10, C_AL, "ALOS " + nf(vAlos));
+    g += T(120, H - 18, "middle", 8, "#8a9bb0", "radial sobre la LOS \u00b7 lateral \u22a5 LOS");
+    g += T(120, H - 6, "middle", 7, "#6f8498",
+           obt ? "\u03b2 > 90\u00b0: la radial baja \u2192 el contacto se aleja" : "\u03b2 < 90\u00b0: la radial sube \u2192 el contacto se acerca");
+    const TRZ = [[X0, Y0, tx, ty], [X0, Y0, X0, yIl], [X0, Y0, xAl, Y0]];
+    return g + TMA._rotulos(ROT, W, H, TRZ) + "</svg>";
+  };
 
+  TMA._punta = (x, y, ang, col, sz) => {
+    /* triángulo limpio: vértice en la punta y base perpendicular al trazo */
+    const h = 0.36, s2 = sz * 0.92;
+    const x1 = x - s2 * Math.cos(ang - h), y1 = y - s2 * Math.sin(ang - h);
+    const x2 = x - s2 * Math.cos(ang + h), y2 = y - s2 * Math.sin(ang + h);
+    return "<path d='M" + x.toFixed(1) + "," + y.toFixed(1) + " L" + x1.toFixed(1) + "," + y1.toFixed(1) +
+           " L" + x2.toFixed(1) + "," + y2.toFixed(1) + " Z' fill='" + col + "'/>";
+  };
 
+  TMA._rotulos = (L, W, H, trazos) => {
+    const ancho = o => o.t.length * o.fs * 0.52;
+    /* 1) ajuste horizontal PRIMERO (si no, mueve el rótulo después de resolver) */
+    L.forEach(o => {
+      const w = ancho(o);
+      if (o.a === "end" && o.x - w < 3) { o.a = "start"; o.x = 3; }
+      if (o.a === "start" && o.x + w > W - 3) { o.a = "end"; o.x = W - 3; }
+      if (o.a === "middle") o.x = Math.max(3 + w / 2, Math.min(W - 3 - w / 2, o.x));
+    });
+    const ext = o => { const w = ancho(o); return o.a === "end" ? [o.x - w, o.x] : o.a === "middle" ? [o.x - w / 2, o.x + w / 2] : [o.x, o.x + w]; };
+    /* 2) separación vertical con el desplazamiento justo */
+    for (let paso = 0; paso < 14; paso++) {
+      let limpio = true;
+      for (let i = 0; i < L.length; i++) for (let j = i + 1; j < L.length; j++) {
+        const [a0, a1] = ext(L[i]), [b0, b1] = ext(L[j]);
+        if (Math.abs(L[i].y - L[j].y) < 11.5 && a0 < b1 - 1 && b0 < a1 - 1) {
+          limpio = false;
+          const dy = L[j].y - L[i].y, falta = 12 - Math.abs(dy), dir = dy >= 0 ? 1 : -1;
+          let y = L[j].y + dir * falta;
+          if (y > H - 4 || y < 10) y = L[j].y - dir * falta;
+          L[j].y = Math.max(10, Math.min(H - 4, y));
+        }
+      }
+      if (limpio) break;
+    }
+    /* 3) apartar rótulos que pisen un trazo del dibujo */
+    if (trazos && trazos.length) {
+      const pisa = o => {
+        const [a0, a1] = ext(o), t0 = o.y - o.fs * 0.8, t1 = o.y + o.fs * 0.25;
+        return trazos.some(([x1, y1, x2, y2]) => {
+          for (let i = 0; i <= 20; i++) {
+            const f = i / 20, x = x1 + (x2 - x1) * f, y = y1 + (y2 - y1) * f;
+            if (x > a0 - 1 && x < a1 + 1 && y > t0 - 1 && y < t1 + 1) return true;
+          }
+          return false;
+        });
+      };
+      const solapaTexto = o => L.some(q => q !== o && Math.abs(q.y - o.y) < 11 &&
+        ext(q)[0] < ext(o)[1] - 1 && ext(o)[0] < ext(q)[1] - 1);
+      L.forEach(o => {
+        if (!pisa(o)) return;
+        const cand = [];
+        for (const dy of [-13, 13, -26, 26, -40, 40, -54, 54]) for (const dx of [0, -20, 20, -38, 38]) cand.push([dx, dy]);
+        for (const dx of [-24, 24, -44, 44]) cand.push([dx, 0]);
+        const ox = o.x, oy = o.y;
+        for (const [dx, dy] of cand) {
+          const w = ancho(o);
+          o.y = oy + dy;
+          o.x = Math.max(o.a === "end" ? w + 3 : o.a === "middle" ? w / 2 + 3 : 3,
+                Math.min(o.a === "end" ? W - 3 : o.a === "middle" ? W - 3 - w / 2 : W - 3 - w, ox + dx));
+          if (o.y - o.fs * 0.8 > 2 && o.y < H - 3 && !pisa(o) && !solapaTexto(o)) return;
+        }
+        o.x = ox; o.y = oy;
+      });
+    }
+    return L.map(o => "<text x='" + o.x.toFixed(0) + "' y='" + o.y.toFixed(0) + "' fill='" + o.c +
+      "' font-size='" + o.fs + "'" + (o.a === "start" ? "" : " text-anchor='" + o.a + "'") + ">" + o.t + "</text>").join("");
+  };
 
-  const SVG_POINT =
-    "<svg viewBox='0 0 240 132' class='rsvg'>" +
-    "<line x1='20' y1='66' x2='222' y2='66' stroke='#4a5b6b' stroke-width='1' stroke-dasharray='5 4'/>" +
-    "<text x='120' y='60' fill='#6f8498' font-size='9'>LOS</text>" +
-    "<circle cx='52' cy='66' r='3' fill='#ffb454'/>" +
-    "<line x1='52' y1='66' x2='96' y2='66' stroke='#ffb454' stroke-width='2'/><path d='M96,66 l-8,-3 l0,6 z' fill='#ffb454'/>" +
-    "<text x='40' y='82' fill='#ffb454' font-size='9'>So proa al contacto</text>" +
-    "<text x='40' y='94' fill='#8a6430' font-size='8'>SoALOS = 0</text>" +
-    "<rect x='168' y='62' width='7' height='7' fill='none' stroke='#c9d6e2'/><text x='168' y='58' fill='#c9d6e2' font-size='9'>B</text>" +
-    "<line x1='172' y1='66' x2='196' y2='96' stroke='#c9d6e2' stroke-width='2'/><path d='M196,96 l-1,-9 l-7,4 z' fill='#c9d6e2'/>" +
-    "<line x1='172' y1='66' x2='196' y2='66' stroke='#4a5b6b' stroke-width='1' stroke-dasharray='3 3'/>" +
-    "<line x1='196' y1='66' x2='196' y2='96' stroke='#c9d6e2' stroke-width='1.4'/>" +
-    "<text x='200' y='84' fill='#c9d6e2' font-size='9'>StALOS</text>" +
-    "<path d='M159,66 A13,13 0 0 0 180.1,76.2' fill='none' stroke='#5ad0c0' stroke-width='1.3'/>" +
-    "<text x='134' y='88' fill='#5ad0c0' font-size='9'>\u03b2 > 90\u00b0</text>" +
-    "<text x='120' y='20' fill='#5ad0c0' font-size='8' text-anchor='middle'>el giro de demora lo produce solo el blanco</text>" +
-    "<text x='120' y='120' fill='#5ad0c0' font-size='8' text-anchor='middle'>\u1e02\u00b7R = StALOS \u2192 St = \u1e02\u00b7R / sen \u03b2</text>" +
-    "</svg>";
-  const SVG_TSR =
-    "<svg viewBox='0 0 240 155' class='rsvg'>" +
-    "<path d='M28,128 l-5,-10 l10,0 z' fill='#ffb454'/>" +
-    "<text x='6' y='142' fill='#ffb454' font-size='8'>propio</text>" +
-    "<line x1='28' y1='128' x2='185' y2='38' stroke='#4a5b6b' stroke-width='1' stroke-dasharray='5 4'/>" +
-    "<line x1='28' y1='128' x2='205' y2='78' stroke='#4a5b6b' stroke-width='1' stroke-dasharray='5 4'/>" +
-    "<rect x='181' y='34' width='8' height='8' fill='none' stroke='#c9d6e2' stroke-width='1.4'/>" +
-    "<rect x='201' y='74' width='8' height='8' fill='none' stroke='#c9d6e2' stroke-width='1.4'/>" +
-    "<text x='150' y='28' fill='#6f8498' font-size='8'>escolta 1</text>" +
-    "<text x='170' y='94' fill='#6f8498' font-size='8'>escolta 2</text>" +
-    "<line x1='185' y1='38' x2='205' y2='78' stroke='#c9d6e2' stroke-width='2'/>" +
-    "<text x='210' y='56' fill='#c9d6e2' font-size='9'>S</text>" +
-    "<text x='204' y='66' fill='#8a9bb0' font-size='6'>= TSR \u00d7 1,6</text>" +
-    "<path d='M74.2,114.9 A48,48 0 0 0 69.7,104.1' fill='none' stroke='#5ad0c0' stroke-width='1.4'/>" +
-    "<text x='84' y='109' fill='#5ad0c0' font-size='9'>\u0394B</text>" +
-    "<text x='96' y='76' fill='#ffb454' font-size='9'>R</text>" +
-    "<text x='120' y='150' fill='#5ad0c0' font-size='8' text-anchor='middle'>R = 60 \u00b7 S / \u0394B</text>" +
-    "</svg>";
+  TMA.svgLA = (co, d, la, banda) => {
+    const W = 240, M = 40, rd = a => a * Math.PI / 180;
+    const LN = 62, LCO = 100, LD = 118;
+    const er0 = ((d - co + 360) % 360) <= 180, bis = co + (er0 ? la / 2 : -la / 2);
+    const P = [[0, LN], [co, LCO], [d, LD], [bis, 92]].map(([a, l]) => [l * Math.sin(rd(a)), -l * Math.cos(rd(a))]);
+    let x0 = 0, x1 = 0, y0 = 0, y1 = 0;
+    P.forEach(([x, y]) => { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); });
+    const k = Math.min(1, (W - 2 * M) / Math.max(x1 - x0, 1));
+    const H = Math.round((y1 - y0) * k + 2 * M + 30);
+    const X0 = M - x0 * k, Y0 = M - y0 * k;
+    const pt = (a, l) => [X0 + l * k * Math.sin(rd(a)), Y0 - l * k * Math.cos(rd(a))];
+    const ROT = [];
+    const T = (x, y, anchor, fs, fill, txt) => { ROT.push({ x: +x, y: +y, a: anchor, fs: fs, c: fill, t: txt }); return ""; };
+    const arco = (r, a1, a2, col, gw) => {
+      const [ax, ay] = pt(a1, r / k), [bx2, by2] = pt(a2, r / k);
+      let dif = (a2 - a1 + 360) % 360;
+      return "<path d='M" + ax.toFixed(1) + "," + ay.toFixed(1) + " A" + r + "," + r + " 0 " +
+             (dif > 180 ? 1 : 0) + " 1 " + bx2.toFixed(1) + "," + by2.toFixed(1) +
+             "' fill='none' stroke='" + col + "' stroke-width='" + gw + "'/>";
+    };
+    const [nx, ny] = pt(0, LN), [cx2, cy2] = pt(co, LCO), [dx, dy] = pt(d, LD);
+    let g = "<svg viewBox='0 0 " + W + " " + H + "' class='rsvg'>";
+    g += "<line x1='" + X0.toFixed(1) + "' y1='" + Y0.toFixed(1) + "' x2='" + nx.toFixed(1) + "' y2='" + ny.toFixed(1) + "' stroke='#4a5b6b' stroke-width='1' stroke-dasharray='4 4'/>";
+    g += T(nx, ny - 7, "middle", 9, "#6f8498", "N");
+    /* demora al contacto */
+    g += "<line x1='" + X0.toFixed(1) + "' y1='" + Y0.toFixed(1) + "' x2='" + dx.toFixed(1) + "' y2='" + dy.toFixed(1) + "' stroke='#4a5b6b' stroke-width='1.2' stroke-dasharray='6 4'/>";
+    g += "<rect x='" + (dx - 4).toFixed(1) + "' y='" + (dy - 4).toFixed(1) + "' width='8' height='8' fill='none' stroke='#c9d6e2' stroke-width='1.4'/>";
+    const pd = er0 ? d + 90 : d - 90, ox = 15 * Math.sin(rd(pd)), oy = -15 * Math.cos(rd(pd));
+    g += T(dx + ox, dy + oy + 3, ox >= 0 ? "start" : "end", 8, "#8a9bb0", "contacto \u00b7 D " + ("00" + Math.round(d)).slice(-3));
+    /* rumbo propio, en blanco */
+    g += "<line x1='" + X0.toFixed(1) + "' y1='" + Y0.toFixed(1) + "' x2='" + cx2.toFixed(1) + "' y2='" + cy2.toFixed(1) + "' stroke='#eef3f8' stroke-width='2.6'/>";
+    const ah = Math.atan2(cy2 - Y0, cx2 - X0);
+    g += "<path d='M" + cx2.toFixed(1) + "," + cy2.toFixed(1) +
+         " l" + (-11 * Math.cos(ah - 0.4)).toFixed(1) + "," + (-11 * Math.sin(ah - 0.4)).toFixed(1) +
+         " l" + (11 * Math.cos(ah - 0.4) - 11 * Math.cos(ah + 0.4)).toFixed(1) + "," +
+                (11 * Math.sin(ah - 0.4) - 11 * Math.sin(ah + 0.4)).toFixed(1) + " z' fill='#eef3f8'/>";
+    const pc = er0 ? co - 90 : co + 90, cxo = 15 * Math.sin(rd(pc)), cyo = -15 * Math.cos(rd(pc));
+    g += T(cx2 + cxo, cy2 + cyo + 3, cxo >= 0 ? "start" : "end", 9, "#eef3f8", "proa \u00b7 Co " + ("00" + Math.round(co)).slice(-3));
+    g += "<circle cx='" + X0.toFixed(1) + "' cy='" + Y0.toFixed(1) + "' r='3.4' fill='#eef3f8'/>";
+    /* arcos: rumbo desde el Norte y marcación entre proa y demora */
+    g += arco(26, 0, co, "#6f8498", 1.1);
+    const er = ((d - co + 360) % 360) <= 180;
+    g += arco(52, er ? co : d, er ? d : co, "#ffb454", 1.8);
+    const bn = ((bis % 360) + 360) % 360, cercaN = Math.min(bn, 360 - bn) < 24;
+    const [lx, ly] = pt(bis, (la < 30 || cercaN ? 40 : 74) / k);
+    g += T(lx, ly, "middle", 11, "#ffb454", "LA " + la + "\u00b0 " + banda);
+    g += T(120, H - 20, "middle", 8, "#8a9bb0", "LA = D \u2212 Co por el camino corto");
+    g += T(120, H - 8, "middle", 8, "#6f8498", "banda: el lado por el que lo ves");
+    const TRZ = [[X0, Y0, cx2, cy2]];
+    return g + TMA._rotulos(ROT, W, H, TRZ) + "</svg>";
+  };
 
-  const SVG_LA =
-    "<svg viewBox='0 0 240 158' class='rsvg'>" +
-    "<line x1='110' y1='110' x2='110' y2='28' stroke='#4a5b6b' stroke-width='1' stroke-dasharray='4 4'/>" +
-    "<text x='104' y='22' fill='#6f8498' font-size='9'>N</text>" +
-    "<line x1='110' y1='110' x2='145' y2='49' stroke='#ffb454' stroke-width='2'/>" +
-    "<path d='M145,49 l-9,0 l4,7 z' fill='#ffb454'/>" +
-    "<text x='149' y='45' fill='#ffb454' font-size='9'>Co</text>" +
-    "<circle cx='110' cy='110' r='3' fill='#ffb454'/>" +
-    "<text x='70' y='124' fill='#ffb454' font-size='8'>propio</text>" +
-    "<line x1='110' y1='110' x2='194' y2='125' stroke='#4a5b6b' stroke-width='1' stroke-dasharray='5 4'/>" +
-    "<rect x='191' y='121' width='8' height='8' fill='none' stroke='#c9d6e2' stroke-width='1.4'/>" +
-    "<text x='166' y='144' fill='#6f8498' font-size='8'>contacto</text>" +
-    "<text x='124' y='131' fill='#6f8498' font-size='8'>demora (D)</text>" +
-    "<path d='M110,70 A40,40 0 0 1 130,75.4' fill='none' stroke='#5ad0c0' stroke-width='1.2'/>" +
-    "<text x='115' y='62' fill='#5ad0c0' font-size='8'>Co desde N</text>" +
-    "<path d='M137.5,62.4 A55,55 0 0 1 164.2,119.6' fill='none' stroke='#5ad0c0' stroke-width='1.6'/>" +
-    "<text x='169' y='90' fill='#5ad0c0' font-size='10'>LA</text>" +
-    "<text x='169' y='101' fill='#8a9bb0' font-size='7'>(marcaci\u00f3n)</text>" +
-    "<text x='120' y='154' fill='#5ad0c0' font-size='8' text-anchor='middle'>LA = D \u2212 Co \u00b7 Er si cae a estribor</text>" +
-    "</svg>";
+  TMA.svgDT = (Ryds, beta, dtYds) => {
+    const W = 240, M = 38, rd = a => a * Math.PI / 180;
+    const b = rd(beta), RL = 200;
+    /* propio en (0,0); contacto arriba a RL; derrota del blanco formando β con la LOS hacia mí */
+    const ux = Math.sin(b), uy = Math.cos(b);              /* dirección de su derrota */
+    const C = [0, -RL], t = RL * Math.cos(b);
+    const F = [C[0] + t * ux, C[1] + t * uy];              /* pie de la perpendicular */
+    const T1 = [C[0] - 70 * ux, C[1] - 70 * uy], T2 = [C[0] + (t + 60) * ux, C[1] + (t + 60) * uy];
+    const VT = [C[0] + 78 * ux, C[1] + 78 * uy];           /* vector absoluto del contacto */
+    const pts = [[0, 0], C, F, T1, T2, VT];
+    let x0 = 0, x1 = 0, y0 = 0, y1 = 0;
+    pts.forEach(([x, y]) => { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); });
+    const k = Math.min(1, (W - 2 * M) / Math.max(x1 - x0, 1), 300 / Math.max(y1 - y0, 1));
+    const H = Math.round((y1 - y0) * k + 2 * M + 18);
+    const OX = M - x0 * k, OY = M - y0 * k;
+    const P = p => [OX + p[0] * k, OY + p[1] * k];
+    const [ox, oy] = P([0, 0]), [cx, cy] = P(C), [fx, fy] = P(F);
+    const [t1x, t1y] = P(T1), [t2x, t2y] = P(T2), [vx, vy] = P(VT);
+    const ROT = [];
+    const T = (x, y, a, fs, c, t2) => { ROT.push({ x: +x, y: +y, a: a, fs: fs, c: c, t: t2 }); return ""; };
+    let g = "<svg viewBox='0 0 " + W + " " + H + "' class='rsvg'>";
+    /* demora (LOS) propio → contacto */
+    g += "<line x1='" + ox.toFixed(1) + "' y1='" + oy.toFixed(1) + "' x2='" + cx.toFixed(1) + "' y2='" + cy.toFixed(1) + "' stroke='#4a5b6b' stroke-width='1.2' stroke-dasharray='6 5'/>";
+    T(ox - 8, (oy + cy) / 2, "end", 9, "#8a9bb0", "R " + (Ryds / 1000).toString().replace(".", ",") + " Kyds");
+    /* derrota del blanco: línea, sin flecha */
+    g += "<line x1='" + t1x.toFixed(1) + "' y1='" + t1y.toFixed(1) + "' x2='" + t2x.toFixed(1) + "' y2='" + t2y.toFixed(1) + "' stroke='#6f8498' stroke-width='1.3'/>";
+    T(t2x + 7, t2y + 12, "start", 8, "#6f8498", "derrota");
+    /* vector absoluto del contacto, blanco y más grueso que su derrota */
+    g += "<line x1='" + cx.toFixed(1) + "' y1='" + cy.toFixed(1) + "' x2='" + vx.toFixed(1) + "' y2='" + vy.toFixed(1) + "' stroke='#eef3f8' stroke-width='3'/>";
+    g += TMA._punta(vx, vy, Math.atan2(vy - cy, vx - cx), "#eef3f8", 11);
+    T(vx + 7, vy + 3, "start", 9, "#eef3f8", "St");
+    /* DT: perpendicular de mi posición a su derrota */
+    g += "<line x1='" + ox.toFixed(1) + "' y1='" + oy.toFixed(1) + "' x2='" + fx.toFixed(1) + "' y2='" + fy.toFixed(1) + "' stroke='#ffb454' stroke-width='2.4'/>";
+    g += TMA._punta(fx, fy, Math.atan2(fy - oy, fx - ox), "#ffb454", 10);
+    const pdt = Math.atan2(fy - oy, fx - ox) - Math.PI / 2;
+    T((ox + fx) / 2 + 14 * Math.cos(pdt), (oy + fy) / 2 + 14 * Math.sin(pdt) + 3, "middle", 10, "#ffb454", "DT " + Math.round(dtYds).toLocaleString("es"));
+    /* marca de ángulo recto en el pie */
+    const pu = Math.atan2(fy - oy, fx - ox), q = 8;
+    g += "<path d='M" + (fx - q * Math.cos(pu)).toFixed(1) + "," + (fy - q * Math.sin(pu)).toFixed(1) +
+         " l" + (-q * ux * k).toFixed(1) + "," + (-q * uy * k).toFixed(1) +
+         " l" + (q * Math.cos(pu)).toFixed(1) + "," + (q * Math.sin(pu)).toFixed(1) + "' fill='none' stroke='#8a9bb0' stroke-width='0.9'/>";
+    /* arco de β en el contacto, entre la LOS hacia mí y su derrota */
+    const a1 = Math.atan2(oy - cy, ox - cx), a2 = Math.atan2(vy - cy, vx - cx), R2 = 30;
+    g += "<path d='M" + (cx + R2 * Math.cos(a1)).toFixed(1) + "," + (cy + R2 * Math.sin(a1)).toFixed(1) +
+         " A" + R2 + "," + R2 + " 0 0 " + (((a2 - a1 + 2 * Math.PI) % (2 * Math.PI)) < Math.PI ? 1 : 0) + " " +
+         (cx + R2 * Math.cos(a2)).toFixed(1) + "," + (cy + R2 * Math.sin(a2)).toFixed(1) + "' fill='none' stroke='#9fb3c8' stroke-width='1.4'/>";
+    const dif = (a2 - a1 + 2 * Math.PI) % (2 * Math.PI);
+    const am = dif <= Math.PI ? a1 + dif / 2 : a1 - (2 * Math.PI - dif) / 2;
+    T(cx + 48 * Math.cos(am), cy + 48 * Math.sin(am), "middle", 10, "#9fb3c8", "\u03b2 " + beta + "\u00b0");
+    /* unidades */
+    g += "<circle cx='" + ox.toFixed(1) + "' cy='" + oy.toFixed(1) + "' r='3.4' fill='#eef3f8'/>";
+    T(ox - 8, oy + 12, "end", 8, "#8a9bb0", "propio");
+    g += "<rect x='" + (cx - 4).toFixed(1) + "' y='" + (cy - 4).toFixed(1) + "' width='8' height='8' fill='none' stroke='#c9d6e2' stroke-width='1.4'/>";
+    T(cx - 8, cy - 6, "end", 8, "#8a9bb0", "contacto");
+    T(120, H - 6, "middle", 8, "#8a9bb0", "DT = R \u00b7 sen \u03b2 \u00b7 separaci\u00f3n perpendicular a su derrota");
+    const TRZ = [[t1x, t1y, t2x, t2y], [cx, cy, vx, vy], [ox, oy, fx, fy]];
+    return g + TMA._rotulos(ROT, W, H, TRZ) + "</svg>";
+  };
+
+  TMA.svgRitmo = (sr, bdot, Rnm) => {
+    const W = 240, H = 320, X0 = 74, Y0 = 268, RL = 196, EX = 16;
+    const rd = a => a * Math.PI / 180;
+    const C1 = [X0, Y0 - RL], C2 = [X0 + RL * Math.sin(rd(EX)), Y0 - RL * Math.cos(rd(EX))];
+    const ROT = [], T = (x, y, a, fs, c, t) => { ROT.push({ x: +x, y: +y, a: a, fs: fs, c: c, t: t }); return ""; };
+    let g = "<svg viewBox='0 0 " + W + " " + H + "' class='rsvg'>";
+    g += "<line x1='" + X0 + "' y1='" + Y0 + "' x2='" + C1[0].toFixed(1) + "' y2='" + C1[1].toFixed(1) + "' stroke='#4a5b6b' stroke-width='1.2' stroke-dasharray='6 5'/>";
+    g += "<line x1='" + X0 + "' y1='" + Y0 + "' x2='" + C2[0].toFixed(1) + "' y2='" + C2[1].toFixed(1) + "' stroke='#4a5b6b' stroke-width='1' stroke-dasharray='3 4'/>";
+    T(X0 - 8, Y0 - RL / 2, "end", 10, "#8a9bb0", "R " + Rnm.toFixed(2).replace(".", ",") + " NM");
+    g += "<line x1='" + C1[0].toFixed(1) + "' y1='" + C1[1].toFixed(1) + "' x2='" + C2[0].toFixed(1) + "' y2='" + C2[1].toFixed(1) + "' stroke='#5ad0c0' stroke-width='2.6'/>";
+    g += TMA._punta(C2[0], C2[1], Math.atan2(C2[1] - C1[1], C2[0] - C1[0]), "#5ad0c0", 10);
+    T((C1[0] + C2[0]) / 2, C1[1] - 12, "middle", 10, "#5ad0c0", "SrALOS " + String(sr).replace(".", ",") + " kn");
+    const R2 = 62;
+    g += "<path d='M" + X0 + "," + (Y0 - R2) + " A" + R2 + "," + R2 + " 0 0 1 " +
+         (X0 + R2 * Math.sin(rd(EX))).toFixed(1) + "," + (Y0 - R2 * Math.cos(rd(EX))).toFixed(1) + "' fill='none' stroke='#ffb454' stroke-width='1.8'/>";
+    T(X0 + 26, Y0 - R2 - 8, "start", 10, "#ffb454", "\u1e02 " + String(bdot).replace(".", ",") + "\u00b0/min");
+    g += "<rect x='" + (C1[0] - 4).toFixed(1) + "' y='" + (C1[1] - 4).toFixed(1) + "' width='8' height='8' fill='none' stroke='#c9d6e2' stroke-width='1.4'/>";
+    T(C1[0] - 8, C1[1] - 6, "end", 8, "#8a9bb0", "contacto");
+    g += "<rect x='" + (C2[0] - 4).toFixed(1) + "' y='" + (C2[1] - 4).toFixed(1) + "' width='8' height='8' fill='none' stroke='#6f8498' stroke-width='1'/>";
+    T(C2[0] + 7, C2[1] - 4, "start", 8, "#6f8498", "1 min despu\u00e9s");
+    g += "<circle cx='" + X0 + "' cy='" + Y0 + "' r='3.4' fill='#eef3f8'/>";
+    T(X0 - 8, Y0 + 13, "end", 8, "#8a9bb0", "propio");
+    T(120, H - 20, "middle", 8, "#8a9bb0", "1 kn de lateral a 2.000 yds \u2192 1\u00b0/min");
+    T(120, H - 8, "middle", 7, "#6f8498", "\u00e1ngulo dibujado exagerado para que se vea");
+    const TRZ = [[C1[0], C1[1], C2[0], C2[1]]];
+    return g + TMA._rotulos(ROT, W, H, TRZ) + "</svg>";
+  };
+
+  TMA.svgPointing = (Rnm, bdot, beta, st, stalos) => {
+    const W = 240, M = 40, rd = a => a * Math.PI / 180, b = rd(beta);
+    const RL = 150, LSO = 66, LST = 84;
+    /* propio en (0,0); contacto arriba; en el contacto, la LOS hacia mí apunta hacia abajo */
+    const C = [0, -RL];
+    const ux = Math.sin(b), uy = Math.cos(b);          /* rumbo del blanco: β desde la LOS hacia mí */
+    const VT = [C[0] + LST * ux, C[1] + LST * uy];
+    const LAT = [C[0] + LST * ux, C[1]];               /* su componente lateral (perpendicular a la LOS) */
+    const SO = [0, -LSO];
+    const pts = [[0, 0], C, VT, LAT, SO, [0, -RL - 24]];
+    let x0 = 0, x1 = 0, y0 = 0, y1 = 0;
+    pts.forEach(([x, y]) => { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); });
+    const k = Math.min(1, (W - 2 * M) / Math.max(x1 - x0, 1));
+    const H = Math.round((y1 - y0) * k + 2 * M + 22);
+    const OX = M - x0 * k, OY = M - y0 * k;
+    const P = p => [OX + p[0] * k, OY + p[1] * k];
+    const [ox, oy] = P([0, 0]), [cx, cy] = P(C), [vx, vy] = P(VT), [lx, ly] = P(LAT), [sx, sy] = P(SO);
+    const ROT = [], T = (x, y, a, fs, c, t) => { ROT.push({ x: +x, y: +y, a: a, fs: fs, c: c, t: t }); return ""; };
+    let g = "<svg viewBox='0 0 " + W + " " + H + "' class='rsvg'>";
+    g += "<line x1='" + ox.toFixed(1) + "' y1='" + (oy + 14).toFixed(1) + "' x2='" + cx.toFixed(1) + "' y2='" + (cy - 22).toFixed(1) + "' stroke='#4a5b6b' stroke-width='1.2' stroke-dasharray='6 5'/>";
+    T(ox - 8, (oy + cy) / 2, "end", 9, "#8a9bb0", "R " + String(Rnm).replace(".", ",") + " NM");
+    /* mi velocidad: proa al contacto, sobre la LOS → mi lateral es cero */
+    g += "<line x1='" + ox.toFixed(1) + "' y1='" + oy.toFixed(1) + "' x2='" + sx.toFixed(1) + "' y2='" + sy.toFixed(1) + "' stroke='#eef3f8' stroke-width='3.2'/>";
+    g += TMA._punta(sx, sy, -Math.PI / 2, "#eef3f8", 12);
+    T(sx + 9, (sy + oy) / 2, "start", 9, "#eef3f8", "So proa al contacto");
+    T(sx + 9, (sy + oy) / 2 + 12, "start", 8, "#ffb454", "SoALOS = 0");
+    /* velocidad del blanco y su componente lateral, que es la que gira la demora */
+    g += "<line x1='" + lx.toFixed(1) + "' y1='" + ly.toFixed(1) + "' x2='" + vx.toFixed(1) + "' y2='" + vy.toFixed(1) + "' stroke='#3d4c5c' stroke-width='0.9' stroke-dasharray='3 3'/>";
+    g += "<line x1='" + cx.toFixed(1) + "' y1='" + cy.toFixed(1) + "' x2='" + vx.toFixed(1) + "' y2='" + vy.toFixed(1) + "' stroke='#eef3f8' stroke-width='3.2'/>";
+    g += TMA._punta(vx, vy, Math.atan2(vy - cy, vx - cx), "#eef3f8", 12);
+    T(vx + 8, vy + 4, "start", 10, "#eef3f8", "St " + st.toFixed(2).replace(".", ",") + " kn");
+    g += "<line x1='" + cx.toFixed(1) + "' y1='" + cy.toFixed(1) + "' x2='" + lx.toFixed(1) + "' y2='" + ly.toFixed(1) + "' stroke='#5ad0c0' stroke-width='2.4'/>";
+    g += TMA._punta(lx, ly, 0, "#5ad0c0", 10);
+    T(lx + 9, ly - 7, "start", 10, "#5ad0c0", "StALOS " + stalos.toFixed(2).replace(".", ",") + " kn");
+    /* arco de β en el contacto, desde la LOS hacia mí */
+    const a1 = Math.atan2(oy - cy, ox - cx), a2 = Math.atan2(vy - cy, vx - cx), R2 = 23;
+    const dif = (a2 - a1 + 2 * Math.PI) % (2 * Math.PI);
+    g += "<path d='M" + (cx + R2 * Math.cos(a1)).toFixed(1) + "," + (cy + R2 * Math.sin(a1)).toFixed(1) +
+         " A" + R2 + "," + R2 + " 0 0 " + (dif <= Math.PI ? 1 : 0) + " " +
+         (cx + R2 * Math.cos(a2)).toFixed(1) + "," + (cy + R2 * Math.sin(a2)).toFixed(1) + "' fill='none' stroke='#9fb3c8' stroke-width='1.4'/>";
+    const am = dif <= Math.PI ? a1 + dif / 2 : a1 - (2 * Math.PI - dif) / 2;
+    T(cx + 38 * Math.cos(am), cy + 38 * Math.sin(am), "middle", 10, "#9fb3c8", "\u03b2 " + beta + "\u00b0");
+    if (beta > 90) T(W - 6, 20, "end", 8, "#7f8fa2", "180\u2212\u03b2 = " + (180 - beta) + "\u00b0");
+    g += "<circle cx='" + ox.toFixed(1) + "' cy='" + oy.toFixed(1) + "' r='3.4' fill='#eef3f8'/>";
+    T(ox - 8, oy + 13, "end", 8, "#8a9bb0", "propio");
+    g += "<rect x='" + (cx - 4).toFixed(1) + "' y='" + (cy - 4).toFixed(1) + "' width='8' height='8' fill='none' stroke='#c9d6e2' stroke-width='1.4'/>";
+    T(cx - 8, cy + 4, "end", 8, "#8a9bb0", "contacto");
+    T(120, H - 20, "middle", 8, "#8a9bb0", "\u1e02 " + String(bdot).replace(".", ",") + "\u00b0/min \u00b7 \u1e02\u00b7R = StALOS");
+    T(120, H - 8, "middle", 7, "#6f8498", "St = \u1e02\u00b7R / sen \u03b2");
+    const TRZ = [[ox, oy + 14, cx, cy - 22], [ox, oy, sx, sy], [cx, cy, vx, vy], [cx, cy, lx, ly], [lx, ly, vx, vy]];
+    return g + TMA._rotulos(ROT, W, H, TRZ) + "</svg>";
+  };
+
+  TMA.svgDminmax = (soalos, bdot, stmax, dmin, dmax) => {
+    const W = 240, H = 340, X0 = 92, Y0 = 296;
+    const esc = 214 / Math.max(dmax, 0.1);
+    const yMin = Y0 - dmin * esc, yMax = Y0 - dmax * esc;
+    const ROT = [], T = (x, y, a, fs, c, t) => { ROT.push({ x: +x, y: +y, a: a, fs: fs, c: c, t: t }); return ""; };
+    let g = "<svg viewBox='0 0 " + W + " " + H + "' class='rsvg'>";
+    g += "<line x1='" + X0 + "' y1='" + Y0 + "' x2='" + X0 + "' y2='" + (yMax - 16).toFixed(1) + "' stroke='#4a5b6b' stroke-width='1.2' stroke-dasharray='6 5'/>";
+    /* banda de incertidumbre entre Dmin y Dmax */
+    g += "<rect x='" + (X0 - 7) + "' y='" + yMax.toFixed(1) + "' width='14' height='" + (yMin - yMax).toFixed(1) + "' fill='#5ad0c0' opacity='0.10'/>";
+    g += "<line x1='" + (X0 - 7) + "' y1='" + yMin.toFixed(1) + "' x2='" + (X0 + 7) + "' y2='" + yMin.toFixed(1) + "' stroke='#5ad0c0' stroke-width='2'/>";
+    g += "<line x1='" + (X0 - 7) + "' y1='" + yMax.toFixed(1) + "' x2='" + (X0 + 7) + "' y2='" + yMax.toFixed(1) + "' stroke='#5ad0c0' stroke-width='2'/>";
+    T(X0 + 12, yMin + 3, "start", 10, "#5ad0c0", "Dmin " + dmin.toFixed(1).replace(".", ",") + " Kyds");
+    T(X0 + 12, yMax + 3, "start", 10, "#5ad0c0", "Dmax " + dmax.toFixed(1).replace(".", ",") + " Kyds");
+    T(X0 - 12, (yMin + yMax) / 2, "end", 8, "#8a9bb0", "el contacto");
+    T(X0 - 12, (yMin + yMax) / 2 + 11, "end", 8, "#8a9bb0", "est\u00e1 aqu\u00ed");
+    /* posiciones extremas */
+    g += "<rect x='" + (X0 - 4) + "' y='" + (yMin - 4).toFixed(1) + "' width='8' height='8' fill='none' stroke='#c9d6e2' stroke-width='1.3'/>";
+    g += "<rect x='" + (X0 - 4) + "' y='" + (yMax - 4).toFixed(1) + "' width='8' height='8' fill='none' stroke='#c9d6e2' stroke-width='1.3'/>";
+    T(X0 + 12, yMin + 15, "start", 7, "#6f8498", "si el blanco no aporta lateral");
+    T(X0 + 12, yMax + 15, "start", 7, "#6f8498", "si aporta " + stmax + " kn en contra");
+    /* mi lateral, que es lo \u00fanico que conozco */
+    g += "<line x1='" + X0 + "' y1='" + Y0 + "' x2='" + (X0 - 62) + "' y2='" + Y0 + "' stroke='#5ad0c0' stroke-width='2.4'/>";
+    g += TMA._punta(X0 - 62, Y0, Math.PI, "#5ad0c0", 10);
+    T(X0 - 34, Y0 + 15, "middle", 10, "#5ad0c0", "SoALOS " + soalos.toFixed(1).replace(".", ",") + " kn");
+    g += "<circle cx='" + X0 + "' cy='" + Y0 + "' r='3.4' fill='#eef3f8'/>";
+    T(X0 + 9, Y0 + 4, "start", 8, "#8a9bb0", "propio");
+    T(120, H - 20, "middle", 8, "#ffb454", "\u1e02 " + String(bdot).replace(".", ",") + "\u00b0/min observado");
+    T(120, H - 8, "middle", 7, "#6f8498", "mismo \u1e02: m\u00e1s lateral en juego \u2192 m\u00e1s lejos");
+    const TRZ = [[X0, Y0, X0 - 62, Y0]];
+    return g + TMA._rotulos(ROT, W, H, TRZ) + "</svg>";
+  };
+
+  TMA.svgTSR = (tsr, dB, S, Rkyds) => {
+    const W = 240, H = 340, X0 = 118, Y0 = 300, rd = a => a * Math.PI / 180;
+    const half = rd(dB) / 2;
+    const RL = Math.min(236, 92 / Math.max(Math.sin(half), 0.02), (Y0 - 52) / Math.max(Math.cos(half), 0.02));
+    const A = [X0 - RL * Math.sin(half), Y0 - RL * Math.cos(half)];
+    const B = [X0 + RL * Math.sin(half), Y0 - RL * Math.cos(half)];
+    const ROT = [], T = (x, y, a, fs, c, t) => { ROT.push({ x: +x, y: +y, a: a, fs: fs, c: c, t: t }); return ""; };
+    let g = "<svg viewBox='0 0 " + W + " " + H + "' class='rsvg'>";
+    /* las dos demoras */
+    [A, B].forEach(P => {
+      g += "<line x1='" + X0 + "' y1='" + Y0 + "' x2='" + P[0].toFixed(1) + "' y2='" + P[1].toFixed(1) + "' stroke='#4a5b6b' stroke-width='1.2' stroke-dasharray='6 5'/>";
+    });
+    /* separación entre ellos, perpendicular a la LOS media */
+    g += "<line x1='" + A[0].toFixed(1) + "' y1='" + A[1].toFixed(1) + "' x2='" + B[0].toFixed(1) + "' y2='" + B[1].toFixed(1) + "' stroke='#5ad0c0' stroke-width='2.6'/>";
+    g += TMA._punta(A[0], A[1], Math.atan2(A[1] - B[1], A[0] - B[0]), "#5ad0c0", 9);
+    g += TMA._punta(B[0], B[1], Math.atan2(B[1] - A[1], B[0] - A[0]), "#5ad0c0", 9);
+    /* c\u00edrculo de cada escolta: su radio es el 80% del TSR, y los dos juntos hacen la S */
+    const rC = Math.hypot(B[0] - A[0], B[1] - A[1]) / 2;
+    [A, B].forEach(P => {
+      g += "<circle cx='" + P[0].toFixed(1) + "' cy='" + P[1].toFixed(1) + "' r='" + rC.toFixed(1) +
+           "' fill='#5ad0c0' fill-opacity='0.05' stroke='#3f6b74' stroke-width='1' stroke-dasharray='5 4'/>";
+    });
+    g += "<line x1='" + X0 + "' y1='" + (A[1] - 6).toFixed(1) + "' x2='" + X0 + "' y2='" + (A[1] + 6).toFixed(1) + "' stroke='#3f6b74' stroke-width='1.2'/>";
+    T(X0, A[1] - 12, "middle", 10, "#5ad0c0", "S " + S.toFixed(1).replace(".", ",") + " Kyds");
+    T(X0, A[1] - 24, "middle", 7, "#6f8498", "= 2 \u00b7 80% \u00b7 TSR " + tsr + " \u00b7 cada c\u00edrculo, el 80%");
+    /* escoltas */
+    [[A, "escolta 1"], [B, "escolta 2"]].forEach(([P, nom], n) => {
+      g += "<rect x='" + (P[0] - 4).toFixed(1) + "' y='" + (P[1] - 4).toFixed(1) + "' width='8' height='8' fill='none' stroke='#c9d6e2' stroke-width='1.4'/>";
+      T(P[0] + (n ? 8 : -8), P[1] + 14, n ? "start" : "end", 8, "#8a9bb0", nom);
+    });
+    /* arco de ΔB en mi posición */
+    const R2 = 74;
+    g += "<path d='M" + (X0 - R2 * Math.sin(half)).toFixed(1) + "," + (Y0 - R2 * Math.cos(half)).toFixed(1) +
+         " A" + R2 + "," + R2 + " 0 0 1 " + (X0 + R2 * Math.sin(half)).toFixed(1) + "," + (Y0 - R2 * Math.cos(half)).toFixed(1) +
+         "' fill='none' stroke='#ffb454' stroke-width='1.8'/>";
+    T(X0, Y0 - R2 - 8, "middle", 10, "#ffb454", "\u0394B " + dB + "\u00b0");
+    T(X0 - 10, Y0 - RL / 2, "end", 10, "#8a9bb0", "R " + Rkyds.toFixed(1).replace(".", ",") + " Kyds");
+    g += "<circle cx='" + X0 + "' cy='" + Y0 + "' r='3.4' fill='#eef3f8'/>";
+    T(X0 + 9, Y0 + 4, "start", 8, "#8a9bb0", "propio");
+    T(120, H - 20, "middle", 8, "#8a9bb0", "R = 60 \u00b7 S / \u0394B");
+    T(120, H - 8, "middle", 7, "#6f8498", "m\u00e1s juntas las demoras \u2192 m\u00e1s lejos la pareja");
+    const TRZ = [[A[0], A[1], B[0], B[1]]];
+    return g + TMA._rotulos(ROT, W, H, TRZ) + "</svg>";
+  };
+
+  TMA.svgZBR = (D, Ct, St, So, Co, stalos, soalos) => {
+    const W = 240, H = 344, X0 = 118, Y0 = 292, RL = 176, rd = a => a * Math.PI / 180;
+    const C = [X0, Y0 - RL];                       /* contacto arriba, LOS vertical */
+    const relT = ((Ct - D + 540) % 360) - 180;     /* rumbo del blanco respecto a la LOS (0 = alejándose de mí) */
+    const relO = ((Co - D + 540) % 360) - 180;     /* mi rumbo respecto a la LOS */
+    const dir = (a, L) => [Math.sin(rd(a)) * L, -Math.cos(rd(a)) * L];
+    const esc = 88 / Math.max(St, So, 1);           /* misma escala para las dos velocidades */
+    const vT = dir(relT, esc * St), vO = dir(relO, esc * So);
+    const ROT = [], T = (x, y, a, fs, c, t) => { ROT.push({ x: +x, y: +y, a: a, fs: fs, c: c, t: t }); return ""; };
+    const P = (p, base) => [base[0] + p[0], base[1] + p[1]];
+    const tT = P(vT, C), tO = P(vO, [X0, Y0]);
+    let g = "<svg viewBox='0 0 " + W + " " + H + "' class='rsvg'>";
+    g += "<line x1='" + X0 + "' y1='" + (Y0 + 16) + "' x2='" + X0 + "' y2='" + (C[1] - 20).toFixed(1) + "' stroke='#4a5b6b' stroke-width='1.2' stroke-dasharray='6 5'/>";
+    T(X0 - 10, (Y0 + C[1]) / 2, "end", 8, "#6f8498", "demora " + ("00" + Math.round(D)).slice(-3));
+    /* laterales: iguales y opuestos → la demora no gira */
+    const latT = [C[0] + vT[0], C[1]], latO = [X0 + vO[0], Y0];
+    [[C, latT, "#5ad0c0", "StALOS " + stalos.toFixed(1).replace(".", ",")],
+     [[X0, Y0], latO, "#ffb454", "SoALOS " + soalos.toFixed(1).replace(".", ",")]].forEach(([b, e, col, rot]) => {
+      g += "<line x1='" + b[0].toFixed(1) + "' y1='" + b[1].toFixed(1) + "' x2='" + e[0].toFixed(1) + "' y2='" + e[1].toFixed(1) + "' stroke='" + col + "' stroke-width='2.4'/>";
+      g += TMA._punta(e[0], e[1], Math.atan2(e[1] - b[1], e[0] - b[0]), col, 9);
+      T(e[0] + (e[0] >= b[0] ? 7 : -7), b[1] - 8, e[0] >= b[0] ? "start" : "end", 9, col, rot);
+    });
+    /* velocidades absolutas, en blanco */
+    [[C, tT, "St " + St + " kn"], [[X0, Y0], tO, "So " + So + " kn"]].forEach(([b, e, rot]) => {
+      g += "<line x1='" + b[0].toFixed(1) + "' y1='" + b[1].toFixed(1) + "' x2='" + e[0].toFixed(1) + "' y2='" + e[1].toFixed(1) + "' stroke='#eef3f8' stroke-width='3.2'/>";
+      g += TMA._punta(e[0], e[1], Math.atan2(e[1] - b[1], e[0] - b[0]), "#eef3f8", 12);
+      T(e[0] + (e[0] >= b[0] ? 8 : -8), e[1] + 4, e[0] >= b[0] ? "start" : "end", 9, "#eef3f8", rot);
+    });
+    g += "<rect x='" + (C[0] - 4) + "' y='" + (C[1] - 4).toFixed(1) + "' width='8' height='8' fill='none' stroke='#c9d6e2' stroke-width='1.4'/>";
+    T(C[0] - 9, C[1] - 8, "end", 8, "#8a9bb0", "contacto \u00b7 Ct " + ("00" + Math.round(Ct)).slice(-3));
+    g += "<circle cx='" + X0 + "' cy='" + Y0 + "' r='3.4' fill='#eef3f8'/>";
+    T(X0 - 9, Y0 + 15, "end", 9, "#ffb454", "Co " + ("00" + Math.round(Co)).slice(-3));
+    T(120, H - 20, "middle", 8, "#8a9bb0", "mismo lateral y al mismo lado \u2192 la demora no gira");
+    T(120, H - 8, "middle", 7, "#6f8498", Math.abs(stalos - soalos) > 0.25
+      ? "sen LA = St \u00b7 sen \u03b2 / So \u00b7 con tabla mental quedan casi iguales"
+      : "sen LA = St \u00b7 sen \u03b2 / So");
+    const TRZ = [[C[0], C[1], tT[0], tT[1]], [X0, Y0, tO[0], tO[1]], [C[0], C[1], latT[0], latT[1]], [X0, Y0, latO[0], latO[1]]];
+    return g + TMA._rotulos(ROT, W, H, TRZ) + "</svg>";
+  };
+
+  TMA.svgEkelund = (s1, b1, s2, b2, R) => {
+    const W = 240, H = 366, X0 = 116, rd = a => a * Math.PI / 180;
+    const sd = x => x > 0 ? "dcha" : "izq";
+    const ROT = [], TRZ = [];
+    const T = (x, y, a, fs, c, t) => { ROT.push({ x: +x, y: +y, a: a, fs: fs, c: c, t: t }); return ""; };
+    let g = "<svg viewBox='0 0 " + W + " " + H + "' class='rsvg'>";
+    const panel = (yTop, so, bd, n) => {
+      const yBot = yTop + 118, yC = yTop + 16;
+      T(X0, yTop + 4, "middle", 9, "#6f8498", "TRAMO " + n);
+      g += "<line x1='" + X0 + "' y1='" + yBot + "' x2='" + X0 + "' y2='" + yC + "' stroke='#4a5b6b' stroke-width='1.1' stroke-dasharray='5 4'/>";
+      g += "<rect x='" + (X0 - 4) + "' y='" + (yC - 4) + "' width='8' height='8' fill='none' stroke='#c9d6e2' stroke-width='1.3'/>";
+      g += "<circle cx='" + X0 + "' cy='" + yBot + "' r='3.4' fill='#ffb454'/>";
+      /* movimiento f\u00edsico propio: contrario al sentido en que su lateral gira la demora */
+      const dirFis = so > 0 ? -1 : 1, xf = X0 + dirFis * 56;
+      g += "<line x1='" + X0 + "' y1='" + (yBot - 16) + "' x2='" + xf + "' y2='" + (yBot - 16) + "' stroke='#ffb454' stroke-width='2.4'/>";
+      g += TMA._punta(xf, yBot - 16, dirFis > 0 ? 0 : Math.PI, "#ffb454", 10);
+      TRZ.push([X0, yBot - 16, xf, yBot - 16]);
+      T(xf + dirFis * 8, yBot - 12, dirFis > 0 ? "start" : "end", 8, "#ffb454", "te mueves " + (dirFis > 0 ? "dcha" : "izq"));
+      /* giro de la demora que produce ese lateral */
+      const gir = so > 0 ? 1 : -1, r = 52, a0 = -90, a1 = -90 + gir * 26;
+      const p = a => [X0 + r * Math.cos(rd(a)), yBot + r * Math.sin(rd(a))];
+      const [ax, ay] = p(a0), [bx, by] = p(a1);
+      g += "<path d='M" + ax.toFixed(1) + "," + ay.toFixed(1) + " A" + r + "," + r + " 0 0 " + (gir > 0 ? 1 : 0) + " " +
+           bx.toFixed(1) + "," + by.toFixed(1) + "' fill='none' stroke='#5ad0c0' stroke-width='2.2'/>";
+      g += TMA._punta(bx, by, rd(a1) + gir * Math.PI / 2, "#5ad0c0", 10);
+      T(bx + gir * 9, by + 4, gir > 0 ? "start" : "end", 9, "#5ad0c0", "SoALOS " + Math.abs(so) + " kn " + sd(so));
+      T(bx + gir * 9, by + 16, gir > 0 ? "start" : "end", 9, "#9fb3c8", "\u1e02 " + String(Math.abs(bd)).replace(".", ",") + "\u00b0/min " + sd(bd));
+    };
+    panel(8, s1, b1, 1);
+    panel(174, s2, b2, 2);
+    const dS = Math.abs(s1 - s2), dB = Math.abs(b1 - b2);
+    T(120, H - 32, "middle", 9, "#5ad0c0", "\u0394SoALOS " + dS + " kn \u00b7 \u0394\u1e02 " + dB.toFixed(1).replace(".", ",") + "\u00b0/min");
+    T(120, H - 19, "middle", 10, "#ffb454", "R = " + dS + " / " + dB.toFixed(1).replace(".", ",") + " = " + R.toFixed(2).replace(".", ",") + " NM");
+    T(120, H - 6, "middle", 7, "#6f8498", "tu movimiento gira la demora al lado contrario");
+    return g + TMA._rotulos(ROT, W, H, TRZ) + "</svg>";
+  };
+
+  TMA.svgPeri = (hPies, N, aum, Ryds) => {
+    const W = 240, H = 306, cx = 120, cy = 150, r = 112;
+    const hz = cy + 34;                                  /* horizonte, algo bajo el centro */
+    const d = Math.min(20, 108 / Math.max(N, 0.5));      /* separaci\u00f3n entre divisiones */
+    const xr = cx - 52;                                  /* columna graduada, a la izquierda */
+    const sx = cx + 34;                                  /* buque, a la derecha */
+    const ROT = [], TRZ = [];
+    const T = (x, y, a, fs, c, t) => { ROT.push({ x: +x, y: +y, a: a, fs: fs, c: c, t: t }); return ""; };
+    const hc = Math.sqrt(r * r - (hz - cy) * (hz - cy));
+    let g = "<svg viewBox='0 0 " + W + " " + H + "' class='rsvg'>";
+    /* campo del periscopio: cielo, mar y borde */
+    g += "<circle cx='" + cx + "' cy='" + cy + "' r='" + r + "' fill='#c6d0d8'/>";
+    g += "<path d='M" + (cx - hc).toFixed(1) + "," + hz + " L" + (cx + hc).toFixed(1) + "," + hz +
+         " A" + r + "," + r + " 0 0 1 " + (cx - hc).toFixed(1) + "," + hz + " Z' fill='#a9b8c4'/>";
+    g += "<line x1='" + (cx - hc).toFixed(1) + "' y1='" + hz + "' x2='" + (cx + hc).toFixed(1) + "' y2='" + hz + "' stroke='#2c3d4c' stroke-width='1.6'/>";
+    /* ret\u00edcula: columna vertical graduada */
+    g += "<line x1='" + xr + "' y1='" + (cy - r + 14) + "' x2='" + xr + "' y2='" + (cy + r - 14) + "' stroke='#2c3d4c' stroke-width='1.4'/>";
+    for (let k = -5; k <= 9; k++) {
+      const y = hz - k * d;
+      if (Math.abs(y - cy) > r - 10) continue;
+      const L = (k % 5 === 0 ? 13 : 7);
+      g += "<line x1='" + (xr - L / 2) + "' y1='" + y.toFixed(1) + "' x2='" + (xr + L / 2) + "' y2='" + y.toFixed(1) + "' stroke='#2c3d4c' stroke-width='1.3'/>";
+    }
+    /* buque en el horizonte, con su palo ocupando N divisiones */
+    const alto = N * d, bw = 42;
+    g += "<path d='M" + (sx - bw / 2) + "," + hz + " L" + (sx + bw / 2) + "," + hz +
+         " L" + (sx + bw * 0.40) + "," + (hz - 5) + " L" + (sx - bw * 0.44) + "," + (hz - 5) + " Z' fill='#33475a'/>";
+    g += "<rect x='" + (sx - 8) + "' y='" + (hz - 12) + "' width='15' height='7' fill='#33475a'/>";
+    g += "<line x1='" + (sx - 1) + "' y1='" + (hz - 12) + "' x2='" + (sx - 1) + "' y2='" + (hz - alto).toFixed(1) + "' stroke='#33475a' stroke-width='2'/>";
+    /* medida del palo sobre la ret\u00edcula */
+    g += "<line x1='" + xr + "' y1='" + (hz - alto).toFixed(1) + "' x2='" + (sx - 1) + "' y2='" + (hz - alto).toFixed(1) + "' stroke='#c8842e' stroke-width='1' stroke-dasharray='4 3'/>";
+    g += "<line x1='" + (xr + 22) + "' y1='" + hz + "' x2='" + (xr + 22) + "' y2='" + (hz - alto).toFixed(1) + "' stroke='#c8842e' stroke-width='2.2'/>";
+    g += TMA._punta(xr + 22, hz - alto, -Math.PI / 2, "#c8842e", 9);
+    g += TMA._punta(xr + 22, hz, Math.PI / 2, "#c8842e", 9);
+    TRZ.push([xr + 22, hz, xr + 22, hz - alto]);
+    T(xr + 27, hz - alto / 2, "start", 10, "#8a5a12", N + " div");
+    T(sx + bw / 2 + 4, hz - alto / 2, "start", 10, "#33475a", "palo " + hPies + " pies");
+    /* borde del campo y datos */
+    g += "<circle cx='" + cx + "' cy='" + cy + "' r='" + r + "' fill='none' stroke='#3c4e5e' stroke-width='2'/>";
+    T(cx, cy - r + 22, "middle", 9, "#33475a", aum === 6 ? "6 aumentos" : "1,5 aumentos");
+    T(120, H - 18, "middle", 10, "#ffb454", "R = " + (aum === 6 ? 120 : 30) + "\u00b7h/N = " + Math.round(Ryds).toLocaleString("es") + " yds");
+    T(120, H - 6, "middle", 7, "#6f8498", "m\u00e1s lejos \u2192 el palo ocupa menos divisiones");
+    return g + TMA._rotulos(ROT, W, H, TRZ) + "</svg>";
+  };
 
   TMA.REGLAS = [
     { id: "r3", nom: "Regla de los 3 minutos", form: "yardas en 3 min = V \u00d7 100",
@@ -2062,43 +2660,53 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
       glos: [["LA", "\u00e1ngulo gu\u00eda o marcaci\u00f3n: separaci\u00f3n entre tu proa y la demora al contacto"], ["D", "demora al contacto"], ["Co", "tu rumbo"]],
       ej: () => ({ enun: "Rumbo propio 188, contacto en demora 264. \u00bfLA y banda?",
         pasos: ["LA = D \u2212 Co = 264 \u2212 188 = 76\u00b0", "el contacto cae a estribor \u2192 76\u00b0 Er"], res: "76\u00b0 Er" }),
-      idea: "La <b>marcaci\u00f3n (LA)</b> es c\u00f3mo ves el contacto <b>desde tu propia proa</b>: 000 es por la proa, 090 por el trav\u00e9s de estribor, 180 por la popa.<br>La demora es un dato del mundo (referida al Norte); la marcaci\u00f3n es un dato tuyo, y por eso cambia cada vez que cambias de rumbo aunque el contacto no se mueva.<br>De ah\u00ed <b>LA = D \u2212 Co</b>, siempre por el camino corto: nunca pasa de 180\u00b0.<br>La banda es la del lado por el que lo ves: <b>Er</b> si cae a estribor de tu proa, <b>Br</b> si cae a babor.<br>Es el \u00e1ngulo con el que entras en la tabla de senos para sacar tu componente lateral (SoALOS = So \u00b7 sen LA).", svg: SVG_LA },
+      idea: "La <b>marcaci\u00f3n (LA)</b> es c\u00f3mo ves el contacto <b>desde tu propia proa</b>: 000 es por la proa, 090 por el trav\u00e9s de estribor, 180 por la popa.<br>La demora es un dato del mundo (referida al Norte); la marcaci\u00f3n es un dato tuyo, y por eso cambia cada vez que cambias de rumbo aunque el contacto no se mueva.<br>De ah\u00ed <b>LA = D \u2212 Co</b>, siempre por el camino corto: nunca pasa de 180\u00b0.<br>La banda es la del lado por el que lo ves: <b>Er</b> si cae a estribor de tu proa, <b>Br</b> si cae a babor.<br>Es el \u00e1ngulo con el que entras en la tabla de senos para sacar tu componente lateral (SoALOS = So \u00b7 sen LA).", svg: TMA.svgLA(188, 264, 76, "Er") },
 
     { id: "dt", nom: "Distancia a la derrota", form: "DT = R \u00b7 sen \u03b2",
       glos: [["R", "distancia al contacto"], ["\u03b2", "beta del contacto (en su amura, entre su rumbo y la demora)"], ["DT", "a qu\u00e9 distancia pasar\u00e1 su derrota de tu posici\u00f3n (perpendicular)"]],
       ej: () => ({ enun: "Contacto a 8 Kyds con \u03b2 45\u00b0. \u00bfA qu\u00e9 distancia pasar\u00e1 su derrota de ti?",
         pasos: ["DT = R \u00b7 sen \u03b2", "DT = 8000 \u00b7 sen 45\u00b0 = 8000 \u00b7 0,7 = 5600 yardas"], res: "5.600 yardas" }),
-      idea: "La derrota del blanco pasa a un lado tuyo. Esa separaci\u00f3n perpendicular es el cateto opuesto a \u03b2 en el tri\u00e1ngulo demora\u2013derrota: por eso R por el seno de \u03b2.", svg: SVG_DT },
+      idea: "La derrota del blanco pasa a un lado tuyo. Esa separaci\u00f3n perpendicular es el cateto opuesto a \u03b2 en el tri\u00e1ngulo demora\u2013derrota: por eso R por el seno de \u03b2.", svg: TMA.svgDT(12000, 30, TMA.dt(12000, 30, "mental")) },
 
     { id: "dperi", nom: "Distancia perisc\u00f3pica", form: "R = 120\u00b7h / N  (6\u00d7)  \u00b7  R = 30\u00b7h / N  (1,5\u00d7)",
       glos: [["h", "altura del palo del contacto, en pies"], ["N", "n\u00famero de divisiones de la ret\u00edcula que ocupa ese palo"], ["6\u00d7 / 1,5\u00d7", "aumentos del periscopio con los que mides"]],
       ej: () => ({ enun: "Un palo de 90 pies ocupa 1,5 divisiones en 6 aumentos. \u00bfDistancia?",
         pasos: ["R = 120 \u00b7 h / N", "R = 120 \u00b7 90 / 1,5 = 10800 / 1,5 = 7200 yardas"], res: "7.200 yardas" }),
-      idea: "Cuanto m\u00e1s lejos est\u00e1 el buque, menos divisiones ocupa su palo. La constante (120 a 6\u00d7, 30 a 1,5\u00d7) sale de la escala de la ret\u00edcula. Necesitas conocer la altura del palo (ver tabla de esloras).", svg: SVG_PERI },
+      idea: "Cuanto m\u00e1s lejos est\u00e1 el buque, menos divisiones ocupa su palo. La constante (120 a 6\u00d7, 30 a 1,5\u00d7) sale de la escala de la ret\u00edcula. Necesitas conocer la altura del palo (ver tabla de esloras).", svg: TMA.svgPeri(120, 4, 6, 3600) },
+
+    { id: "comp", nom: "Componentes de una velocidad", form: "ALOS = V \u00b7 sen \u03b2 \u00b7 ILOS = V \u00b7 cos \u03b2",
+      glos: [["ALOS", "componente lateral: perpendicular a la LOS, la que hace girar la demora"],
+             ["ILOS", "componente radial: sobre la LOS, la que acerca o aleja"],
+             ["\u03b2", "\u00e1ngulo entre la velocidad y la LOS"]],
+      ej: () => ({ enun: "Velocidad 12 kn con \u03b2 30\u00b0. \u00bfComponentes?",
+        pasos: ["ALOS = 12 \u00b7 sen 30\u00b0 = 12 \u00b7 0,5 = 6 kn", "ILOS = 12 \u00b7 cos 30\u00b0 = 12 \u00b7 sen 60\u00b0 = 12 \u00b7 0,85 = 10,2 kn"],
+        res: "ALOS 6 kn \u00b7 ILOS 10,2 kn" }),
+      idea: "Toda velocidad se parte en dos trozos perpendiculares respecto a la LOS.<br>El <b>lateral (ALOS)</b> es el que <b>mueve la demora</b>: cuanto mayor sea, m\u00e1s deprisa gira.<br>El <b>radial (ILOS)</b> es el que <b>abre o cierra la distancia</b>: no mueve la demora nada.<br>Con <b>\u03b2 &lt; 90\u00b0</b> el radial acerca; con <b>\u03b2 &gt; 90\u00b0</b> aleja, y para la tabla de senos se opera con 180 \u2212 \u03b2.<br>En \u03b2 = 90\u00b0 todo es lateral (giro de demora m\u00e1ximo, distancia constante); en \u03b2 = 0\u00b0 todo es radial (la demora no se mueve).",
+      svg: TMA.svgComponentes(12, 30, "alos", 6, 10.2) },
 
     { id: "dlat", nom: "Distancia por movimiento lateral", form: "R = K \u00b7 SrALOS / \u1e02",
       glos: [["SrALOS", "componente lateral RESULTANTE (tu lateral \u00b1 el del blanco), en nudos: la que hace girar la demora"], ["\u1e02", "r\u00e9gimen de demora: cu\u00e1nto cambia la marcaci\u00f3n, en \u00b0/min"], ["K", "constante: 2000 yardas (mental) \u00b7 1936 (BRC) \u00b7 1 (si trabajas en millas)"]],
       ej: () => ({ enun: "Mides SrALOS 4 nudos y un \u1e02 de 1,2\u00b0/min. \u00bfDistancia al contacto?",
         pasos: ["R = K \u00b7 SrALOS / \u1e02", "R = 2000 \u00b7 4 / 1,2 = 8000 / 1,2 \u2248 6667 yardas", "en millas (K=1): 4 / 1,2 \u2248 3,33 NM"], res: "\u2248 6.667 yardas (3,33 millas)" }),
-      idea: "1 nudo de componente lateral a 2000 yardas produce 1\u00b0/min de giro de demora: de ah\u00ed K = 2000. Para una misma velocidad lateral, cuanto m\u00e1s despacio gira la demora, m\u00e1s lejos est\u00e1 el contacto.", svg: SVG_COMP },
+      idea: "1 nudo de componente lateral a 2000 yardas produce 1\u00b0/min de giro de demora: de ah\u00ed K = 2000. Para una misma velocidad lateral, cuanto m\u00e1s despacio gira la demora, m\u00e1s lejos est\u00e1 el contacto.", svg: TMA.svgRitmo(4, 1.2, 3.33) },
 
     { id: "dminmax", nom: "Distancia m\u00ednima y m\u00e1xima", form: "Dmin = K\u00b7SoALOS / \u1e02   \u00b7   Dmax = K\u00b7(SoALOS + Stm\u00e1x) / \u1e02",
       glos: [["SoALOS", "tu componente lateral = So \u00b7 sen LA (la conoces, es tuya)"], ["\u1e02", "r\u00e9gimen de demora que mides"], ["K", "2000 yardas (mental)"], ["Stm\u00e1x", "velocidad m\u00e1xima que le supones al contacto"]],
       ej: () => ({ enun: "Vas a 5 kn con LA 45\u00b0. Contacto con \u1e02 2\u00b0/min; le supones 20 kn como m\u00e1ximo. \u00bfEntre qu\u00e9 distancias est\u00e1?",
         pasos: ["SoALOS = So \u00b7 sen LA = 5 \u00b7 sen 45\u00b0 = 5 \u00b7 0,7 = 3,5 kn", "Dmin (el blanco no abre nada) = 2000 \u00b7 3,5 / 2 = 3500 yardas", "Dmax (el blanco abre en contra a tope) = 2000 \u00b7 (3,5 + 20) / 2 = 23500 yardas"], res: "entre 3.500 y 23.500 yardas" }),
-      idea: "Con solo el r\u00e9gimen de demora no sabes la distancia exacta, pero la acotas: la m\u00ednima suponiendo que el blanco no aporta lateral, la m\u00e1xima suponiendo que aporta el suyo en contra a su velocidad m\u00e1xima.", svg: SVG_COMP },
+      idea: "Con solo el r\u00e9gimen de demora no sabes la distancia exacta, pero la acotas: la m\u00ednima suponiendo que el blanco no aporta lateral, la m\u00e1xima suponiendo que aporta el suyo en contra a su velocidad m\u00e1xima.", svg: TMA.svgDminmax(6.4, 1, 25, 12.8, 62.8) },
 
     { id: "ekel", nom: "Distancia Ekelund", form: "R (NM) = \u0394 SoALOS / \u0394 \u1e02",
       glos: [["SoALOS", "tu componente lateral; dcha/izq = sentido en que hace girar la demora"], ["\u1e02", "r\u00e9gimen de demora observado"], ["\u0394", "diferencia entre los dos tramos"]],
       ej: () => ({ enun: "Tramo 1: SoALOS 4 kn dcha., \u1e02 0,6\u00b0/min dcha. Cambias de rumbo \u2014 Tramo 2: SoALOS 3 kn izq., \u1e02 0,4\u00b0/min izq. \u00bfDistancia?",
         pasos: ["laterales contrarios \u2192 \u0394SoALOS = 4 + 3 = 7 kn", "\u1e02 contrarios \u2192 \u0394\u1e02 = 0,6 + 0,4 = 1,0\u00b0/min", "R = 7 / 1,0 = 7 NM"], res: "7 NM" }),
-      idea: "<b>Convenio</b>: dcha/izq es el sentido en que <b>ese lateral hace girar la demora</b>, el mismo criterio que en SrALOS (LA a Br \u2192 IZ, a Er \u2192 DE).<br>Tu movimiento f\u00edsico a trav\u00e9s de la LOS es el <b>contrario</b>: si dejas el contacto por babor cruzas hacia tu derecha, y eso empuja la demora hacia la izquierda. El blanco, en cambio, empuja la demora hacia su propio lado.<br>Con ese convenio: <b>\u1e02 \u00b7 R = SoALOS + StALOS</b>.<br>Al cambiar t\u00fa de rumbo solo cambia tu lateral: la variaci\u00f3n de \u1e02 depende \u00fanicamente de la distancia, y as\u00ed desaparece la inc\u00f3gnita del blanco.<br>Contrarias suman, iguales restan \u2014 tanto en los laterales como en los \u1e02.<br><b>Comprobaci\u00f3n</b>: StALOS = \u1e02\u00b7R \u2212 SoALOS debe salir igual en los dos tramos.", svg: SVG_EKEL },
+      idea: "<b>Convenio</b>: dcha/izq es el sentido en que <b>ese lateral hace girar la demora</b>, el mismo criterio que en SrALOS (LA a Br \u2192 IZ, a Er \u2192 DE).<br>Tu movimiento f\u00edsico a trav\u00e9s de la LOS es el <b>contrario</b>: si dejas el contacto por babor cruzas hacia tu derecha, y eso empuja la demora hacia la izquierda. El blanco, en cambio, empuja la demora hacia su propio lado.<br>Con ese convenio: <b>\u1e02 \u00b7 R = SoALOS + StALOS</b>.<br>Al cambiar t\u00fa de rumbo solo cambia tu lateral: la variaci\u00f3n de \u1e02 depende \u00fanicamente de la distancia, y as\u00ed desaparece la inc\u00f3gnita del blanco.<br>Contrarias suman, iguales restan \u2014 tanto en los laterales como en los \u1e02.<br><b>Comprobaci\u00f3n</b>: StALOS = \u1e02\u00b7R \u2212 SoALOS debe salir igual en los dos tramos.", svg: TMA.svgEkelund(4, 0.6, -3, -0.4, 7) },
 
     { id: "tsr", nom: "Separaci\u00f3n entre escoltas", form: "S = 2 \u00b7 80% \u00b7 TSR    \u00b7    R = 60 \u00b7 S / \u0394B",
       glos: [["TSR", "separaci\u00f3n real entre las dos derrotas (escoltas), que conoces"], ["\u0394B", "diferencia entre las demoras a los dos contactos, en grados"], ["S", "separaci\u00f3n efectiva de c\u00e1lculo (TSR \u00d7 1,6)"], ["R", "distancia a la pareja de escoltas"]],
       ej: () => ({ enun: "Dos escoltas con TSR 4 Kyds; sus demoras difieren 25\u00b0. \u00bfA qu\u00e9 distancia est\u00e1n?",
         pasos: ["S = 2 \u00b7 80% \u00b7 TSR = 1,6 \u00b7 4000 = 6400", "R = 60 \u00b7 S / \u0394B = 60 \u00b7 6400 / 25 \u2248 15360 yardas"], res: "\u2248 15,4 Kyds" }),
-      idea: "El <b>TSR</b> es la separaci\u00f3n real entre las derrotas de los dos escoltas: un dato que ya conoces por la formaci\u00f3n de la pantalla, no algo que midas en el momento.<br>La regla lo convierte en <b>S</b>, la separaci\u00f3n efectiva de c\u00e1lculo, multiplicando por 2 \u00b7 80% (es decir, \u00d7 1,6). Ese factor lo fija la regla tal cual: la fuente no lo justifica.<br><b>\u0394B</b> es lo que difieren las dos demoras: lo \u00fanico que t\u00fa observas.<br>A \u00e1ngulo peque\u00f1o, distancia \u2248 separaci\u00f3n / \u00e1ngulo, y el 60 hace la conversi\u00f3n de grados a esa proporci\u00f3n.<br>Para un mismo TSR: cuanto <b>m\u00e1s juntas</b> veas las dos demoras, <b>m\u00e1s lejos</b> est\u00e1 la pareja.", svg: SVG_TSR },
+      idea: "El <b>TSR</b> es la separaci\u00f3n real entre las derrotas de los dos escoltas: un dato que ya conoces por la formaci\u00f3n de la pantalla, no algo que midas en el momento.<br>La regla lo convierte en <b>S</b>, la separaci\u00f3n efectiva de c\u00e1lculo, multiplicando por 2 \u00b7 80% (es decir, \u00d7 1,6). Ese factor lo fija la regla tal cual: la fuente no lo justifica.<br><b>\u0394B</b> es lo que difieren las dos demoras: lo \u00fanico que t\u00fa observas.<br>A \u00e1ngulo peque\u00f1o, distancia \u2248 separaci\u00f3n / \u00e1ngulo, y el 60 hace la conversi\u00f3n de grados a esa proporci\u00f3n.<br>Para un mismo TSR: cuanto <b>m\u00e1s juntas</b> veas las dos demoras, <b>m\u00e1s lejos</b> est\u00e1 la pareja.", svg: TMA.svgTSR(2, 12, TMA.tsrSep(2), TMA.rPorSep(TMA.tsrSep(2), 12)) },
 
     { id: "dopp", nom: "Ley por Doppler", form: "\u1e58 = (fo \u2212 fm) / fo \u00b7 3000 kn",
       glos: [["fo", "frecuencia propia / nominal (la que se oir\u00eda sin movimiento)"], ["fm", "frecuencia medida en el sonar"], ["\u1e58", "velocidad de acercamiento (+) o alejamiento (\u2212)"]],
@@ -2122,13 +2730,13 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
       glos: [["LA", "tu \u00e1ngulo de ataque: entre TU rumbo y la demora \u2014 es lo que buscas"], ["\u03b2", "beta del contacto (dato)"], ["So / St", "tu velocidad y la del contacto"]],
       ej: () => ({ enun: "Contacto en demora 000, rumbo 160 a 10 kn; t\u00fa a 6 kn. \u00bfQu\u00e9 rumbo pones para que la demora deje de girar?",
         pasos: ["El contacto forma \u03b2 20\u00b0 con la demora \u2192 su lateral = St \u00b7 sen \u03b2 = 10 \u00b7 sen 20\u00b0 = 10 \u00b7 0,3 = 3 kn", "Igualas con tu lateral: sen LA = 3 / So = 3 / 6 = 0,5 \u2192 LA = 30\u00b0", "Ese LA a la banda CONTRARIA de su \u03b2 \u2192 rumbo 030"], res: "rumbo 030" }),
-      idea: "Si tu componente lateral iguala la del blanco, la demora no gira (\u1e02 = 0). Es la base para \u00abapuntar\u00bb al contacto y para colocarte en una posici\u00f3n relativa estable.", svg: SVG_ZBR },
+      idea: "Si tu componente lateral iguala la del blanco, la demora no gira (\u1e02 = 0). Es la base para \u00abapuntar\u00bb al contacto y para colocarte en una posici\u00f3n relativa estable.", svg: TMA.svgZBR(90, 200, 12, 8, 145, 4.1, 4.0) },
 
     { id: "pointing", nom: "Velocidad del blanco en POINTING", form: "St = \u1e02 \u00b7 R (NM) / sen \u03b2",
       glos: [["POINTING", "situaci\u00f3n con tu componente lateral nula: proa o popa a la demora (SoALOS = 0)"], ["\u1e02", "r\u00e9gimen de demora medido"], ["R", "distancia al contacto, en millas"], ["\u03b2", "beta del contacto"]],
       ej: () => ({ enun: "En POINTING (proa al contacto), a 4 NM, mides \u1e02 1\u00b0/min y \u03b2 150\u00b0. \u00bfVelocidad del contacto?",
         pasos: ["Tu lateral es nulo \u2192 el giro lo produce solo el blanco: StALOS = \u1e02 \u00b7 R = 1 \u00b7 4 = 4 kn (K=1 en millas)", "\u03b2 = 150\u00b0 > 90\u00b0 \u2192 opero con sen 30\u00b0", "St = StALOS / sen 30\u00b0 = 4 / 0,5 = 8 kn"], res: "8 nudos" }),
-      idea: "Poniendo proa o popa al contacto anulas tu aportaci\u00f3n lateral; entonces el r\u00e9gimen de demora mide directamente la componente lateral del blanco, y de ah\u00ed sacas su velocidad.", svg: SVG_POINT }
+      idea: "Poniendo proa o popa al contacto anulas tu aportaci\u00f3n lateral; entonces el r\u00e9gimen de demora mide directamente la componente lateral del blanco, y de ah\u00ed sacas su velocidad.", svg: TMA.svgPointing(4, 1, 150, 8, 4) }
   ];
 
   TMA.cpaOptimoConSo = (So, D, R, Ct, St, quiereMax) => {
@@ -2649,7 +3257,7 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
     });
     /* T15: comprobar que las tres salidas aparecen en el muestreo */
     (function () {
-      const vistos = {}; const t = PEN.byId("T15");
+      const vistos = {}; const t = PEN.byId("T27");
       for (let s = 1; s <= 400; s++) {
         const ej = t.gen(mulberry32(s * 131));
         vistos[ej.sol.v === "COTA 55" ? "C" : ej.sol.v === "CONT." ? "K" : "T"] = 1;
@@ -2674,7 +3282,7 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
     add("G13 corrección", "ZBR 2A-77", TMA.zbrCo(65, 215, 8, 8) === 95, TMA.zbrCo(65, 215, 8, 8), 95);
     add("G13 corrección", "ZBR 2A-79", TMA.zbrCo(330, 165, 12, 6) === 300, TMA.zbrCo(330, 165, 12, 6), 300);
     (function () { let okb = true;
-        for (let i = 1; i <= 12; i++) { const m = /β = (\d+)°/.exec(PEN.byId("T17").gen(TMA.rng(i * 7)).enun); if (!m || +m[1] <= 90) okb = false; }
+        for (let i = 1; i <= 12; i++) { const m = /β = (\d+)°/.exec(PEN.byId("T19").gen(TMA.rng(i * 7)).enun); if (!m || +m[1] <= 90) okb = false; }
         add("G13 corrección", "T17 genera β > 90°", okb, okb ? "12/12" : "fallo", "12/12");
       })();
       add("G13 corrección", "20 tipos registrados", PEN.TYPES.length === 20, PEN.TYPES.length, 20);
@@ -3066,8 +3674,8 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
       } catch (err) { ok = false; }
       add("G24 reglas estudio", r.id + " completa", ok, res.slice(0, 22), "enun+pasos+res+glos+idea");
     });
-    add("G24 reglas estudio", "16 reglas catalogadas", TMA.REGLAS.length === 16, TMA.REGLAS.length, 16);
-    add("G24 reglas estudio", "9 reglas con dibujo", TMA.REGLAS.filter(r => r.svg).length === 9, TMA.REGLAS.filter(r => r.svg).length, 9);
+    add("G24 reglas estudio", "17 reglas catalogadas", TMA.REGLAS.length === 17, TMA.REGLAS.length, 17);
+    add("G24 reglas estudio", "10 reglas con dibujo", TMA.REGLAS.filter(r => r.svg).length === 10, TMA.REGLAS.filter(r => r.svg).length, 10);
 
     (function () {
       const mn = TMA.cpaOptimoConSo(9, 30, 9000, 185, 8, false);
@@ -3075,6 +3683,16 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
       add("G21 alejamiento", "óptimo: min ≤ max", mn && mx && mn.dcpa <= mx.dcpa + 1, Math.round(mn ? mn.dcpa : -1), "≤ " + Math.round(mx ? mx.dcpa : -1));
       const chk = TMA.cpaExacto(mx.co, 9, 30, 9000, 185, 8);
       add("G21 alejamiento", "óptimo max reproducible", Math.abs(chk.dcpa - mx.dcpa) < 2, Math.round(chk.dcpa), Math.round(mx.dcpa));
+    })();
+
+    (function () {
+      const ag = TMA.svgComponentes(6, 30, "alos", 3, 5.2), ob = TMA.svgComponentes(6, 105, "ilos", 5.8, 1.5);
+      const pta = a => { const m = /x1='58' y1='232' x2='([\d.]+)' y2='([\d.]+)' stroke='#eef3f8'/.exec(a); return m ? [+m[1], +m[2]] : null; };
+      add("G24 reglas estudio", "β agudo: la punta sube (LOS vertical)", pta(ag) && pta(ag)[1] < 232, "sube", "sube");
+      add("G24 reglas estudio", "β obtuso: la punta baja", pta(ob) && pta(ob)[1] > 232, "baja", "baja");
+      add("G24 reglas estudio", "obtuso muestra 180−β", ob.indexOf("180\u2212\u03b2 = 75") > 0, "ok", "ok");
+      const e7 = PEN.byId("T09").gen(TMA.rng(5)), e11 = PEN.byId("T10").gen(TMA.rng(5));
+      add("G24 reglas estudio", "T07 y T11 llevan dibujo propio", !!e7.dibujo && !!e11.dibujo, "sí", "sí");
     })();
 
     /* G11 — reglas sueltas con caso de la fuente */
@@ -3088,6 +3706,151 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
     add("G11 reglas", "TACAID 3': 15kn·4,5'", okTol(TMA.regla3yds(15, 4.5), 2250, 1), TMA.regla3yds(15, 4.5), 2250);
     add("G11 reglas", "GDR 12/5", TMA.PUNTEO["12/5"].gdr === 1200, 1200, 1200);
     add("G11 reglas", "GDR 5/12", TMA.PUNTEO["5/12"].gdr === 500, 500, 500);
+    /* G25 — control de tiempos, contrastado celda a celda con el
+       "Calculador para Observación Intermitente" que aportó Javi. */
+    TMA.CTRL.TIPOS.forEach(t => add("G25 control", "GDC " + t.nombre,
+      Math.abs(t.gdc - TMA.ctrlGDCcalc(t.velAlvo)) < 0.5, t.gdc, r2(TMA.ctrlGDCcalc(t.velAlvo))));
+    TMA.CTRL.TIPOS.forEach(t => add("G25 control", "regla " + t.nombre,
+      t.seg100 === Math.round(60 / (t.gdc / 100)), t.seg100, Math.round(60 / (t.gdc / 100))));
+    [["Calculador H2", 9500, "Mercante Grande", 2, 7.5],
+     ["Calculador H3", 3500, "Fragata TGs", 2, 55 / 60],
+     ["Calculador H4", 4500, "Mercante Grande", 2, 2.5],
+     ["Calculador margen 1", 9500, "Mercante Grande", 1, 8.5],
+     ["Intervalos B8", 12000, "Fragata TGs", 2, 8],
+     ["Intervalos B9", 11500, "Fragata TGs", 2, 455 / 60],
+     ["Intervalos B28", 2400, "Fragata TGs", 2, 0],
+     ["Intervalos C23", 4500, "Mercante Grande", 2, 2.5],
+     ["Intervalos C28", 2400, "Mercante Grande", 2, 0.4],
+     ["Intervalos D8", 12000, "Mercante Peque\u00f1o", 2, 13],
+     ["Intervalos D30", 1600, "Patrullero", 2, 0],
+     ["Intervalos E8", 12000, "Pesquero", 2, 22],
+     ["Intervalos E32", 1000, "Velero", 2, 0],
+     ["Intervalos C8", 12000, "Mercante Grande", 2, 10]
+    ].forEach(c => {
+      const got = TMA.ctrlLI(c[1], TMA.ctrlGDC(c[2]), c[3]);
+      add("G25 control", c[0], Math.abs(got - c[4]) < 0.02, r2(got), r2(c[4]));
+    });
+    /* La hoja LookInterval tabula velocidades combinadas sueltas (10 a 40 kn),
+       no las cuatro familias, as\u00ed que se comprueba con el GDC calculado. */
+    [[4000, 10, 10], [12000, 30, 10], [2000, 20, 1], [10000, 36, 6 + 20 / 60]
+    ].forEach(c => {
+      const got = TMA.ctrlLI(c[0], c[1] * 100 / 3, 2);
+      add("G25 control", "LookInterval " + c[0] + "/" + c[1] + "kn",
+        Math.abs(got - c[2]) < 0.02, r2(got), r2(c[2]));
+    });
+    [[350, 10, 20], [10, 350, -20], [90, 270, 180], [270, 90, 180], [0, 0, 0], [359, 1, 2]
+    ].forEach(c => add("G25 control", "\u0394demora " + c[0] + "\u2192" + c[1],
+      TMA.deltaDem(c[0], c[1]) === c[2], TMA.deltaDem(c[0], c[1]), c[2]));
+    add("G25 control", "ley 6\u00b0 en 2'", TMA.leyDem(0, 0, 6, 120000) === 3, TMA.leyDem(0, 0, 6, 120000), 3);
+    add("G25 control", "ley a la izquierda", TMA.leyDem(180, 0, 174, 120000) === -3, TMA.leyDem(180, 0, 174, 120000), -3);
+    add("G25 control", "ley sin tiempo", TMA.leyDem(0, 0, 5, 0) === null, TMA.leyDem(0, 0, 5, 0), null);
+    add("G25 control", "cruce por el norte", TMA.leyDem(358, 0, 4, 60000) === 6, TMA.leyDem(358, 0, 4, 60000), 6);
+    [[3.5, "003,5"], [120, "120"], [0, "000"], [359.9, "359,9"], [45.04, "045"], [359.96, "000"]
+    ].forEach(c => add("G25 control", "formato demora " + c[0],
+      TMA.fmtDem(c[0]) === c[1], TMA.fmtDem(c[0]), c[1]));
+    add("G25 control", "demora vac\u00eda", TMA.fmtDem(null) === "\u2014", TMA.fmtDem(null), "\u2014");
+    [["003.5", 3.5], ["003,5", 3.5], ["120", 120], ["365", 5], ["-10", 350]
+    ].forEach(c => add("G25 control", "lectura demora " + c[0],
+      Math.abs(TMA.leeDem(c[0]) - c[1]) < 1e-9, TMA.leeDem(c[0]), c[1]));
+    add("G25 control", "lectura no num\u00e9rica", isNaN(TMA.leeDem("x")), TMA.leeDem("x"), NaN);
+    add("G25 control", "acercamiento 500 yds/min", TMA.acerca(5000, 0, 4000, 120000) === 500,
+      TMA.acerca(5000, 0, 4000, 120000), 500);
+    add("G25 control", "alejamiento negativo", TMA.acerca(4000, 0, 5000, 120000) === -500,
+      TMA.acerca(4000, 0, 5000, 120000), -500);
+    add("G25 control", "acercamiento sin tiempo", TMA.acerca(5000, 0, 4000, 0) === null,
+      TMA.acerca(5000, 0, 4000, 0), null);
+    add("G25 control", "ley con decimales", Math.abs(TMA.leyDem(120, 0, 120.6, 120000) - 0.3) < 1e-9,
+      TMA.leyDem(120, 0, 120.6, 120000), 0.3);
+    add("G25 control", "pendiente recta", TMA.pendiente([{x:0,y:0},{x:1,y:2},{x:2,y:4},{x:3,y:6}]) === 2,
+      TMA.pendiente([{x:0,y:0},{x:1,y:2},{x:2,y:4},{x:3,y:6}]), 2);
+    add("G25 control", "pendiente sin recorrido", TMA.pendiente([{x:1,y:0},{x:1,y:5}]) === null,
+      TMA.pendiente([{x:1,y:0},{x:1,y:5}]), null);
+    add("G25 control", "desenrolla el norte", TMA.desenrolla([358,359,1,2]).join() === "358,359,361,362",
+      TMA.desenrolla([358,359,1,2]).join(), "358,359,361,362");
+    add("G25 control", "desenrolla a la izquierda", TMA.desenrolla([2,1,359,358]).join() === "2,1,-1,-2",
+      TMA.desenrolla([2,1,359,358]).join(), "2,1,-1,-2");
+    (function () {
+      const M = 60000;
+      const o4 = [{b:100,d:8000,t:0},{b:101,d:7000,t:M},{b:102,d:6000,t:2*M},{b:103,d:5000,t:3*M}];
+      const L = TMA.leyDemSerie(o4), A = TMA.acercaSerie(o4);
+      add("G25 control", "ley sobre 4 obs", Math.abs(L.v - 1) < 1e-9 && L.n === 4, L, {v:1,n:4});
+      add("G25 control", "acercamiento sobre 4 obs", Math.abs(A.v - 1000) < 1e-9 && A.n === 4, A, {v:1000,n:4});
+      const o2 = o4.slice(-2);
+      add("G25 control", "con 2 obs coincide con la resta",
+        Math.abs(TMA.leyDemSerie(o2).v - TMA.leyDem(o2[0].b, o2[0].t, o2[1].b, o2[1].t)) < 1e-9,
+        TMA.leyDemSerie(o2).v, TMA.leyDem(o2[0].b, o2[0].t, o2[1].b, o2[1].t));
+      const o5 = [{b:0,d:0,t:0}].concat(o4.map(x => ({b:x.b,d:x.d,t:x.t + M})));
+      add("G25 control", "ventana acotada a 4", TMA.leyDemSerie(o5).n === 4, TMA.leyDemSerie(o5).n, 4);
+      const ruido = [{b:100,t:0},{b:101.4,t:M},{b:101.6,t:2*M},{b:103,t:3*M}];
+      add("G25 control", "el ajuste suaviza el ruido",
+        Math.abs(TMA.leyDemSerie(ruido).v - 0.92) < 0.005, r2(TMA.leyDemSerie(ruido).v), 0.92);
+      const sep = [{b:10,t:0},{b:11,d:5000,t:M},{b:12,t:2*M},{d:4000,t:3*M}];
+      add("G25 control", "demora y distancia independientes",
+        TMA.leyDemSerie(sep).n === 3 && TMA.acercaSerie(sep).n === 2,
+        [TMA.leyDemSerie(sep).n, TMA.acercaSerie(sep).n], [3, 2]);
+      add("G25 control", "una sola obs no da ley", TMA.leyDemSerie([{b:10,t:0}]) === null,
+        TMA.leyDemSerie([{b:10,t:0}]), null);
+    })();
+    add("G25 control", "ley muy peque\u00f1a", TMA.leyNum(0.05) === "0,05\u00b0/min derecha", TMA.leyNum(0.05), "0,05\u00b0/min derecha");
+    add("G25 control", "ley entera sin coma", TMA.leyNum(3) === "3\u00b0/min derecha", TMA.leyNum(3), "3\u00b0/min derecha");
+    add("G25 control", "ley nula", TMA.leyNum(null) === "\u2014", TMA.leyNum(null), "\u2014");
+    add("G25 control", "ley num\u00e9rica", TMA.leyNum(0.1) === "0,1\u00b0/min derecha", TMA.leyNum(0.1), "0,1\u00b0/min derecha");
+    add("G25 control", "ley num\u00e9rica izq", TMA.leyNum(-2.5) === "2,5\u00b0/min izquierda", TMA.leyNum(-2.5), "2,5\u00b0/min izquierda");
+    add("G25 control", "demora constante", TMA.leyTexto(0.1) === "demora constante", TMA.leyTexto(0.1), "demora constante");
+    add("G25 control", "texto de la ley", TMA.leyTexto(1.5) === "1,5\u00b0/min derecha", TMA.leyTexto(1.5), "1,5\u00b0/min derecha");
+    add("G25 control", "texto a la izquierda", TMA.leyTexto(-12.4) === "12\u00b0/min izquierda", TMA.leyTexto(-12.4), "12\u00b0/min izquierda");
+    add("G25 control", "formato mm:ss", TMA.fmtMS(455) === "7:35", TMA.fmtMS(455), "7:35");
+    add("G25 control", "formato negativo", TMA.fmtMS(-95) === "\u22121:35", TMA.fmtMS(-95), "\u22121:35");
+    /* G26 — pestaña PD: marcación, signatura y maniobra Ekelund. */
+    [[90, 0, 90, "Er"], [270, 0, 270, "Br"], [10, 30, 340, "Br"],
+     [350, 10, 340, "Br"], [30, 350, 40, "Er"], [0, 0, 0, null], [180, 0, 180, null]
+    ].forEach(c => {
+      const m = TMA.marcacion(c[0], c[1]);
+      add("G26 PD", "marcación dem " + c[0] + " rbo " + c[1], m === c[2] && TMA.bandaMarc(m) === c[3],
+        m + "/" + TMA.bandaMarc(m), c[2] + "/" + c[3]);
+    });
+    [[90, "090 Er"], [270, "090 Br"], [45, "045 Er"], [315, "045 Br"],
+     [0, "000 proa"], [180, "180 popa"]
+    ].forEach(c => add("G26 PD", "marcación hablada " + c[0],
+      TMA.fmtMarc(c[0]) === c[1], TMA.fmtMarc(c[0]), c[1]));
+    /* Signatura: banda + sentido. DD e II van a popa. */
+    [[90, 1, "DD"], [90, -1, "DI"], [270, 1, "ID"], [270, -1, "II"],
+     [0, 1, null], [180, -1, null], [90, 0, null]
+    ].forEach(c => add("G26 PD", "signatura m" + c[0] + " Ḃ" + c[1],
+      TMA.signatura(c[0], c[1]) === c[2], TMA.signatura(c[0], c[1]), c[2]));
+    add("G26 PD", "DD va a popa", TMA.sigPopa("DD") && TMA.sigPopa("II"), true, true);
+    add("G26 PD", "DI va a proa", !TMA.sigPopa("DI") && !TMA.sigPopa("ID"), true, true);
+    /* Lateral propia: máxima al través, nula por proa. */
+    add("G26 PD", "SoALOS al través", Math.abs(TMA.soAlosPD(5, 90).mag - 5) < 1e-9,
+      r2(TMA.soAlosPD(5, 90).mag), 5);
+    add("G26 PD", "SoALOS a 30°", Math.abs(TMA.soAlosPD(5, 30).mag - 2.5) < 1e-9,
+      r2(TMA.soAlosPD(5, 30).mag), 2.5);
+    add("G26 PD", "SoALOS por estribor gira a la derecha", TMA.soAlosPD(5, 90).lado === "der",
+      TMA.soAlosPD(5, 90).lado, "der");
+    add("G26 PD", "SoALOS por babor gira a la izquierda", TMA.soAlosPD(5, 270).lado === "izq",
+      TMA.soAlosPD(5, 270).lado, "izq");
+    /* Ekelund por tramos: el envoltorio debe dar lo mismo que la función base. */
+    (function () {
+      const t1 = { rumbo: 0, vel: 5, dem: 90, ley: 0.6 };    // 090 Er → SoALOS 5 der
+      const t2 = { rumbo: 0, vel: 5, dem: 270, ley: -0.9 };  // 090 Br → SoALOS 5 izq
+      const r = TMA.ekelundPD(t1, t2, 1);
+      const base = TMA.ekelund(5, "Er", 5, "Br", 0.6, "der", 0.9, "izq", 1);
+      add("G26 PD", "Ekelund por tramos = función base", Math.abs(r.dek - base) < 1e-9,
+        r2(r.dek), r2(base));
+      add("G26 PD", "Ekelund laterales contrarios suman", Math.abs(r.dek - (10 / 1.5)) < 1e-9,
+        r2(r.dek), r2(10 / 1.5));
+      add("G26 PD", "avisa si no se invirtió la lateral",
+        TMA.ekelundPD({ rumbo: 0, vel: 5, dem: 90, ley: 0.6 },
+                      { rumbo: 0, vel: 5, dem: 60, ley: 0.9 }, 1)
+          .avisos.some(a => /no se ha invertido/.test(a)), true, true);
+      add("G26 PD", "avisa si la Ḃ apenas cambia",
+        TMA.ekelundPD({ rumbo: 0, vel: 5, dem: 90, ley: 0.60 },
+                      { rumbo: 0, vel: 5, dem: 270, ley: 0.65 }, 1)
+          .avisos.some(a => /apenas cambia/.test(a)), true, true);
+      add("G26 PD", "sin banda no hay Ekelund",
+        TMA.ekelundPD({ rumbo: 0, vel: 5, dem: 0, ley: 0.6 }, t2, 1) === null,
+        TMA.ekelundPD({ rumbo: 0, vel: 5, dem: 0, ley: 0.6 }, t2, 1), null);
+    })();
 
     return R;
   };
@@ -3121,6 +3884,23 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
     "ENTRENADOR DE CÁLCULO MENTAL 4.xlsm verificado en directo: mismos cinco generadores (RAND), trigonometría exacta y K=2000; su combinación de laterales por sentidos (mismo sentido resta, contrario suma) es la representación dual de la regla por bandas de la PLANTILLA. UTYLIDADES CAMARA DE MANDO es una calculadora de SUBNOTE (fuera del alcance de esta herramienta)."
   ];
 
+  /*==SUPUESTO (rosa de CRONOS) ===========================================
+  El umbral de 0,3°/min para dar una demora por constante es criterio de
+  presentación de esta herramienta, no doctrina: sirve para que la rosa avise
+  de un posible rumbo de colisión sin que el ruido de dos lecturas seguidas
+  encienda el aviso continuamente.
+  El radio de la rosa es lineal con la distancia y está normalizado al mayor
+  valor en pantalla, sea un contacto o la vuelta de seguridad, con un radio
+  mínimo para que un contacto muy cerca siga siendo legible. Es una escala
+  relativa para ver de un vistazo quién está encima, no una carta. */
+  /*==SUPUESTO (modo batería) ============================================
+  Los tipos que el mazo del Minuto Peñiquero plantea siempre con varios casos
+  en la misma carta (inversas 6 · Ct 2 · senos 6 · DT 3 · periscópica 4 · TSR 3)
+  se generan aquí con ese mismo número de casos. El veredicto muestra los
+  aciertos parciales, pero el ejercicio SOLO cuenta como acertado en la
+  estadística si están todos bien: la carta se resuelve entera en un minuto.
+  En la periscópica los cuatro casos comparten aumentos y unidad de altura,
+  como en las cartas 3, 14, 24, 34 y 44. El dibujo ilustra el primer caso. */
   /*==SUPUESTOS (tanda 1) — también visibles en la pestaña REFERENCIA =======
   1. Tabla mental de senos: Φ≤30 → escalón de 3° a la baja, 0,05 por escalón
      (hitos doctrinales de 6° y sus medios: 12→0,2 · 15→0,25 · 20→0,3);
@@ -3148,6 +3928,241 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
   return TMA;
 });
 
+
+/*---------------- ORDEN Y MIGRACIÓN DE IDENTIFICADORES ------------------
+  Los ejercicios se numeran siguiendo la cadena de cálculo real:
+    T01-T04 demoras y ángulos · T05-T08 cálculo mental base
+    T09-T12 componentes       · T13-T16 distancias directas
+    T17-T21 BRC completo      · T22-T26 maniobra y decisión
+    T27-T28 punteo y observación
+  HUECOS RESERVADOS para los tipos aún no implementados (sacados del mazo
+  del Minuto Peñiquero); se dejan libres para no tener que renumerar otra vez:
+    T08 distancia recorrida en N minutos   T11 StALOS y StILOS juntos
+    T17 distancia por BRC completa         T18 velocidad del blanco por BRC
+    T21 Ekelund completo por tramos        T23 β y Ct con Ḃ = 0
+    T24 Co para colisionar                 T28 tiempo entre observaciones
+  El orden de presentación sale del propio id, así que un tipo nuevo se
+  coloca solo con darle su número; no hay que tocar el orden del código. */
+TMA.MIGRA_IDS = { T03:"T06", T04:"T07", T05:"T13", T06:"T05", T07:"T09",
+                  T08:"T14", T09:"T03", T10:"T04", T11:"T10", T12:"T16",
+                  T13:"T15", T14:"T26", T15:"T27", T16:"T12", T17:"T19",
+                  T18:"T25", T19:"T20", T20:"T22" };
+TMA.PEN.TYPES.sort(function (a, b) { return a.id < b.id ? -1 : a.id > b.id ? 1 : 0; });
+
+/*---------------- CONTROL DE TIEMPOS ENTRE OBSERVACIONES -----------------
+  Reproduce el "Calculador para Observación Intermitente" (hoja Calculador,
+  columna H) del que Javi pasó el fichero:
+
+      LI (min) = Distancia (yds) / GDC − margen
+
+  GDC = (VelSub + VelAlvo) · 100/3, o sea la velocidad combinada expresada
+  en yardas por minuto. Es la misma regla de los 3 minutos de siempre.
+  El margen NO es una distancia de seguridad: es el minuto (o los dos) que
+  se reserva para bajar a cota segura. 2 por defecto (mando ausente), 1 con
+  el mando presente, tal como hace el IF de la hoja.
+
+  DATO ORIGINAL, NO TOCAR SIN MARCARLO: la velocidad propia está fijada en
+  7 nudos en la tabla de origen. Todo el encuadre por familias depende de
+  ello, y por eso tampoco se admite velocidad de contacto libre: elegir la
+  velocidad del blanco rompería la clasificación en cuatro familias, que es
+  lo que hace rápido al método.
+
+  Los números 12−5, 10−6, 8−8 y 5−12 no son otra cosa que GDC/100 (centenas
+  de yarda por minuto) y 60/ese número (segundos por centena). */
+TMA.CTRL = {
+  So: 7,
+  MARGEN_DEF: 2,
+  TIPOS: [
+    { nombre: "Pesquero",         velAlvo: 8,  gdc: 500,  regla: "5 \u2212 12", seg100: 12 },
+    { nombre: "Velero",           velAlvo: 8,  gdc: 500,  regla: "5 \u2212 12", seg100: 12 },
+    { nombre: "Corbeta",          velAlvo: 17, gdc: 800,  regla: "8 \u2212 8",  seg100: 8 },
+    { nombre: "Mercante Peque\u00f1o", velAlvo: 17, gdc: 800,  regla: "8 \u2212 8",  seg100: 8 },
+    { nombre: "Patrullero",       velAlvo: 17, gdc: 800,  regla: "8 \u2212 8",  seg100: 8 },
+    { nombre: "Fragata MDs",      velAlvo: 23, gdc: 1000, regla: "10 \u2212 6", seg100: 6 },
+    { nombre: "Lancha Militar",   velAlvo: 23, gdc: 1000, regla: "10 \u2212 6", seg100: 6 },
+    { nombre: "Mercante Grande",  velAlvo: 23, gdc: 1000, regla: "10 \u2212 6", seg100: 6 },
+    { nombre: "Ferry",            velAlvo: 29, gdc: 1200, regla: "12 \u2212 5", seg100: 5 },
+    { nombre: "Fragata TGs",      velAlvo: 29, gdc: 1200, regla: "12 \u2212 5", seg100: 5 },
+    { nombre: "Lancha R\u00e1pida",    velAlvo: 29, gdc: 1200, regla: "12 \u2212 5", seg100: 5 },
+    { nombre: "Skiff",            velAlvo: 29, gdc: 1200, regla: "12 \u2212 5", seg100: 5 }
+  ]
+};
+/* Diferencia de demoras por el camino corto, con signo: + a la derecha.
+   Un salto de exactamente 180° es ambiguo y se resuelve siempre a la
+   derecha (+180), por convenio, para que la función sea determinista. */
+TMA.deltaDem = (b1, b2) => { let d = (b2 - b1) % 360; if (d > 180) d -= 360; if (d <= -180) d += 360; return d; };
+/* Ley de variación en demora entre dos observaciones, en grados por minuto.
+   t1 y t2 en milisegundos. Devuelve null si no ha pasado tiempo. */
+TMA.leyDem = (b1, t1, b2, t2) => { const dt = (t2 - t1) / 60000; return dt > 0 ? TMA.deltaDem(b1, b2) / dt : null; };
+/* Lectura de la ley: por debajo del umbral se da la demora por constante, que
+   es la señal de rumbo de colisión. Umbral de presentación, no doctrinal. */
+/* Demora con un decimal opcional, siempre a tres cifras enteras: 3,5 -> 003,5 */
+TMA.fmtDem = b => {
+  if (b === null || b === undefined || isNaN(b)) return "\u2014";
+  const v = (Math.round(((b % 360) + 360) % 360 * 10) / 10) % 360; // 359,96 redondea a 360 -> 000
+  const e = Math.floor(v), dc = Math.round((v - e) * 10);
+  return ("00" + e).slice(-3) + (dc ? "," + dc : "");
+};
+/* Lectura de demora tecleada: admite coma o punto como separador decimal. */
+TMA.leeDem = t => {
+  if (t === null || t === undefined) return NaN;
+  const v = parseFloat(String(t).replace(",", "."));
+  return isFinite(v) ? ((v % 360) + 360) % 360 : NaN;
+};
+/* Ventana de observaciones que entran en el ajuste. Con dos puntos el ajuste
+   coincide exactamente con la resta de toda la vida, así que la ventana solo
+   añade estabilidad cuando hay material; nunca cambia el caso mínimo. */
+TMA.VENT_OBS = 4;
+/* Pendiente por mínimos cuadrados de y respecto de x. */
+TMA.pendiente = pts => {
+  const n = pts.length; if (n < 2) return null;
+  let sx = 0, sy = 0; pts.forEach(p => { sx += p.x; sy += p.y; });
+  const mx = sx / n, my = sy / n;
+  let num = 0, den = 0;
+  pts.forEach(p => { num += (p.x - mx) * (p.y - my); den += (p.x - mx) * (p.x - mx); });
+  return den > 0 ? num / den : null;
+};
+/* Desenrolla una serie de demoras para que el paso por el norte no rompa el
+   ajuste: 358, 359, 001, 002 se convierte en 358, 359, 361, 362. */
+TMA.desenrolla = bs => {
+  const out = []; let acc = 0;
+  bs.forEach((b, i) => { acc = (i === 0) ? b : acc + TMA.deltaDem(bs[i - 1], b); out.push(acc); });
+  return out;
+};
+/* Ley de variación en demora ajustada sobre las últimas observaciones con
+   demora. Devuelve el valor en °/min y cuántas han entrado. */
+TMA.leyDemSerie = obs => {
+  const o = (obs || []).filter(x => x && x.b !== null && x.b !== undefined).slice(-TMA.VENT_OBS);
+  if (o.length < 2) return null;
+  const bs = TMA.desenrolla(o.map(x => x.b)), t0 = o[0].t;
+  const m = TMA.pendiente(o.map((x, i) => ({ x: (x.t - t0) / 60000, y: bs[i] })));
+  return m === null ? null : { v: m, n: o.length };
+};
+/* Acercamiento ajustado sobre las últimas observaciones con distancia.
+   Positivo si se acerca. Serie independiente de la de demoras: una
+   observación puede traer solo una de las dos cosas. */
+TMA.acercaSerie = obs => {
+  const o = (obs || []).filter(x => x && x.d > 0).slice(-TMA.VENT_OBS);
+  if (o.length < 2) return null;
+  const t0 = o[0].t;
+  const m = TMA.pendiente(o.map(x => ({ x: (x.t - t0) / 60000, y: x.d })));
+  return m === null ? null : { v: -m, n: o.length };
+};
+/* Acercamiento real entre dos observaciones, en yardas por minuto.
+   Positivo si se acerca. Es el contraste directo contra el GDC supuesto:
+   si el contacto cierra más deprisa que su familia, el intervalo se queda
+   largo y hay que encuadrarlo en la familia de arriba. */
+TMA.acerca = (d1, t1, d2, t2) => {
+  const dt = (t2 - t1) / 60000;
+  return (dt > 0 && d1 > 0 && d2 > 0) ? (d1 - d2) / dt : null;
+};
+TMA.UMBRAL_BCTE = 0.3;
+/* Solo el número y la banda, sin juicio: el aviso de demora constante lo
+   añade quien pinta, para que el dato numérico esté siempre a la vista. */
+TMA.leyNum = b => {
+  if (b === null || b === undefined || isNaN(b)) return "\u2014";
+  const n = Math.abs(b);
+  /* Con demoras a un decimal aparecen leyes muy pequeñas; por debajo de 10°/min
+     se dan hasta dos decimales, quitando los ceros que sobran. */
+  const t = n < 10 ? String(parseFloat(n.toFixed(2))).replace(".", ",") : String(Math.round(n));
+  return t + "\u00b0/min " + (b > 0 ? "derecha" : b < 0 ? "izquierda" : "");
+};
+TMA.leyTexto = b => b === null ? "\u2014"
+  : Math.abs(b) < TMA.UMBRAL_BCTE ? "demora constante" : TMA.leyNum(b);
+TMA.ctrlTipo = n => TMA.CTRL.TIPOS.filter(t => t.nombre === n)[0] || null;
+TMA.ctrlGDC = n => { const t = TMA.ctrlTipo(n); return t ? t.gdc : null; };
+/* GDC derivado de la velocidad combinada, para comprobar la tabla */
+TMA.ctrlGDCcalc = velAlvo => (TMA.CTRL.So + velAlvo) * 100 / 3;
+/* Intervalo en minutos. Puede salir 0 o negativo: significa que el contacto
+   ya está tan cerca que no hay margen, y eso hay que verlo en pantalla. */
+TMA.ctrlLI = (dist, gdc, margen) => (dist / gdc) - (margen === undefined ? TMA.CTRL.MARGEN_DEF : margen);
+TMA.ctrlLIseg = (dist, nombre, margen) => {
+  const g = TMA.ctrlGDC(nombre); if (!g || !(dist > 0)) return null;
+  return Math.round(TMA.ctrlLI(dist, g, margen) * 60);
+};
+/* mm:ss con signo; por encima de una hora, h:mm:ss */
+TMA.fmtMS = seg => {
+  if (seg === null || seg === undefined || isNaN(seg)) return "\u2014";
+  const neg = seg < 0; let s = Math.abs(Math.round(seg));
+  const h = Math.floor(s / 3600); s -= h * 3600;
+  const m = Math.floor(s / 60); s -= m * 60;
+  const dd = n => (n < 10 ? "0" : "") + n;
+  return (neg ? "\u2212" : "") + (h ? h + ":" + dd(m) : m) + ":" + dd(s);
+};
+
+/*---------------- PD · SUBIDA A COTA PERISCÓPICA ------------------------
+  Motor de la pestaña PD. Solo lo observado se calcula en continuo
+  (marcación, desfile, Ḃ); las distancias salen a petición, sobre el
+  contacto que interese, que es como se trabaja de verdad.
+
+  Convenio de laterales, el mismo que el resto del fichero: "der/izq" es el
+  sentido en que ese lateral HACE GIRAR LA DEMORA. Contacto por estribor →
+  tu movimiento empuja la demora a la derecha; por babor, a la izquierda. */
+TMA.PD = { So_DEF: 5, ST_IMPLAUSIBLE: 30, DB_MIN: 0.15 };
+
+/* Marcación relativa 0–360 a partir de demora y rumbo propio. */
+TMA.marcacion = (dem, rumbo) => (((dem - rumbo) % 360) + 360) % 360;
+/* Banda: Er (000–180) o Br (180–360). Proa y popa exactas no tienen banda. */
+TMA.bandaMarc = m => {
+  const v = (((m % 360) + 360) % 360);
+  if (v < 0.05 || Math.abs(v - 180) < 0.05) return null;
+  return v < 180 ? "Er" : "Br";
+};
+/* Magnitud 0–180 de la marcación. */
+TMA.magMarc = m => { const v = (((m % 360) + 360) % 360); return v <= 180 ? v : 360 - v; };
+/* Como se dice en voz alta: "045 Er". Proa y popa se nombran. */
+TMA.fmtMarc = m => {
+  if (m === null || m === undefined || isNaN(m)) return "\u2014";
+  const b = TMA.bandaMarc(m), g = Math.round(TMA.magMarc(m));
+  const t = ("00" + g).slice(-3);
+  return b ? t + " " + b : (g === 0 ? "000 proa" : "180 popa");
+};
+/* Lateral propia sobre la LOS: magnitud y sentido en que gira la demora. */
+TMA.soAlosPD = (so, marc) => {
+  const b = TMA.bandaMarc(marc);
+  return { mag: Math.abs(so * Math.sin(TMA.magMarc(marc) * Math.PI / 180)),
+           lado: b === "Er" ? "der" : b === "Br" ? "izq" : null };
+};
+/* Signatura: primera letra la banda, segunda el sentido del desfile.
+   DD y II desfilan hacia popa; DI e ID hacia proa. */
+TMA.signatura = (marc, ley) => {
+  const b = TMA.bandaMarc(marc);
+  if (!b || ley === null || ley === undefined || ley === 0) return null;
+  return (b === "Er" ? "D" : "I") + (ley > 0 ? "D" : "I");
+};
+TMA.sigTexto = sig => ({
+  DD: "estribor \u00b7 desfila a popa", II: "babor \u00b7 desfila a popa",
+  DI: "estribor \u00b7 desfila a proa", ID: "babor \u00b7 desfila a proa"
+})[sig] || "\u2014";
+TMA.sigPopa = sig => sig === "DD" || sig === "II";
+
+/* Maniobra Ekelund de dos tramos. Cada tramo: {rumbo, vel, dem, ley}.
+   Devuelve la distancia, el lateral del blanco que se deduce y los avisos.
+   El lateral del blanco sale idéntico desde los dos tramos por construcción
+   (de ahí nace la fórmula), así que no sirve de comprobación: lo que sí
+   avisa es que salga un valor imposible, que la Ḃ apenas cambie o que la
+   lateral no se haya invertido de verdad. */
+TMA.ekelundPD = (t1, t2, K) => {
+  const k = K || TMA.K.mentalYds;
+  const m1 = TMA.marcacion(t1.dem, t1.rumbo), m2 = TMA.marcacion(t2.dem, t2.rumbo);
+  const s1 = TMA.soAlosPD(t1.vel, m1), s2 = TMA.soAlosPD(t2.vel, m2);
+  if (!s1.lado || !s2.lado) return null;
+  const b1 = s1.lado === "der" ? "Er" : "Br", b2 = s2.lado === "der" ? "Er" : "Br";
+  const d1 = t1.ley >= 0 ? "der" : "izq", d2 = t2.ley >= 0 ? "der" : "izq";
+  const dek = TMA.ekelund(s1.mag, b1, s2.mag, b2, Math.abs(t1.ley), d1,
+                          Math.abs(t2.ley), d2, k);
+  /* Lateral del blanco: Ḃ·R = SoALOS + StALOS, con signo + a la derecha. */
+  const soSig = s => (s.lado === "der" ? 1 : -1) * s.mag;
+  const stalos = (t1.ley * dek / k) - soSig(s1);
+  const av = [];
+  if (b1 === b2) av.push("la lateral no se ha invertido: los dos tramos dejan el contacto a la misma banda");
+  if (Math.abs(t1.ley - t2.ley) < TMA.PD.DB_MIN)
+    av.push("la Ḃ apenas cambia entre tramos: el resultado es muy sensible al error de lectura");
+  if (Math.abs(stalos) > TMA.PD.ST_IMPLAUSIBLE)
+    av.push("el lateral que sale para el blanco (" + Math.round(Math.abs(stalos)) + " kn) no es creíble: revisar datos");
+  if (!(dek > 0)) av.push("la distancia sale negativa o nula: revisar sentidos de la Ḃ");
+  return { dek: dek, m1: m1, m2: m2, so1: s1, so2: s2, stalos: stalos, avisos: av };
+};
 /*==FIN_BLOQUE_MOTOR==*/
 
 /* ==================== APLICACIÓN (esqueleto tanda 1) ==================== */
@@ -3230,12 +4245,12 @@ function pintaSenos(){
         html+="<div class='blq'><span class='et2'>DESARROLLO</span><ol class='pasos'>";
         e.pasos.forEach(function(p){ html+="<li>"+p+"</li>"; });
         html+="</ol><div class='resfin'>"+e.res+"</div></div>";
-        if(r.svg) html+="<div class='dib'>"+r.svg+"</div>";
+        if(e.dibujo||r.svg) html+="<div class='dib'>"+(e.dibujo||r.svg)+"</div>";
         html+="<div class='blq glos'><span class='et2'>QUÉ ES CADA COSA</span><dl>";
         r.glos.forEach(function(g){ html+="<dt>"+g[0]+"</dt><dd>"+g[1]+"</dd>"; });
         html+="</dl></div>";
         html+="<div class='blq idea'><span class='et2'>DE DÓNDE VIENE</span>"+r.idea+"</div>";
-        html="<div class='cerrar'>▴ cerrar</div>"+html+"<div class='cerrar'>▴ cerrar</div>";
+        html+="<div class='cerrar'>▴ cerrar</div>";
         li.querySelector(".ejemplo").innerHTML=html;
         li.dataset.hecho="1";
       }
@@ -3280,21 +4295,34 @@ var DUR=60; // segundos por ejercicio (Minuto Peñiquero)
 
 /* --- estadística persistente (localStorage con salvaguarda a memoria) --- */
 var MEM={}; var persistible=true;
-var DKEY="hsub_datos_v1", tsLocal=0, VERSION_APP=(window.TMA&&TMA.version)||"";
-function stLoad(){ try{
-    var s=localStorage.getItem(DKEY);
-    if(s){ var o=JSON.parse(s); tsLocal=o.ts||0; return o.stats||{}; }
-    var v=localStorage.getItem("tma_pen_stats_v1"); return v?JSON.parse(v):{}; }
+/* Migración de identificadores: al renumerar los ejercicios, la estadística
+   guardada seguía apuntando a los números antiguos. Se convierte UNA sola vez
+   (marca _idv) y se vuelve a guardar, de modo que no se pierde el historial. */
+function stMigra(o){
+  if(!o || typeof o!=="object" || o._idv) return o||{};
+  var M=(window.TMA&&TMA.MIGRA_IDS)||{}, n={}, cambios=0;
+  Object.keys(o).forEach(function(k){
+    if(!/^T\d\d$/.test(k)) return;
+    var d=M[k]||k; if(d!==k) cambios++;
+    var e=o[k]||{ok:0,tot:0};
+    if(n[d]){ n[d].ok+=(e.ok||0); n[d].tot+=(e.tot||0); }
+    else n[d]={ok:e.ok||0,tot:e.tot||0};
+  });
+  n._idv=2; n._migrados=cambios; return n;
+}
+function stLoad(){ try{ var s=localStorage.getItem("tma_pen_stats_v1");
+    var o=stMigra(s?JSON.parse(s):{});
+    if(s) localStorage.setItem("tma_pen_stats_v1",JSON.stringify(o));
+    return o; }
   catch(e){ persistible=false; return MEM; } }
-function stSave(o){ try{ tsLocal=Date.now();
-    localStorage.setItem(DKEY,JSON.stringify({v:1,ts:tsLocal,app:VERSION_APP,stats:o})); }
+function stSave(o){ try{ localStorage.setItem("tma_pen_stats_v1",JSON.stringify(o)); }
   catch(e){ persistible=false; MEM=o; } }
 var stats=stLoad();
 $("#stAviso").textContent = persistible? "La estadística se guarda en este dispositivo (localStorage)."
   : "Este visor no permite guardar: la estadística vive solo en esta sesión.";
 
 /* --- estado de sesión --- */
-var S={activo:false,nivel:1,grupo:"todos",ej:null,tipo:null,rng:null,
+var S={activo:false,nivel:3,grupo:"todos",ej:null,tipo:null,rng:null,
        corregido:false,t0:0,timer:null,ses:{ok:0,tot:0,racha:0,mejor:0}};
 
 /* --- selectores --- */
@@ -3377,7 +4405,7 @@ function respuestas(){
 }
 
 /* --- corrección --- */
-var PEN_REGLA={T01:"inv",T02:"ct",T09:"ct",T10:"la",T03:"r3",T04:"r6",T06:null,T07:"dlat",T11:"dlat",T16:"dlat",T05:"dt",T08:"dperi",T13:"tsr",T12:"dlat",T18:"dminmax",T19:"ekel",T20:"zbr",T17:"pointing",T14:"tcpa",T15:null};
+var PEN_REGLA={T01:"inv",T02:"ct",T03:"ct",T04:"la",T05:null,T06:"r3",T07:"r6",T09:"comp",T10:"comp",T12:"comp",T13:"dt",T14:"dperi",T15:"tsr",T16:"dlat",T19:"pointing",T20:"ekel",T22:"zbr",T25:"dminmax",T26:"tcpa",T27:null};
 function corregir(porTiempo){
   if(!S.ej||S.corregido) return;
   S.corregido=true; clearInterval(S.timer);
@@ -3390,14 +4418,15 @@ function corregir(porTiempo){
   });
   $("#dResultado").hidden=false;
   $("#dVeredicto").className=res.ok?"ok":"bad";
-  $("#dVeredicto").textContent=(res.ok?"CORRECTO":"FALLO")+(porTiempo?" · TIEMPO AGOTADO":"");
+  $("#dVeredicto").textContent=(res.ok?"CORRECTO":"FALLO")+(res.total>1?" · "+res.aciertos+" de "+res.total:"")+(porTiempo?" · TIEMPO AGOTADO":"");
   $("#dPista").innerHTML="<b>Regla:</b> "+S.ej.pista;
   // resolución paso a paso
   var pah=""; (S.ej.pasos||[]).forEach(function(p){ pah+="<li>"+p+"</li>"; });
   $("#dPasos").innerHTML=pah;
   var rg=PEN_REGLA[S.tipo.id]; var rr = rg && TMA.REGLAS ? TMA.REGLAS.find(function(x){return x.id===rg}) : null;
   var teo = rr ? rr.idea : "";
-  if(teo){ $("#dTeoria").innerHTML="<span class='et2'>POR QUÉ</span>"+teo+(rr&&rr.svg?"<div class='dib'>"+rr.svg+"</div>":""); $("#dTeoria").hidden=false; } else { $("#dTeoria").hidden=true; }
+  var dib=(S.ej&&S.ej.dibujo)?S.ej.dibujo:(rr&&rr.svg?rr.svg:"");
+  if(teo){ $("#dTeoria").innerHTML="<span class='et2'>POR QUÉ</span>"+teo+(dib?"<div class='dib'>"+dib+"</div>":""); $("#dTeoria").hidden=false; } else { $("#dTeoria").hidden=true; }
   $("#dResol").open=false;
   $("#btnCorregir").hidden=true; $("#btnSiguiente").hidden=false;
   /* estadística */
@@ -3422,52 +4451,6 @@ function pintaStats(){
 }
 pintaStats();
 $("#btnResetStats").addEventListener("click",function(){ stats={}; stSave(stats); pintaStats(); });
-
-/* ---------- copia de seguridad: exportar / restaurar (los datos viven en el móvil) ---------- */
-function ioMsg(t){ var m=$("#pwaMsg"); if(m) m.textContent=t||""; }
-function ioBox(){ var b=$("#ioBox"); b.style.display="block"; return b; }
-function expJSON(){
-  var texto=JSON.stringify({app:"HSUB",formato:1,version:VERSION_APP,ts:Date.now(),stats:stats},null,1);
-  try{
-    var b=new Blob([texto],{type:"application/json"}), a=document.createElement("a");
-    a.href=URL.createObjectURL(b);
-    a.download="HSUB_datos_"+new Date().toISOString().slice(0,10)+".json";
-    document.body.appendChild(a); a.click();
-    setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); },1500);
-  }catch(e){}
-  ioBox().value=texto;
-  ioMsg("Descargado. Si el móvil no lo guarda, copia el texto de abajo.");
-}
-function leeJSON(){
-  var t=(ioBox().value||"").trim();
-  if(!t){ ioMsg("Pega aquí dentro el JSON y vuelve a pulsar."); return null; }
-  try{ var o=JSON.parse(t); return o.stats||o; }catch(e){ ioMsg("Ese texto no es un JSON válido."); return null; }
-}
-function impJSON(fusionar){
-  var s=leeJSON(); if(!s) return;
-  var base = fusionar ? stats : {};
-  var n=0;
-  Object.keys(s).forEach(function(k){
-    var e=s[k]; if(!e||typeof e.tot!=="number") return;
-    var c=base[k]||{ok:0,tot:0};
-    base[k]={ok:(c.ok||0)+(e.ok||0), tot:c.tot+e.tot}; n++;
-  });
-  stats=base; stSave(stats); pintaStats();
-  ioMsg(fusionar ? ("Fusionado: "+n+" tipos. No se ha borrado nada.") : ("Reemplazado: "+n+" tipos."));
-}
-$("#btnExp").addEventListener("click",expJSON);
-$("#btnImp").addEventListener("click",function(){ impJSON(true); });
-$("#btnRep").addEventListener("click",function(){ impJSON(false); });
-
-/* ---------- al volver a primer plano: quedarse con lo último guardado ---------- */
-document.addEventListener("visibilitychange",function(){
-  if(document.hidden) return;
-  try{
-    var s=localStorage.getItem(DKEY); if(!s) return;
-    var o=JSON.parse(s);
-    if((o.ts||0)>tsLocal){ stats=o.stats||{}; tsLocal=o.ts; pintaStats(); }
-  }catch(e){}
-});
 
 /* --- flujo --- */
 $("#btnComenzar").addEventListener("click",function(){
@@ -3790,21 +4773,40 @@ $("#btnMan").addEventListener("click",calcMan);
 })();
 /* --- selector de sub-calculadora --- */
 (function(){
-  var grid=$("#calcGrid"), brc=$("#calcBRC"), cpa=$("#calcCPA"), dist=$("#calcDist");
-  if(!grid) return;
-  function mostrar(k){
-    brc.hidden = !(k==="todas"||k==="brc");
-    cpa.hidden = !(k==="todas"||k==="cpa");
-    dist.hidden = !(k==="todas"||k==="dist");
-    grid.hidden = (k==="dist");
-    grid.classList.toggle("solo", k==="brc"||k==="cpa");
+  /* Cada herramienta se enciende o se apaga por su cuenta: se pueden tener
+     varias a la vez, o solo las dos que interesen. La elección se guarda. */
+  var grid=$("#calcGrid"), PANEL={ brc:$("#calcBRC"), cpa:$("#calcCPA"),
+    dist:$("#calcDist"), cronos:$("#calcCronos") };
+  var LSC="tma_calc_vis_v1", VIS={brc:true,cpa:true,dist:true,cronos:true};
+  try{ var gv=localStorage.getItem(LSC);
+    if(gv){ var ov=JSON.parse(gv); Object.keys(VIS).forEach(function(k){
+      if(typeof ov[k]==="boolean") VIS[k]=ov[k]; }); } }catch(e){}
+
+  function mostrar(){
+    Object.keys(PANEL).forEach(function(k){ if(PANEL[k]) PANEL[k].hidden=!VIS[k]; });
+    if(grid){
+      grid.hidden=!(VIS.brc||VIS.cpa);
+      grid.classList.toggle("solo",(VIS.brc?1:0)+(VIS.cpa?1:0)===1);
+    }
+    document.querySelectorAll("#selCalc button").forEach(function(b){
+      b.classList.toggle("on",!!VIS[b.dataset.v]);
+      b.setAttribute("aria-pressed",VIS[b.dataset.v]?"true":"false");
+    });
+    try{ localStorage.setItem(LSC,JSON.stringify(VIS)); }catch(e){}
   }
   document.querySelectorAll("#selCalc button").forEach(function(b){
     b.addEventListener("click",function(){
-      document.querySelectorAll("#selCalc button").forEach(function(x){x.classList.remove("on")});
-      b.classList.add("on"); mostrar(b.dataset.v);
+      var k=b.dataset.v;
+      /* No se permite apagarlas todas: dejaría la pestaña en blanco. */
+      var enc=Object.keys(VIS).filter(function(x){return VIS[x];});
+      if(VIS[k]&&enc.length===1) return;
+      VIS[k]=!VIS[k]; mostrar();
     });
   });
+  mostrar();
+  window.CALCVIS_UI={ estado:function(){return VIS;},
+    alterna:function(k){ var b=document.querySelector('#selCalc button[data-v="'+k+'"]');
+      if(b) b.click(); return VIS; } };
 })();
 window.CALC_UI={cpa:calcCpa,man:calcMan,brc:brc,modo:function(v){modoMan=v;
   $("#manPos").hidden=v!=="pos"; $("#manDer").hidden=v!=="der"; $("#manAce").hidden=v!=="ace"; $("#manAle").hidden=v!=="ale";}};
@@ -3998,23 +5000,608 @@ window.APTRZ_UI={nuevo:function(t,s){A.tipo=t;A.ej=TRZ.nuevo(t,s||7);A.paso=0;$(
     medio:function(m){A.medio=m;pintaAp();},paso:function(n){A.paso=n;pintaAp();},estado:function(){return A;}};
 })();
 })();
-</script>
-<script>
+/* ============ CONTROL: tiempos entre observaciones (v1.10.0) ============
+   Réplica del "Calculador para Observación Intermitente". Va en su propio
+   ámbito y es lo último del script: si algo fallase aquí, no arrastra al
+   resto de la aplicación. */
+(function(){ "use strict";
+  if(!window.TMA||!TMA.CTRL) return;
+  var $=function(s){return document.querySelector(s)};
+  var LS="tma_ctrl_v1", TIPOS=TMA.CTRL.TIPOS, seq=1;
+  var CT={margen:TMA.CTRL.MARGEN_DEF, vs:{id:"vs",tipo:"Fragata TGs",dist:"",t0:null}, cs:[]};
+  var ac=null, son=false, avisado={};
+
+  function guardar(){ try{ localStorage.setItem(LS,JSON.stringify(
+    {margen:CT.margen,vs:CT.vs,cs:CT.cs,seq:seq})); }catch(e){} }
+  function cargar(){ try{ var t=localStorage.getItem(LS); if(!t) return;
+    var o=JSON.parse(t); if(!o) return;
+    if(o.margen===1||o.margen===2) CT.margen=o.margen;
+    if(o.vs) CT.vs=o.vs; if(o.cs&&o.cs.length) CT.cs=o.cs;
+    if(o.seq) seq=o.seq;
+    CT.vs.id="vs"; }catch(e){ CT.vs.id="vs"; } }
+
+  function liSeg(c){ var g=TMA.ctrlGDC(c.tipo), d=parseFloat(c.dist);
+    if(!g||!(d>0)) return null; return Math.round(TMA.ctrlLI(d,g,CT.margen)*60); }
+  function restante(c){ var li=liSeg(c); if(li===null||!c.t0) return null;
+    return li-Math.round((Date.now()-c.t0)/1000); }
+
+  /* Desplegable agrupado por régimen: es como se razona a bordo, primero
+     "esto es un 10-6" y luego qué barco concreto es. */
+  /* Sellar una observación: arranca la cuenta y fija el minuto de la demora.
+     La usan igual el botón OBSERVADO y la API, para que no diverjan. */
+  function observa(c){ if(!c) return null;
+    c.t0=Date.now(); c.dmin=("0"+new Date().getMinutes()).slice(-2);
+    var b=TMA.leeDem(c.dem), v=parseFloat(c.dist);
+    /* Se guarda la observación entera, con el número y el tipo que tenía en
+       ese momento, para que el registro sea un parte fiel aunque luego se
+       reclasifique el contacto. La rosa y la ley usan solo las dos últimas. */
+    /* Se anota SIEMPRE, aunque no haya demora: la vuelta de seguridad no la
+       tiene y aun así debe quedar constancia de que se hizo. */
+    c.obs=(c.obs||[]).concat([{ b:(isFinite(b)?b:null),
+      d:(isFinite(v)?v:0), t:c.t0,
+      n:(c.id==="vs"?"VS":(c.itn||"—")), tp:c.tipo,
+      f:(c.id==="vs"?"PERIS":(c.fte||"PERIS")) }]);
+    if(c.obs.length>60) c.obs=c.obs.slice(-60);
+    avisado[c.id]=false; return c; }
+  /* Ley de variación en demora entre las dos últimas observaciones. */
+  /* Solo las observaciones que llevan demora: la vuelta de seguridad no la
+     tiene y aun así se anota en el registro. */
+  /* Solo las observaciones que llevan demora: la vuelta de seguridad no la
+     tiene y aun así se anota en el registro. */
+  function conDem(c){ return (c.obs||[]).filter(function(o){ return o.b!==null && o.b!==undefined; }); }
+  /* Ley y acercamiento ajustados sobre las últimas observaciones (hasta cuatro).
+     Las dos series son independientes: una observación puede traer solo demora,
+     solo distancia o las dos, y cada cálculo coge las suyas. */
+  function leyDe(c){ var r=TMA.leyDemSerie(c.obs||[]); return r?r.v:null; }
+  function leyN(c){ var r=TMA.leyDemSerie(c.obs||[]); return r?r.n:0; }
+  function acercaDe(c){ var r=TMA.acercaSerie(c.obs||[]); return r?r.v:null; }
+  function acercaN(c){ var r=TMA.acercaSerie(c.obs||[]); return r?r.n:0; }
+
+  function opcionesTipo(sel){
+    var vistos=[], h="";
+    TIPOS.forEach(function(t){ if(vistos.indexOf(t.regla)<0) vistos.push(t.regla); });
+    vistos.forEach(function(reg){
+      var g=TIPOS.filter(function(t){return t.regla===reg;});
+      h+='<optgroup label="'+reg+' \u00b7 '+Math.round(g[0].gdc*3/100)+' kn combinados">';
+      g.forEach(function(t){
+        h+='<option value="'+t.nombre+'"'+(t.nombre===sel?" selected":"")+'>'+t.nombre+'</option>';
+      });
+      h+='</optgroup>';
+    });
+    return h;
+  }
+  /* Color del sem\u00e1foro, compartido por la ficha y por la rosa */
+  function colorDe(c){
+    var li=liSeg(c); if(li===null) return "var(--faint)";
+    if(li<=0) return "var(--bad)";
+    var r=restante(c); if(r===null) return "var(--dim)";
+    return r<=0?"var(--bad)":r<=30?"var(--warn)":"var(--ok)";
+  }
+  /* Rosa: cada contacto en su demora, con el número dentro del círculo y el
+     minuto de la demora debajo. El radio es proporcional a la distancia,
+     normalizado al contacto más lejano, para que se vea de un vistazo quién
+     está encima. Norte arriba. */
+  function pintaRosa(){
+    var svg=document.getElementById("rosaCr"), avi=document.getElementById("rosaAviso");
+    if(!svg) return;
+    var cs=CT.cs.filter(function(c){ return isFinite(TMA.leeDem(c.dem)); });
+    var vsD=parseFloat(CT.vs.dist), vsOk=isFinite(vsD)&&vsD>0;
+    /* La escala se normaliza al mayor valor en pantalla, incluida la vuelta
+       de seguridad y las posiciones anteriores, para que nada se salga. */
+    var dm=0;
+    cs.forEach(function(c){ var v=parseFloat(c.dist); if(v>dm) dm=v;
+      var oo=conDem(c); if(oo.length>1&&oo[oo.length-2].d>dm) dm=oo[oo.length-2].d; });
+    if(vsOk&&vsD>dm) dm=vsD;
+    function R(v){ return (dm>0&&v>0)?Math.max(20,98*v/dm):80; }
+    function XY(b,r){ var a=(((b%360)+360)%360-90)*Math.PI/180;
+      return {x:+(r*Math.cos(a)).toFixed(1), y:+(r*Math.sin(a)).toFixed(1)}; }
+
+    var g='<circle class="aro" cx="0" cy="0" r="100"/><circle class="aro2" cx="0" cy="0" r="49"/>';
+    g+='<line class="eje" x1="0" y1="-100" x2="0" y2="100"/><line class="eje" x1="-100" y1="0" x2="100" y2="0"/>';
+    g+='<text class="card" x="0" y="-104">000</text><text class="card" x="108" y="3">090</text>'
+      +'<text class="card" x="0" y="113">180</text><text class="card" x="-108" y="3">270</text>';
+
+    if(vsOk){ var rv=R(vsD), cv=colorDe(CT.vs);
+      g+='<circle class="vs" cx="0" cy="0" r="'+rv.toFixed(1)+'" style="stroke:'+cv+'"/>';
+      g+='<text class="vsr" x="0" y="'+(-rv+11).toFixed(1)+'" style="fill:'+cv+'">VS</text>'; }
+
+    g+='<circle class="prop" cx="0" cy="0" r="4"/>';
+
+    cs.forEach(function(c){
+      var col=colorDe(c), pt=XY(TMA.leeDem(c.dem), R(parseFloat(c.dist))), ob=conDem(c);
+      if(ob.length>1){ var an=ob[ob.length-2], pa=XY(an.b, R(an.d));
+        g+='<line class="vieja" x1="'+pa.x+'" y1="'+pa.y+'" x2="'+pt.x+'" y2="'+pt.y+'"/>';
+        g+='<circle class="marcaV" cx="'+pa.x+'" cy="'+pa.y+'" r="7"/>'; }
+      g+='<line class="vec" x1="0" y1="0" x2="'+pt.x+'" y2="'+pt.y+'" style="stroke:'+col+'"/>';
+      g+='<circle class="marca" cx="'+pt.x+'" cy="'+pt.y+'" r="12" style="fill:'+col+';stroke:'+col+'"/>';
+      g+='<text class="num" x="'+pt.x+'" y="'+pt.y+'">'+(c.itn||"\u00b7")+'</text>';
+      if(c.dmin) g+='<text class="min" x="'+pt.x+'" y="'+(pt.y+24).toFixed(1)+'">'+c.dmin+'</text>';
+    });
+    svg.innerHTML=g;
+
+    if(avi){
+      if(!cs.length&&!vsOk){ avi.hidden=false;
+        avi.textContent="a\u00f1ade la demora de un contacto para verlo aqu\u00ed"; }
+      else { avi.hidden=false;
+        avi.textContent="escala relativa \u00b7 anillo exterior "+Math.round(dm)
+          +" yds \u00b7 trazo interior "+Math.round(dm/2)+" yds"; }
+    }
+  }
+
+  function fila(c,esVS){
+    var d=document.createElement("div"); d.className="ctrlFila"; d.dataset.id=c.id;
+    var nom=esVS?"VUELTA DE SEGURIDAD":"";
+    d.innerHTML=
+      '<div class="cab"><b>'+(esVS?nom:'')+'</b></div>'+
+      '<div class="ctrlEnt">'+
+        (esVS?'':'<div><label>N\u00ba</label><input class="itn f-itn" type="text" autocomplete="off" maxlength="3" placeholder="A1"></div>')+
+        '<div><label>TIPO</label><select class="f-tipo"></select></div>'+
+        '<div><label>'+(esVS?'VISIBLE A':'DISTANCIA')+'</label><input class="f-dist" type="text" inputmode="numeric" autocomplete="off" placeholder="yds"></div>'+
+        (esVS?'':'<div><label>DEMORA</label><input class="itn f-dem" type="text" inputmode="decimal" autocomplete="off" maxlength="5" placeholder="003,5"></div>')+
+        (esVS?'':'<div><label>TOMADA CON</label><div class="selGrp fte f-fte">'
+          +'<button type="button" data-f="PERIS" class="on">PERIS</button>'
+          +'<button type="button" data-f="SONAR">SONAR</button></div></div>')+
+        (esVS?'':'<button type="button" class="del f-del">BORRAR</button>')+
+      '</div>'+
+      '<div class="ctrlDatos f-datos"></div>'+
+      (esVS?'':'<div class="ctrlLey f-ley" hidden></div>')+
+      '<div class="ctrlPie"><span class="ctrlCta f-cta">—</span>'+
+        '<button type="button" class="ctrlObs f-obs">OBSERVADO</button>'+
+        '<span class="ctrlSel f-sel"></span></div>';
+    var sel=d.querySelector(".f-tipo");
+    sel.innerHTML=opcionesTipo(c.tipo);
+    var itn=d.querySelector(".f-itn"), dist=d.querySelector(".f-dist");
+    if(itn){ itn.value=c.itn||""; itn.addEventListener("input",function(){ c.itn=itn.value; cab(d,c,esVS); guardar(); }); }
+    var dem=d.querySelector(".f-dem");
+    if(dem){ dem.value=(c.dem===null||c.dem===undefined)?"":c.dem;
+      dem.addEventListener("input",function(){ c.dem=dem.value;
+        var b=TMA.leeDem(c.dem);
+        if(c.obs&&c.obs.length&&isFinite(b)) c.obs[c.obs.length-1].b=((b%360)+360)%360;
+        guardar(); refresca(d,c); pintaRosa(); }); }
+    dist.value=c.dist||"";
+    dist.addEventListener("input",function(){ c.dist=dist.value; avisado[c.id]=false; refresca(d,c); guardar(); });
+    sel.addEventListener("change",function(){ c.tipo=sel.value; avisado[c.id]=false; cab(d,c,esVS); refresca(d,c); guardar(); });
+    var fte=d.querySelector(".f-fte");
+    if(fte){ if(!c.fte) c.fte="PERIS";
+      fte.querySelectorAll("button").forEach(function(x){
+        x.classList.toggle("on", x.dataset.f===c.fte);
+        x.addEventListener("click",function(){ c.fte=x.dataset.f;
+          fte.querySelectorAll("button").forEach(function(y){ y.classList.toggle("on", y.dataset.f===c.fte); });
+          guardar(); pintaRegistro(); }); }); }
+    d.querySelector(".f-obs").addEventListener("click",function(){
+      desbloquea(); observa(c); refresca(d,c); guardar(); pintaRegistro(); pintaRosa(); });
+    var del=d.querySelector(".f-del");
+    if(del) del.addEventListener("click",function(){
+      CT.cs=CT.cs.filter(function(x){return x.id!==c.id}); guardar(); pinta(); });
+    cab(d,c,esVS); refresca(d,c);
+    return d;
+  }
+  function cab(d,c,esVS){ if(esVS) return;
+    d.querySelector(".cab b").textContent=(c.itn?c.itn+" \u00b7 ":"")+c.tipo; }
+
+  function refresca(d,c){
+    var t=TMA.ctrlTipo(c.tipo), li=liSeg(c);
+    d.querySelector(".f-datos").innerHTML= t
+      ? 'GDC <b>'+t.gdc+'</b> yds/min · regla <b>'+t.regla+'</b> · '+t.seg100+'&Prime; por centena'
+        +(li!==null?' · intervalo <b>'+TMA.fmtMS(li)+'</b>':'')
+      : '';
+    /* Se muestra SIEMPRE la velocidad angular; el aviso de demora constante
+       y el de cierre por encima del GDC se añaden encima, no la sustituyen. */
+    var ly=leyDe(c), ac=acercaDe(c), zl=d.querySelector(".f-ley");
+    if(zl){
+      var tr=[], gd=TMA.ctrlGDC(c.tipo);
+      var cte=(ly!==null && Math.abs(ly)<TMA.UMBRAL_BCTE);
+      var sup=(ac!==null && gd && ac>gd);
+      if(ly!==null) tr.push('ley <b>'+TMA.leyNum(ly)+'</b> <span class="nobs">('+leyN(c)+' obs)</span>');
+      if(ac!==null) tr.push((ac>=0?'acerca <b>':'aleja <b>')+Math.abs(Math.round(ac))+' yds/min</b>'
+        +' <span class="nobs">('+acercaN(c)+' obs)</span>');
+      if(cte) tr.push('<b>demora constante</b>');
+      if(sup) tr.push('<b>cierra por encima de su GDC ('+gd+')</b>');
+      zl.hidden=(tr.length===0);
+      zl.innerHTML=tr.join(' \u00b7 ');
+      zl.className="ctrlLey f-ley"+((cte||sup)?" cte":"");
+    }
+    var cta=d.querySelector(".f-cta"), sel=d.querySelector(".f-sel"), r=restante(c);
+    if(li===null){ cta.textContent="—"; cta.className="ctrlCta f-cta nula"; sel.textContent="falta la distancia"; return; }
+    if(li<=0){ cta.textContent="YA"; cta.className="ctrlCta f-cta bad";
+      sel.textContent="sin margen a esta distancia"; return; }
+    if(r===null){ cta.textContent=TMA.fmtMS(li); cta.className="ctrlCta f-cta nula";
+      sel.textContent="pulsa OBSERVADO para arrancar"; return; }
+    cta.textContent=TMA.fmtMS(r);
+    cta.className="ctrlCta f-cta "+(r<=0?"bad":r<=30?"warn":"ok");
+    sel.textContent=r<=0?"VENCIDA":"";
+  }
+
+  function pinta(){
+    var vs=$("#ctrlVS"); if(!vs) return;
+    vs.innerHTML=""; vs.appendChild(fila(CT.vs,true));
+    var L=$("#ctrlLista"); L.innerHTML="";
+    CT.cs.forEach(function(c){ L.appendChild(fila(c,false)); });
+    var nC=$("#ctrlN"); if(nC) nC.textContent=CT.cs.length;
+    var nM=$("#ctrlMargen"); if(nM) nM.textContent="margen "+CT.margen+" min";
+    pintaRegistro(); pintaRosa();
+  }
+
+  function nombreDe(c){ return c.id==="vs" ? "Vuelta de seguridad"
+    : ((c.itn?c.itn+" \u00b7 ":"")+c.tipo); }
+
+  /* Todas las cuentas en marcha, de la que menos tiempo le queda a la que más.
+     La vuelta de seguridad entra en la lista como una más, porque compite por
+     el mismo periscopio. */
+  function pintaProximas(){
+    var ol=$("#ctrlProx"), vac=$("#ctrlProxVacio"); if(!ol) return;
+    var L=[CT.vs].concat(CT.cs).map(function(c){ return {c:c,r:restante(c),li:liSeg(c)}; })
+      .filter(function(o){ return o.li!==null; });
+    L.sort(function(a,b){
+      if(a.r===null&&b.r===null) return 0;
+      if(a.r===null) return 1; if(b.r===null) return -1;
+      return a.r-b.r; });
+    ol.innerHTML=L.map(function(o,i){
+      var cl=(o.r===null)?"nula":(o.r<=0?"bad":(o.r<=30?"warn":"ok"));
+      var tx=(o.r===null)?("intervalo "+TMA.fmtMS(o.li)):TMA.fmtMS(o.r);
+      return '<li><span class="or">'+(i+1)+'</span><span class="qu">'+nombreDe(o.c)
+        +'</span><span class="tm '+cl+'">'+tx+'</span></li>';
+    }).join("");
+    if(vac) vac.hidden=L.length>0;
+  }
+
+  /* Parte de observaciones: todo lo sellado, lo más reciente arriba. */
+  function pintaRegistro(){
+    var z=$("#ctrlReg"); if(!z) return;
+    var L=[];
+    [CT.vs].concat(CT.cs).forEach(function(c){ (c.obs||[]).forEach(function(o){ L.push(o); }); });
+    L.sort(function(a,b){ return b.t-a.t; });
+    var n=$("#ctrlNReg"); if(n) n.textContent=L.length;
+    if(!L.length){ z.innerHTML='<div class="regVacio">todav\u00eda no hay observaciones anotadas</div>'; return; }
+    var dd=function(v){ return (v<10?"0":"")+v; };
+    var h='<table class="regTab"><thead><tr><th>HORA</th><th>N\u00ba</th><th>TIPO</th>'
+      +'<th>DEMORA</th><th>DIST</th><th>FTE</th></tr></thead><tbody>';
+    L.slice(0,80).forEach(function(o){
+      var f=new Date(o.t);
+      h+='<tr><td>'+dd(f.getHours())+':'+dd(f.getMinutes())+':'+dd(f.getSeconds())+'</td>'
+        +'<td class="n">'+(o.n||"\u2014")+'</td><td>'+(o.tp||"")+'</td>'
+                +'<td class="d">'+TMA.fmtDem(o.b)+'</td>'
+        +'<td>'+(o.d?Math.round(o.d):"—")+'</td>'
+        +'<td>'+(o.f||"")+'</td></tr>';
+    });
+    z.innerHTML=h+'</tbody></table>';
+  }
+
+  function tick(){
+    var todos=[CT.vs].concat(CT.cs);
+    document.querySelectorAll("#calcCronos .ctrlFila").forEach(function(d){
+      var id=d.dataset.id, c=null;
+      todos.forEach(function(x){ if(x.id===id) c=x; });
+      if(!c) return;
+      var r=restante(c); refresca(d,c);
+      if(r!==null&&r<=0&&!avisado[id]){ avisado[id]=true; pita(); }
+    });
+    pintaProximas(); pintaRosa();
+  }
+
+  function desbloquea(){ if(ac) return;
+    try{ var C=window.AudioContext||window.webkitAudioContext; if(!C) return;
+      ac=new C(); if(ac.state==="suspended") ac.resume(); }catch(e){ ac=null; } }
+  function pita(){ if(!son||!ac) return;
+    try{ var o=ac.createOscillator(), g=ac.createGain();
+      o.type="square"; o.frequency.value=880; g.gain.value=0.07;
+      o.connect(g); g.connect(ac.destination); o.start();
+      setTimeout(function(){ try{o.stop();}catch(e){} },420);
+    }catch(e){} }
+
+  cargar();
+  document.querySelectorAll("#selMando button").forEach(function(b){
+    b.classList.toggle("on", +b.dataset.v===CT.margen);
+    b.addEventListener("click",function(){
+      document.querySelectorAll("#selMando button").forEach(function(x){x.classList.remove("on")});
+      b.classList.add("on"); CT.margen=+b.dataset.v; guardar(); pinta(); tick(); });
+  });
+  $("#btnCtrlAdd").addEventListener("click",function(){
+    desbloquea();
+    CT.cs.push({id:"c"+(seq++),itn:"",tipo:"Mercante Grande",dist:"",t0:null});
+    guardar(); pinta(); tick(); });
+  $("#btnCtrlReg").addEventListener("click",function(){
+    [CT.vs].concat(CT.cs).forEach(function(c){ c.obs=[]; });
+    guardar(); pinta(); tick(); });
+  $("#btnCtrlSon").addEventListener("click",function(){
+    desbloquea(); son=!son;
+    $("#btnCtrlSon").textContent="AVISO: "+(son?"ENCENDIDO":"APAGADO"); });
+  pinta(); tick(); setInterval(tick,1000);
+
+  window.CTRL_UI={ estado:function(){return CT;}, pinta:pinta, tick:tick, rosa:pintaRosa,
+    add:function(itn,tipo,dist,dem){ CT.cs.push({id:"c"+(seq++),itn:itn,tipo:tipo,dist:String(dist),
+        dem:(dem===undefined?"":String(dem)),dmin:null,t0:null});
+      guardar(); pinta(); tick(); return CT.cs[CT.cs.length-1]; },
+    observar:function(id){ var c=null; [CT.vs].concat(CT.cs).forEach(function(x){if(x.id===id)c=x;});
+      observa(c); guardar(); pinta(); tick(); return c; },
+    margen:function(m){ CT.margen=m; guardar(); pinta(); tick(); },
+    li:liSeg, restante:restante };
+})();
+
+/* ============ PD · SUBIDA A COTA PERISCÓPICA (v1.12.0) ==================
+   Primera tanda: tramos, contactos, lo observado y la maniobra Ekelund.
+   Fuera de esta tanda: cortes, clasificación LAG/LEAD/OVERLEAD, guion del
+   anexo 3B y fase en cota. Ámbito propio y último del script. */
+(function(){ "use strict";
+  if(!window.TMA || !TMA.PD) return;
+  var $=function(q){return document.querySelector(q)};
+  var LS="tma_pd_v1", seq=1;
+  var PD={ tIni:null, tramos:[], cs:[] };
+
+  function guardar(){ try{ localStorage.setItem(LS,JSON.stringify({PD:PD,seq:seq})); }catch(e){} }
+  function cargar(){ try{ var t=localStorage.getItem(LS); if(!t) return;
+    var o=JSON.parse(t); if(o&&o.PD){ PD=o.PD; seq=o.seq||1;
+      if(!PD.tramos) PD.tramos=[]; if(!PD.cs) PD.cs=[]; } }catch(e){} }
+
+  function tramoAct(){ return PD.tramos.length?PD.tramos[PD.tramos.length-1]:null; }
+  function idxTramo(t){ /* tramo en el que cae un instante */
+    for(var i=PD.tramos.length-1;i>=0;i--) if(t>=PD.tramos[i].t) return i;
+    return -1; }
+  function hhmm(t){ var d=new Date(t), z=function(n){return (n<10?"0":"")+n};
+    return z(d.getHours())+":"+z(d.getMinutes()); }
+
+  /* --- observaciones: la demora y su minuto, nada más --- */
+  function observa(c){
+    var b=TMA.leeDem(c.dem); if(!isFinite(b)) return null;
+    var t=Date.now();
+    c.obs=(c.obs||[]).concat([{ b:b, t:t, tr:PD.tramos.length-1 }]);
+    if(c.obs.length>80) c.obs=c.obs.slice(-80);
+    return c;
+  }
+  function obsDeTramo(c,i){ return (c.obs||[]).filter(function(o){ return o.tr===i; }); }
+  function leyDe(c){ var r=TMA.leyDemSerie(c.obs||[]); return r?r:null; }
+  /* Ley dentro de un tramo concreto, para prellenar el Ekelund */
+  function leyTramo(c,i){ var r=TMA.leyDemSerie(obsDeTramo(c,i)); return r?r.v:null; }
+  function ultDem(c){ var o=c.obs||[]; return o.length?o[o.length-1].b:TMA.leeDem(c.dem); }
+
+  function marcDe(c){
+    var tr=tramoAct(); var d=ultDem(c);
+    if(!tr||!isFinite(d)) return null;
+    return TMA.marcacion(d, tr.rumbo);
+  }
+
+  /* ---------------- fichas de contacto ---------------- */
+  function ficha(c){
+    var d=document.createElement("div"); d.className="pdFicha"; d.dataset.id=c.id;
+    d.innerHTML=
+      '<div class="cab"><b></b><button type="button" class="del f-del">BORRAR</button></div>'+
+      '<div class="pdEnt">'+
+        '<div><label>Nº</label><input class="f-num" type="text" maxlength="3" autocomplete="off" placeholder="A1"></div>'+
+        '<div><label>TIPO</label><select class="f-tipo"></select></div>'+
+        '<div><label>RPM</label><input class="f-rpm" type="text" inputmode="numeric" maxlength="4" autocomplete="off"></div>'+
+        '<div><label>B/G</label><select class="f-bg"><option value="">—</option><option value="SÍ">SÍ</option><option value="NO">NO</option></select></div>'+
+      '</div>'+
+      '<div class="pdObs">'+
+        '<div><label style="display:block;font:600 9.5px var(--sans);letter-spacing:.16em;color:var(--faint);margin-bottom:3px">DEMORA</label>'+
+        '<input class="f-dem" type="text" inputmode="decimal" maxlength="5" autocomplete="off" placeholder="003,5" style="width:86px;appearance:none;background:var(--bg);border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:9px;font:700 16px var(--mono)"></div>'+
+        '<button type="button" class="obs f-obs">OBSERVADO</button>'+
+        '<button type="button" class="pdEkBtn f-ekb">EKELUND</button>'+
+      '</div>'+
+      '<div class="pdDeriv f-deriv"></div>'+
+      '<div class="pdEk f-ek" hidden></div>';
+
+    var sel=d.querySelector(".f-tipo");
+    sel.innerHTML='<option value="">—</option>'+ (TMA.CTRL?TMA.CTRL.TIPOS.map(function(t){
+      return '<option value="'+t.nombre+'"'+(t.nombre===c.tipo?" selected":"")+'>'+t.nombre+'</option>'; }).join(""):"");
+    if(c.tipo) sel.value=c.tipo;
+    var num=d.querySelector(".f-num"), rpm=d.querySelector(".f-rpm"),
+        bg=d.querySelector(".f-bg"), dem=d.querySelector(".f-dem");
+    num.value=c.num||""; rpm.value=c.rpm||""; bg.value=c.bg||""; dem.value=c.dem||"";
+    num.addEventListener("input",function(){ c.num=num.value; cab(d,c); guardar(); pintaRosa(); });
+    rpm.addEventListener("input",function(){ c.rpm=rpm.value; guardar(); });
+    bg.addEventListener("change",function(){ c.bg=bg.value; cab(d,c); guardar(); });
+    sel.addEventListener("change",function(){ c.tipo=sel.value; cab(d,c); guardar(); });
+    dem.addEventListener("input",function(){ c.dem=dem.value; deriva(d,c); pintaRosa(); guardar(); });
+    d.querySelector(".f-obs").addEventListener("click",function(){
+      if(!tramoAct()){ avisa("Antes de observar hay que fijar un rumbo: usa CAÍDA."); return; }
+      observa(c); deriva(d,c); pintaRosa(); guardar(); });
+    d.querySelector(".f-ekb").addEventListener("click",function(){
+      c.ekAbierto=!c.ekAbierto; pintaEk(d,c); });
+    d.querySelector(".f-del").addEventListener("click",function(){
+      PD.cs=PD.cs.filter(function(x){return x.id!==c.id}); guardar(); pinta(); });
+    cab(d,c); deriva(d,c); pintaEk(d,c);
+    return d;
+  }
+  function cab(d,c){
+    d.querySelector(".cab b").textContent=
+      (c.num?c.num+" · ":"")+(c.tipo||"sin clasificar")+(c.bg==="SÍ"?" · B/G":"");
+  }
+
+  /* Lo observado y nada más: marcación, cómo desfila y la ley. */
+  function deriva(d,c){
+    var z=d.querySelector(".f-deriv"); if(!z) return;
+    var m=marcDe(c), L=leyDe(c), tr=tramoAct();
+    var p=[];
+    if(m!==null) p.push('marcación <b>'+TMA.fmtMarc(m)+'</b>');
+    else if(!tr) p.push('<span class="nobs">sin rumbo: pulsa CAÍDA</span>');
+    if(L){
+      p.push('Ḃ <b>'+TMA.leyNum(L.v)+'</b> <span class="nobs">('+L.n+' obs)</span>');
+      var sig=(m!==null)?TMA.signatura(m,L.v):null;
+      if(sig) p.push('<span class="sig">'+sig+'</span> <span class="nobs">'+TMA.sigTexto(sig)+'</span>');
+      if(Math.abs(L.v)>5) p.push('<b style="color:var(--bad)">Ḃ&gt;5°/min · contacto muy próximo</b>');
+    } else if((c.obs||[]).length===1) p.push('<span class="nobs">1 observación: hace falta otra para la ley</span>');
+    z.innerHTML=p.join(' · ');
+  }
+
+  /* ---------------- maniobra Ekelund ---------------- */
+  function pintaEk(d,c){
+    var z=d.querySelector(".f-ek"); if(!z) return;
+    z.hidden=!c.ekAbierto; if(!c.ekAbierto) return;
+    c.ek=c.ek||{ t1:{rumbo:"",vel:"5",dem:"",ley:""}, t2:{rumbo:"",vel:"5",dem:"",ley:""} };
+    var fila=function(k,rot){
+      var t=c.ek[k];
+      return '<div class="pdEkFila" data-t="'+k+'"><span class="t">'+rot+'</span>'+
+        '<div><label style="display:block;font:600 9px var(--sans);letter-spacing:.14em;color:var(--faint);margin-bottom:2px">RUMBO</label><input class="e-rumbo" value="'+(t.rumbo||"")+'"></div>'+
+        '<div><label style="display:block;font:600 9px var(--sans);letter-spacing:.14em;color:var(--faint);margin-bottom:2px">VEL</label><input class="e-vel" value="'+(t.vel||"")+'"></div>'+
+        '<div><label style="display:block;font:600 9px var(--sans);letter-spacing:.14em;color:var(--faint);margin-bottom:2px">DEMORA</label><input class="e-dem" value="'+(t.dem||"")+'"></div>'+
+        '<div><label style="display:block;font:600 9px var(--sans);letter-spacing:.14em;color:var(--faint);margin-bottom:2px">Ḃ °/min</label><input class="e-ley" value="'+(t.ley||"")+'"></div>'+
+        '</div>';
+    };
+    z.innerHTML=fila("t1","TRAMO 1")+fila("t2","TRAMO 2")+
+      '<button type="button" class="pdEkBtn f-ektraer">TRAER DE LOS TRAMOS</button>'+
+      '<div class="pdEkRes f-ekres"></div><div class="pdEkAviso f-ekav"></div>';
+    z.querySelectorAll(".pdEkFila").forEach(function(f){
+      var k=f.dataset.t;
+      f.querySelectorAll("input").forEach(function(inp){
+        var campo=inp.className.replace("e-","");
+        inp.addEventListener("input",function(){ c.ek[k][campo]=inp.value; calcEk(z,c); guardar(); });
+      });
+    });
+    z.querySelector(".f-ektraer").addEventListener("click",function(){
+      traeTramos(c); pintaEk(d,c); guardar(); });
+    calcEk(z,c);
+  }
+  /* Prellena con los dos últimos tramos en los que el contacto tenga ley */
+  function traeTramos(c){
+    var buenos=[];
+    for(var i=0;i<PD.tramos.length;i++){
+      var L=leyTramo(c,i), o=obsDeTramo(c,i);
+      if(L!==null&&o.length>=2) buenos.push({i:i,ley:L,dem:o[o.length-1].b});
+    }
+    var u=buenos.slice(-2);
+    if(u.length<2) return;
+    ["t1","t2"].forEach(function(k,j){
+      var b=u[j], tr=PD.tramos[b.i];
+      c.ek[k]={ rumbo:String(tr.rumbo), vel:String(tr.vel||TMA.PD.So_DEF),
+                dem:TMA.fmtDem(b.dem).replace(" ",""), ley:String(Math.round(b.ley*100)/100).replace(".",",") };
+    });
+  }
+  function calcEk(z,c){
+    var res=z.querySelector(".f-ekres"), av=z.querySelector(".f-ekav");
+    var lee=function(k){
+      var t=c.ek[k];
+      var r=parseFloat(String(t.rumbo).replace(",",".")),
+          v=parseFloat(String(t.vel).replace(",",".")),
+          d=TMA.leeDem(t.dem),
+          l=parseFloat(String(t.ley).replace(",","."));
+      return (isFinite(r)&&isFinite(v)&&isFinite(d)&&isFinite(l))?{rumbo:r,vel:v,dem:d,ley:l}:null;
+    };
+    var a=lee("t1"), b=lee("t2");
+    if(!a||!b){ res.textContent="faltan datos en los dos tramos"; res.style.color="var(--faint)"; av.textContent=""; return; }
+    var r=TMA.ekelundPD(a,b,TMA.K.mentalYds);
+    if(!r){ res.textContent="el contacto queda por la proa o la popa exactas: sin banda no hay cálculo";
+      res.style.color="var(--faint)"; av.textContent=""; return; }
+    res.style.color="";
+    res.innerHTML='distancia Ekelund <b>'+Math.round(r.dek).toLocaleString("es-ES")+' yds</b>'+
+      '<br><span style="color:var(--dim);font-size:11.5px">SoALOS '+
+        (Math.round(r.so1.mag*10)/10)+' '+r.so1.lado+' → '+(Math.round(r.so2.mag*10)/10)+' '+r.so2.lado+
+        ' · lateral del blanco '+(Math.round(Math.abs(r.stalos)*10)/10)+' kn '+(r.stalos>0?"der":"izq")+'</span>';
+    av.innerHTML=r.avisos.length?r.avisos.map(function(x){return "⚠ "+x;}).join("<br>"):"";
+  }
+
+  /* ---------------- rosa de demoras ---------------- */
+  function pintaRosa(){
+    var svg=$("#rosaPD"); if(!svg) return;
+    var tr=tramoAct();
+    var g='<circle class="aro" cx="0" cy="0" r="100"/><circle class="aro2" cx="0" cy="0" r="55"/>'+
+      '<line class="eje" x1="0" y1="-100" x2="0" y2="100"/><line class="eje" x1="-100" y1="0" x2="100" y2="0"/>'+
+      '<text class="card" x="0" y="-104">000</text><text class="card" x="108" y="3">090</text>'+
+      '<text class="card" x="0" y="113">180</text><text class="card" x="-108" y="3">270</text>';
+    if(tr){ var a=(tr.rumbo-90)*Math.PI/180;
+      g+='<line class="proa" x1="0" y1="0" x2="'+(104*Math.cos(a)).toFixed(1)+'" y2="'+(104*Math.sin(a)).toFixed(1)+'"/>'; }
+    g+='<circle class="prop" cx="0" cy="0" r="4"/>';
+    PD.cs.forEach(function(c){
+      var d=ultDem(c); if(!isFinite(d)) return;
+      var L=leyDe(c), col=(L&&Math.abs(L.v)>5)?"var(--bad)":(L?"var(--ok)":"var(--dim)");
+      var a=(d-90)*Math.PI/180, r=82;
+      var x=+(r*Math.cos(a)).toFixed(1), y=+(r*Math.sin(a)).toFixed(1);
+      g+='<line class="vec" x1="0" y1="0" x2="'+x+'" y2="'+y+'" style="stroke:'+col+'"/>';
+      g+='<circle class="marca" cx="'+x+'" cy="'+y+'" r="12" style="fill:'+col+';stroke:'+col+'"/>';
+      g+='<text class="num" x="'+x+'" y="'+y+'">'+(c.num||"·")+'</text>';
+      var o=c.obs||[]; if(o.length) g+='<text class="min" x="'+x+'" y="'+(y+24).toFixed(1)+'">'+
+        ("0"+new Date(o[o.length-1].t).getMinutes()).slice(-2)+'</text>';
+    });
+    svg.innerHTML=g;
+    var pie=$("#pdRosaPie");
+    if(pie) pie.textContent = tr ? ("demoras verdaderas · norte arriba · proa en "+("00"+tr.rumbo).slice(-3))
+                                 : "demoras verdaderas · norte arriba";
+  }
+
+  /* ---------------- tramos ---------------- */
+  function pintaTramos(){
+    var z=$("#pdTramos"); if(!z) return;
+    if(!PD.tramos.length){ z.innerHTML='<div class="regVacio">sin tramos: teclea el rumbo y pulsa CAÍDA</div>'; return; }
+    z.innerHTML=PD.tramos.map(function(t,i){
+      var fin=(i<PD.tramos.length-1)?PD.tramos[i+1].t:null;
+      var dur=Math.round(((fin||Date.now())-t.t)/60000);
+      return '<div class="pdTramoFila'+(i===PD.tramos.length-1?" act":"")+'">'+
+        '<span class="r">'+("00"+t.rumbo).slice(-3)+'</span>'+
+        '<span>'+hhmm(t.t)+'</span><span>'+dur+' min</span>'+
+        '<span style="margin-left:auto">'+t.vel+' kn</span></div>';
+    }).join("");
+    var ra=$("#pdRumboAct"), de=$("#pdTramoDesde"), a=tramoAct();
+    if(ra) ra.textContent=a?("00"+a.rumbo).slice(-3):"—";
+    if(de) de.textContent=a?("desde "+hhmm(a.t)):"";
+  }
+  function crono(){
+    var z=$("#pdCrono"); if(!z) return;
+    z.textContent = PD.tIni ? TMA.fmtMS(Math.round((Date.now()-PD.tIni)/1000)) : "—";
+  }
+  function avisa(m){ var z=$("#pdRosaPie"); if(z){ z.textContent=m;
+    setTimeout(pintaRosa,2600); } }
+
+  function pinta(){
+    var L=$("#pdLista"); if(!L) return;
+    L.innerHTML="";
+    PD.cs.forEach(function(c){ L.appendChild(ficha(c)); });
+    pintaTramos(); pintaRosa(); crono();
+  }
+
+  /* ---------------- arranque ---------------- */
+  cargar();
+  var inp=$("#pdRumboNuevo");
+  var caida=function(){
+    var r=parseInt(String(inp.value).replace(/\D/g,""),10);
+    if(!isFinite(r)||r<0||r>359){ avisa("El rumbo va de 000 a 359."); return; }
+    if(!PD.tIni) PD.tIni=Date.now();
+    PD.tramos.push({ rumbo:r, vel:TMA.PD.So_DEF, t:Date.now() });
+    inp.value=""; guardar(); pinta();
+  };
+  if($("#btnPdCaida")) $("#btnPdCaida").addEventListener("click",caida);
+  if(inp) inp.addEventListener("keydown",function(e){ if(e.key==="Enter") caida(); });
+  if($("#btnPdAdd")) $("#btnPdAdd").addEventListener("click",function(){
+    PD.cs.push({ id:"p"+(seq++), num:"", tipo:"", rpm:"", bg:"", dem:"", obs:[] });
+    guardar(); pinta(); });
+  pinta(); setInterval(function(){ crono(); pintaTramos(); },1000);
+
+  window.PD_UI={ estado:function(){return PD;}, pinta:pinta,
+    caida:function(r){ if(!PD.tIni) PD.tIni=Date.now();
+      PD.tramos.push({rumbo:r,vel:TMA.PD.So_DEF,t:Date.now()}); guardar(); pinta(); },
+    add:function(num,tipo,dem){ var c={id:"p"+(seq++),num:num,tipo:tipo||"",rpm:"",bg:"",
+      dem:(dem===undefined?"":String(dem)),obs:[]}; PD.cs.push(c); guardar(); pinta(); return c; },
+    observar:function(id){ var c=null; PD.cs.forEach(function(x){if(x.id===id)c=x;});
+      if(c){ observa(c); guardar(); pinta(); } return c; },
+    ek:function(id,t1,t2){ var c=null; PD.cs.forEach(function(x){if(x.id===id)c=x;});
+      if(!c) return null; c.ekAbierto=true; c.ek={t1:t1,t2:t2}; guardar(); pinta();
+      return TMA.ekelundPD({rumbo:+t1.rumbo,vel:+t1.vel,dem:TMA.leeDem(t1.dem),ley:+String(t1.ley).replace(",",".")},
+                           {rumbo:+t2.rumbo,vel:+t2.vel,dem:TMA.leeDem(t2.dem),ley:+String(t2.ley).replace(",",".")},
+                           TMA.K.mentalYds); },
+    traer:function(id){ var c=null; PD.cs.forEach(function(x){if(x.id===id)c=x;});
+      if(c){ c.ek=c.ek||{t1:{},t2:{}}; traeTramos(c); guardar(); pinta(); } return c&&c.ek; },
+    marc:marcDe, ley:leyDe };
+})();
+
+/* ============ SERVICE WORKER · actualización en iOS ====================
+   El HTML va por red primero (lo decide el sw.js), así que basta con pedir
+   comprobación al cargar y cada vez que la app vuelve a primer plano.
+   Cuando entra una versión nueva se recarga UNA sola vez: el indicador
+   evita el bucle de recargas. */
 (function(){
   if(!("serviceWorker" in navigator)) return;
-  var yaControlado = !!navigator.serviceWorker.controller;
-  navigator.serviceWorker.register("./sw.js").then(function(reg){
-    reg.update();
-    document.addEventListener("visibilitychange",function(){ if(!document.hidden) reg.update(); });
-    window.addEventListener("focus",function(){ reg.update(); });
-  }).catch(function(){});
+  var recargado=false;
   navigator.serviceWorker.addEventListener("controllerchange",function(){
-    if(!yaControlado) return;                                  // primera instalación: no recargar
-    if(sessionStorage.getItem("hsub_recargado")==="1") return;  // flag anti-bucle
-    sessionStorage.setItem("hsub_recargado","1");
+    if(recargado) return; recargado=true;
+    try{ sessionStorage.setItem("hsub_recarga","1"); }catch(e){}
     location.reload();
   });
+  navigator.serviceWorker.register("./sw.js").then(function(reg){
+    reg.update();
+    document.addEventListener("visibilitychange",function(){
+      if(document.visibilityState==="visible") reg.update();
+    });
+  }).catch(function(){});
 })();
+
 </script>
 </body>
 </html>
