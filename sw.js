@@ -7,7 +7,7 @@
    El nombre de la caché lleva la versión: al cambiarlo se descarta la
    anterior por completo. HAY QUE SUBIRLO junto al index.html en cada
    versión, o iOS seguirá sirviendo la copia antigua. */
-const CACHE = "hsub-v1.12.0";
+const CACHE = "hsub-v1.15.2";
 const ESTATICOS = ["./manifest.json", "./icon-180.png", "./icon-512.png"];
 
 self.addEventListener("install", e => {

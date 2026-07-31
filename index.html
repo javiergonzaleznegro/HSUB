@@ -46,6 +46,9 @@ nav.tabs button{appearance:none;border:1px solid transparent;background:transpar
 nav.tabs button[aria-selected="true"]{color:var(--amber);border-color:var(--line);
   background:var(--panel)}
 nav.tabs button:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+/* La de herramientas lleva el nombre más largo: se le da algo más de aire
+   y se le impide partirse en dos líneas. */
+nav.tabs button[data-v="calcular"]{padding-left:22px;padding-right:22px;white-space:nowrap}
 
 /* ==================== CONTENIDO ==================== */
 main{max-width:1060px;margin:0 auto;padding:18px 16px 40px}
@@ -298,6 +301,21 @@ ul.reglaslist li.exnota{background:none;border-left:0;padding:2px 10px;color:var
 .intro-est{text-align:center;background:linear-gradient(180deg,rgba(255,180,84,.08),rgba(255,180,84,.02));
   border:1px solid var(--amber2);border-radius:12px;padding:14px 16px;margin-bottom:14px}
 .intro-est b{display:block;font:700 13px var(--sans);letter-spacing:.16em;color:var(--amber)}
+/* Pantalla sin herramientas: en vez de un aviso escueto, la marca */
+#calcNada{display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:10px;padding:54px 16px 64px;text-align:center}
+#calcNada .marcaFondo{width:132px;height:132px;opacity:.16}
+#calcNada .marcaFondo circle,#calcNada .marcaFondo line{fill:none;stroke:var(--teal);stroke-width:2.4}
+#calcNada .marcaFondo .nucleo{fill:var(--amber);stroke:none}
+#calcNada b{font:700 13px var(--sans);letter-spacing:.3em;color:var(--dim)}
+#calcNada span{font:12px var(--mono);color:var(--faint);max-width:34ch;line-height:1.6}
+/* Tres niveles de rótulo: ámbar la pestaña, teal la herramienta,
+   y dentro de cada tarjeta su propio h2. */
+.intro-2{text-align:center;background:linear-gradient(180deg,rgba(90,208,192,.07),rgba(90,208,192,.015));
+  border:1px solid color-mix(in srgb,var(--teal) 55%,var(--line));border-radius:9px;
+  padding:8px 12px;margin:16px 0 8px}
+.intro-2 b{display:block;font:700 10.5px var(--sans);letter-spacing:.2em;color:var(--teal)}
+#calcGrid .intro-2{margin-top:0}
 #v-referencia [data-sec][hidden]{display:none!important}
 .brand .sub{display:block;font:600 9.5px var(--sans);letter-spacing:.34em;color:var(--dim);margin-top:3px}
 
@@ -459,20 +477,20 @@ details.expl{border-left-color:var(--amber2)}
 .regVacio{color:var(--faint);font:11.5px var(--mono);padding:6px 2px}
 .rosaVacia{color:var(--faint);font:11.5px var(--mono);text-align:center;padding:10px 0}
 
-#v-pd .pdBarra{display:flex;flex-wrap:wrap;align-items:flex-end;gap:14px;
+#blqPd .pdBarra{display:flex;flex-wrap:wrap;align-items:flex-end;gap:14px;
   border:1px solid var(--line);border-radius:var(--rad);background:var(--panel2);padding:10px 14px;margin-bottom:12px}
-#v-pd .pdTramoAct b{font:700 26px var(--mono);color:var(--amber);letter-spacing:.06em}
-#v-pd .pdReloj b{font:700 20px var(--mono);color:var(--teal);font-variant-numeric:tabular-nums}
-#v-pd .pdTramoAct,#v-pd .pdReloj{display:flex;align-items:baseline;gap:8px}
-#v-pd .pdCaida{display:flex;align-items:flex-end;gap:8px;margin-left:auto}
-#v-pd .pdCaida label{display:block;font:600 9.5px var(--sans);letter-spacing:.16em;color:var(--faint);margin-bottom:3px}
-#v-pd .pdCaida input{appearance:none;background:var(--bg);border:1px solid var(--line);color:var(--ink);
+#blqPd .pdTramoAct b{font:700 26px var(--mono);color:var(--amber);letter-spacing:.06em}
+#blqPd .pdReloj b{font:700 20px var(--mono);color:var(--teal);font-variant-numeric:tabular-nums}
+#blqPd .pdTramoAct,#blqPd .pdReloj{display:flex;align-items:baseline;gap:8px}
+#blqPd .pdCaida{display:flex;align-items:flex-end;gap:8px;margin-left:auto}
+#blqPd .pdCaida label{display:block;font:600 9.5px var(--sans);letter-spacing:.16em;color:var(--faint);margin-bottom:3px}
+#blqPd .pdCaida input{appearance:none;background:var(--bg);border:1px solid var(--line);color:var(--ink);
   border-radius:8px;padding:8px 9px;font:700 18px var(--mono);width:80px;text-align:center}
-#v-pd .pdCaida input:focus{outline:none;border-color:var(--amber2)}
-#v-pd .pdCaida button{appearance:none;background:var(--amber2);border:1px solid var(--amber);color:#12181e;
+#blqPd .pdCaida input:focus{outline:none;border-color:var(--amber2)}
+#blqPd .pdCaida button{appearance:none;background:var(--amber2);border:1px solid var(--amber);color:#12181e;
   border-radius:8px;padding:10px 18px;font:700 12px var(--sans);letter-spacing:.1em;cursor:pointer}
-#v-pd .pdCols{display:grid;grid-template-columns:1fr;gap:12px;align-items:start}
-@media (min-width:900px){ #v-pd .pdCols{grid-template-columns:minmax(0,1.55fr) minmax(0,1fr)} }
+#blqPd .pdCols{display:grid;grid-template-columns:1fr;gap:12px;align-items:start}
+@media (min-width:900px){ #blqPd .pdCols{grid-template-columns:minmax(0,1.55fr) minmax(0,1fr)} }
 #pdLista{display:grid;grid-template-columns:1fr;gap:10px}
 @media (min-width:1280px){ #pdLista{grid-template-columns:1fr 1fr} }
 .pdFicha{border:1px solid var(--line);border-radius:var(--rad);padding:10px 12px;background:var(--panel2)}
@@ -496,7 +514,19 @@ details.expl{border-left-color:var(--amber2)}
 .pdEkBtn{appearance:none;background:none;border:1px solid var(--line);color:var(--dim);
   border-radius:6px;padding:4px 10px;font:600 10.5px var(--sans);letter-spacing:.08em;cursor:pointer}
 .pdEk{border-top:1px solid var(--line);margin-top:8px;padding-top:8px}
-.pdEkFila{display:flex;gap:6px;align-items:flex-end;margin-bottom:6px;flex-wrap:wrap}
+.pdEkFila{display:flex;gap:8px;align-items:center;margin-bottom:8px;flex-wrap:wrap}
+.pdEkFila .t{font:700 10px var(--sans);letter-spacing:.1em;color:var(--faint);width:46px;flex:none;line-height:1.3}
+.anGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media (min-width:520px){ .anGrid{grid-template-columns:repeat(3,minmax(0,1fr))} }
+@media (min-width:900px){ .anGrid{grid-template-columns:repeat(4,minmax(0,1fr))} }
+.anGrid .pdTend{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.anGrid .pdTend button{padding:9px 4px}
+.ceGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;flex:1;min-width:0}
+.ce label{display:block;font:600 8.5px var(--sans);letter-spacing:.12em;color:var(--faint);margin-bottom:3px}
+.ce input{width:100%;appearance:none;background:var(--bg);border:1px solid var(--line);color:var(--ink);
+  border-radius:7px;padding:7px 6px;font:600 14px var(--mono);text-align:center;min-width:0}
+.ce input:focus{outline:none;border-color:var(--amber2)}
+
 .pdEkFila .t{font:700 10px var(--sans);letter-spacing:.1em;color:var(--faint);width:52px}
 .pdEkFila input{width:62px;appearance:none;background:var(--bg);border:1px solid var(--line);
   color:var(--ink);border-radius:7px;padding:6px 7px;font:600 13px var(--mono)}
@@ -519,6 +549,50 @@ details.expl{border-left-color:var(--amber2)}
 #rosaPD .vec{stroke-width:1.6;opacity:.85}
 #rosaPD .marca{stroke-width:1.6}
 #rosaPD .num{font:700 11px var(--mono);text-anchor:middle;dominant-baseline:central;fill:#0d1319}
+/* Botones que despliegan: se distinguen de los que hacen algo */
+.pdObsLista{margin-top:8px}
+.obsTit{font:700 9px var(--sans);letter-spacing:.16em;color:var(--faint);margin-bottom:4px}
+.obsFila{display:flex;align-items:center;gap:6px;padding:3px 0}
+.obsFila .pto{width:8px;height:8px;border-radius:50%;flex:none}
+.obsFila input{appearance:none;background:var(--bg);border:1px solid var(--line);color:var(--ink);
+  border-radius:6px;padding:5px 6px;font:600 12.5px var(--mono);text-align:center}
+.obsFila input.oDem{width:72px} .obsFila input.oHora{width:64px}
+.obsFila input:focus{outline:none;border-color:var(--amber2)}
+.obsFila .oDel{appearance:none;background:none;border:none;color:var(--faint);
+  font:600 16px var(--sans);cursor:pointer;padding:0 6px;line-height:1}
+.obsFila .oDel:hover{color:var(--bad)}
+.pdTogs{display:flex;justify-content:center;gap:10px;margin:10px 0 0}
+.pdTog{appearance:none;background:transparent;border:1px dashed var(--line);border-radius:8px;
+  padding:9px 12px;font:700 10.5px var(--sans);letter-spacing:.1em;cursor:pointer;
+  display:inline-flex;align-items:center;gap:6px;color:var(--dim)}
+.pdTog .cv{font-size:9px;opacity:.8}
+.pdTog.an{color:var(--teal);border-color:color-mix(in srgb,var(--teal) 45%,var(--line))}
+.pdTog.ek{color:var(--amber);border-color:color-mix(in srgb,var(--amber) 45%,var(--line))}
+.pdTog.on{border-style:solid}
+.pdTog.an.on{background:color-mix(in srgb,var(--teal) 14%,transparent);border-color:var(--teal)}
+.pdTog.ek.on{background:color-mix(in srgb,var(--amber) 14%,transparent);border-color:var(--amber)}
+/* Paneles desplegados: cuelgan de su botón por el color */
+.pdPan{margin-top:8px;padding:10px 12px;border-radius:var(--rad);border:1px solid var(--line);
+  border-left-width:3px;background:var(--bg)}
+.pdPan.an{border-left-color:var(--teal)}
+.pdPan.ek{border-left-color:var(--amber)}
+.pdPanTit{font:700 9.5px var(--sans);letter-spacing:.16em;color:var(--faint);margin-bottom:8px}
+.pdPan.an .pdPanTit{color:color-mix(in srgb,var(--teal) 70%,var(--faint))}
+.pdPan.ek .pdPanTit{color:color-mix(in srgb,var(--amber) 70%,var(--faint))}
+.pdTend.mudo{opacity:.4}
+.pdTend button:disabled{cursor:not-allowed}
+.pdTend{display:inline-flex;gap:4px}
+.pdTend button{appearance:none;background:var(--bg);border:1px solid var(--line);color:var(--dim);
+  border-radius:7px;padding:8px 10px;font:700 11px var(--sans);letter-spacing:.06em;cursor:pointer}
+.pdTend button.on{background:var(--amber2);border-color:var(--amber);color:#12181e}
+.pdTramoFila input.tHora{width:62px;appearance:none;background:var(--bg);border:1px solid var(--line);
+  color:var(--ink);border-radius:6px;padding:4px 6px;font:600 12px var(--mono);text-align:center}
+.pdTramoFila input.tHora:focus{outline:none;border-color:var(--amber2)}
+.pdTramoFila.mal input.tHora{border-color:var(--bad);color:var(--bad)}
+.pdTramoFila.mal{color:var(--bad)}
+.pdTramoFila .pto{width:9px;height:9px;border-radius:50%;flex:none;align-self:center}
+#blqPd input::placeholder{color:var(--faint);opacity:.35}
+.selGrp button.tn{border-style:dashed;color:var(--faint);letter-spacing:.06em}
 #rosaPD .min{font:9px var(--mono);text-anchor:middle;fill:var(--faint)}
 </style>
 </head>
@@ -530,16 +604,15 @@ details.expl{border-left-color:var(--amber2)}
 </header>
 
 <nav class="tabs" role="tablist" aria-label="Secciones">
-  <button role="tab" aria-selected="true"  data-v="entrenar" type="button">ENTRENAR</button>
-  <button role="tab" aria-selected="false" data-v="calcular" type="button">CALCULADORA</button>
-<button role="tab" aria-selected="false" data-v="pd" type="button">PD</button>
+  <button role="tab" aria-selected="false" data-v="entrenar" type="button">ENTRENAR</button>
+  <button role="tab" aria-selected="true"  data-v="calcular" type="button">⌖ HERRAMIENTAS ⌖</button>
   <button role="tab" aria-selected="false" data-v="referencia" type="button">APUNTES</button>
 </nav>
 
 <main>
 
 <!-- ============================ ENTRENAR ============================ -->
-<section class="vista act" id="v-entrenar" role="tabpanel">
+<section class="vista" id="v-entrenar" role="tabpanel">
 
   <div class="intro-est">
     <b>EJERCICIOS DE CÁLCULO MENTAL, CINEMÁTICA Y TMA</b>
@@ -685,23 +758,40 @@ details.expl{border-left-color:var(--amber2)}
 </section>
 
 <!-- ============================ CALCULAR ============================ -->
-<section class="vista" id="v-calcular" role="tabpanel">
+<section class="vista act" id="v-calcular" role="tabpanel">
 
   <div class="intro-est">
-    <b>HERRAMIENTAS DE CÁLCULO</b>
+    <b>HERRAMIENTAS DEL SUBMARINISTA</b>
   </div>
 
   <div class="ajuste" style="margin:0 0 12px"><span class="eti">MOSTRAR</span>
     <div class="selGrp multi" id="selCalc">
+      <button type="button" class="tn" id="btnCalcTN">TODAS / NINGUNA</button>
       <button type="button" data-v="brc" class="on">BRC</button>
       <button type="button" data-v="cpa" class="on">CPA · MANIOBRA</button>
       <button type="button" data-v="dist" class="on">ESTADIMETRÍA</button>
       <button type="button" data-v="cronos" class="on">CRONOS</button>
+      <button type="button" data-v="pd" class="on">SUBIDA PD</button>
+    </div>
+    <div id="calcNada" hidden>
+      <svg class="marcaFondo" viewBox="0 0 120 120" role="img" aria-label="⌖HSUB⌖">
+        <circle cx="60" cy="60" r="46" />
+        <circle cx="60" cy="60" r="24" />
+        <circle cx="60" cy="60" r="3.2" class="nucleo" />
+        <line x1="60" y1="4"  x2="60" y2="34" />
+        <line x1="60" y1="86" x2="60" y2="116" />
+        <line x1="4"  y1="60" x2="34" y2="60" />
+        <line x1="86" y1="60" x2="116" y2="60" />
+      </svg>
+      <b>⌖HSUB⌖</b>
+      <span>elige arriba las herramientas que quieras a la vista</span>
     </div></div>
 
   <div class="grid" id="calcGrid">
-    <div class="card" id="calcBRC">
-      <h2>BRC · COMPONENTES E INVERSOS</h2>
+    <div class="calcBlq" id="blqBrc">
+  <div class="intro-2"><b>BRC</b></div>
+  <div class="card" id="calcBRC">
+      <h2>COMPONENTES E INVERSOS</h2>
       <p class="dualleg"><b class="m">■</b> mental (tabla, K=2000) &nbsp; <b class="x">■</b> exacta (trigonometría, K=1936)</p>
       <div class="cIn">
         <div class="campo"><label>V (kn)</label><input id="bV" type="text" inputmode="decimal" value="16"></div>
@@ -723,9 +813,11 @@ details.expl{border-left-color:var(--amber2)}
       <p class="nota">Todo se recalcula al escribir. Ámbar = mental (K=2000) ·
       verdeazul = exacto (K=1936, la constante del aparato).</p>
     </div>
+</div>
 
-    <div class="card" id="calcCPA">
-      <h2>CPA · MANIOBRA</h2>
+    <div class="calcBlq" id="blqCpa">
+  <div class="intro-2"><b>CPA · MANIOBRA</b></div>
+  <div class="card" id="calcCPA">
       <div class="cIn">
         <div class="campo"><label>Co / So</label><input id="cCo" type="text" inputmode="decimal" value="000"><input id="cSo" type="text" inputmode="decimal" value="6" class="chico"><span class="uni">° · kn</span></div>
         <div class="campo"><label>D / R</label><input id="cD" type="text" inputmode="decimal" value="030"><input id="cR" type="text" inputmode="decimal" value="9000" class="chico"><span class="uni">° · yds</span></div>
@@ -784,10 +876,13 @@ details.expl{border-left-color:var(--amber2)}
       <svg id="rosa" viewBox="-110 -110 220 220" role="img" aria-label="Rosa de maniobra"></svg>
       <div class="leyenda"><span><i style="background:#ffb454"></i>propio</span><span><i style="background:#c9d6e2"></i>blanco</span><span><i style="background:#e0a852"></i>relativo→CPA</span><span><i style="background:#5ad0c0"></i>maniobra</span><span><i style="background:#e05252"></i>CPA</span></div>
     </div>
+</div>
   </div>
 
+  <div class="calcBlq" id="blqDist">
+  <div class="intro-2"><b>ESTADIMETRÍA · ALTURA DE PALO</b></div>
   <div class="card" id="calcDist">
-    <h2>TABLA DE DISTANCIAS<br>ESTADIMETRÍA PERISCOPIOS</h2>
+    <h2>TABLA DE DISTANCIAS · PERISCOPIOS</h2>
     <div class="cIn">
       <div class="campo"><label>(Altura de palo) contacto</label>
         <select id="dContacto" class="sel"></select></div>
@@ -802,8 +897,11 @@ details.expl{border-left-color:var(--amber2)}
       <div class="selGrp uniSel" id="dTabUnidad"><button type="button" data-v="yd" class="on">yardas</button><button type="button" data-v="m">metros</button></div></div>
     <table class="pnt" id="tPeriFull"></table>
   </div>
+</div>
 
 
+  <div class="calcBlq" id="blqCronos">
+  <div class="intro-2"><b>CRONOS · PUNTEO INTERMITENTE</b></div>
   <div id="calcCronos">
 
 <div class="card">
@@ -858,12 +956,13 @@ details.expl{border-left-color:var(--amber2)}
     <div class="drillBtns"><button type="button" id="btnCtrlReg">BORRAR REGISTRO</button></div>
   </div>
   </div>
+</div>
 
-</section>
 
-<!-- ============================ REFERENCIA ============================ -->
-<section class="vista" id="v-pd" role="tabpanel">
-  <div class="pdBarra">
+<div class="calcBlq" id="blqPd">
+  <div class="intro-2"><b>SUBIDA A COTA PERISCÓPICA</b></div>
+
+<div class="pdBarra">
     <div class="pdTramoAct">
       <span class="eti">TRAMO</span>
       <b id="pdRumboAct">—</b>
@@ -898,7 +997,11 @@ details.expl{border-left-color:var(--amber2)}
       </div>
     </div>
   </div>
+</div>
 </section>
+
+<!-- ============================ REFERENCIA ============================ -->
+
 
 <section class="vista" id="v-referencia" role="tabpanel">
 
@@ -1152,7 +1255,7 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
   else root.TMA = factory();
 })(typeof self !== "undefined" ? self : this, function () {
   "use strict";
-  const TMA = { version: "1.12.0" };
+  const TMA = { version: "1.15.2" };
 
   /*---------------- UTIL ----------------*/
   const norm360 = a => ((a % 360) + 360) % 360;
@@ -3818,6 +3921,8 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
      [0, 1, null], [180, -1, null], [90, 0, null]
     ].forEach(c => add("G26 PD", "signatura m" + c[0] + " Ḃ" + c[1],
       TMA.signatura(c[0], c[1]) === c[2], TMA.signatura(c[0], c[1]), c[2]));
+    add("G26 PD", "tres clases de contacto", TMA.PD.TIPOS.length === 3
+      && TMA.PD.TIPOS[0] === "Diésel mercante", TMA.PD.TIPOS.join("·"), "3 clases");
     add("G26 PD", "DD va a popa", TMA.sigPopa("DD") && TMA.sigPopa("II"), true, true);
     add("G26 PD", "DI va a proa", !TMA.sigPopa("DI") && !TMA.sigPopa("ID"), true, true);
     /* Lateral propia: máxima al través, nula por proa. */
@@ -4098,7 +4203,10 @@ TMA.fmtMS = seg => {
   Convenio de laterales, el mismo que el resto del fichero: "der/izq" es el
   sentido en que ese lateral HACE GIRAR LA DEMORA. Contacto por estribor →
   tu movimiento empuja la demora a la derecha; por babor, a la izquierda. */
-TMA.PD = { So_DEF: 5, ST_IMPLAUSIBLE: 30, DB_MIN: 0.15 };
+TMA.PD = { So_DEF: 5, ST_IMPLAUSIBLE: 30, DB_MIN: 0.15,
+  /* En cota profunda los contactos se llevan por número y en tres clases.
+     Los doce tipos por familias son de CRONOS (cota periscópica), no de aquí. */
+  TIPOS: ["Diésel mercante", "Buque de guerra", "Embarcación ligera"] };
 
 /* Marcación relativa 0–360 a partir de demora y rumbo propio. */
 TMA.marcacion = (dem, rumbo) => (((dem - rumbo) % 360) + 360) % 360;
@@ -4775,9 +4883,11 @@ $("#btnMan").addEventListener("click",calcMan);
 (function(){
   /* Cada herramienta se enciende o se apaga por su cuenta: se pueden tener
      varias a la vez, o solo las dos que interesen. La elección se guarda. */
-  var grid=$("#calcGrid"), PANEL={ brc:$("#calcBRC"), cpa:$("#calcCPA"),
-    dist:$("#calcDist"), cronos:$("#calcCronos") };
-  var LSC="tma_calc_vis_v1", VIS={brc:true,cpa:true,dist:true,cronos:true};
+  var grid=$("#calcGrid"), PANEL={ brc:$("#blqBrc"), cpa:$("#blqCpa"),
+    dist:$("#blqDist"), cronos:$("#blqCronos"), pd:$("#blqPd") };
+  /* Ninguna de partida: se abre limpio y eliges qué quieres a la vista.
+     Lo que guardaste la última vez manda sobre esto. */
+  var LSC="tma_calc_vis_v1", VIS={brc:false,cpa:false,dist:false,cronos:false,pd:false};
   try{ var gv=localStorage.getItem(LSC);
     if(gv){ var ov=JSON.parse(gv); Object.keys(VIS).forEach(function(k){
       if(typeof ov[k]==="boolean") VIS[k]=ov[k]; }); } }catch(e){}
@@ -4788,20 +4898,25 @@ $("#btnMan").addEventListener("click",calcMan);
       grid.hidden=!(VIS.brc||VIS.cpa);
       grid.classList.toggle("solo",(VIS.brc?1:0)+(VIS.cpa?1:0)===1);
     }
-    document.querySelectorAll("#selCalc button").forEach(function(b){
+    document.querySelectorAll("#selCalc button[data-v]").forEach(function(b){
       b.classList.toggle("on",!!VIS[b.dataset.v]);
       b.setAttribute("aria-pressed",VIS[b.dataset.v]?"true":"false");
     });
+    var nada=document.getElementById("calcNada");
+    if(nada) nada.hidden=Object.keys(VIS).some(function(k){return VIS[k];});
     try{ localStorage.setItem(LSC,JSON.stringify(VIS)); }catch(e){}
   }
-  document.querySelectorAll("#selCalc button").forEach(function(b){
+  document.querySelectorAll("#selCalc button[data-v]").forEach(function(b){
     b.addEventListener("click",function(){
-      var k=b.dataset.v;
-      /* No se permite apagarlas todas: dejaría la pestaña en blanco. */
-      var enc=Object.keys(VIS).filter(function(x){return VIS[x];});
-      if(VIS[k]&&enc.length===1) return;
-      VIS[k]=!VIS[k]; mostrar();
+      VIS[b.dataset.v]=!VIS[b.dataset.v]; mostrar();
     });
+  });
+  /* TODAS / NINGUNA: si falta alguna, enciende todas; si están todas, apaga todas */
+  var tn=document.getElementById("btnCalcTN");
+  if(tn) tn.addEventListener("click",function(){
+    var todas=Object.keys(VIS).every(function(k){return VIS[k];});
+    Object.keys(VIS).forEach(function(k){ VIS[k]=!todas; });
+    mostrar();
   });
   mostrar();
   window.CALCVIS_UI={ estado:function(){return VIS;},
@@ -5366,45 +5481,78 @@ window.APTRZ_UI={nuevo:function(t,s){A.tipo=t;A.ej=TRZ.nuevo(t,s||7);A.paso=0;$(
     d.innerHTML=
       '<div class="cab"><b></b><button type="button" class="del f-del">BORRAR</button></div>'+
       '<div class="pdEnt">'+
-        '<div><label>Nº</label><input class="f-num" type="text" maxlength="3" autocomplete="off" placeholder="A1"></div>'+
+        '<div><label>Nº</label><input class="f-num" type="text" inputmode="numeric" maxlength="2" autocomplete="off" placeholder="8"></div>'+
         '<div><label>TIPO</label><select class="f-tipo"></select></div>'+
         '<div><label>RPM</label><input class="f-rpm" type="text" inputmode="numeric" maxlength="4" autocomplete="off"></div>'+
-        '<div><label>B/G</label><select class="f-bg"><option value="">—</option><option value="SÍ">SÍ</option><option value="NO">NO</option></select></div>'+
+
       '</div>'+
       '<div class="pdObs">'+
         '<div><label style="display:block;font:600 9.5px var(--sans);letter-spacing:.16em;color:var(--faint);margin-bottom:3px">DEMORA</label>'+
         '<input class="f-dem" type="text" inputmode="decimal" maxlength="5" autocomplete="off" placeholder="003,5" style="width:86px;appearance:none;background:var(--bg);border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:9px;font:700 16px var(--mono)"></div>'+
         '<button type="button" class="obs f-obs">OBSERVADO</button>'+
-        '<button type="button" class="pdEkBtn f-ekb">EKELUND</button>'+
+        '<div><label style="display:block;font:600 9.5px var(--sans);letter-spacing:.16em;color:var(--faint);margin-bottom:3px">TENDENCIA</label>'+
+        '<div class="pdTend f-tend">'+
+          '<button type="button" data-s="I">◀ I</button>'+
+          '<button type="button" data-s="">AUTO</button>'+
+          '<button type="button" data-s="D">D ▶</button>'+
+        '</div></div>'+
       '</div>'+
       '<div class="pdDeriv f-deriv"></div>'+
-      '<div class="pdEk f-ek" hidden></div>';
+      '<div class="pdObsLista f-obsl"></div>'+
+      '<div class="pdTogs">'+
+        '<button type="button" class="pdTog an f-anb"><span class="cv">\u25b8</span>ANOTAR</button>'+
+        '<button type="button" class="pdTog ek f-ekb"><span class="cv">\u25b8</span>EKELUND</button>'+
+      '</div>'+
+      '<div class="pdPan an f-an" hidden></div>'+
+      '<div class="pdPan ek f-ek" hidden></div>';
 
     var sel=d.querySelector(".f-tipo");
-    sel.innerHTML='<option value="">—</option>'+ (TMA.CTRL?TMA.CTRL.TIPOS.map(function(t){
-      return '<option value="'+t.nombre+'"'+(t.nombre===c.tipo?" selected":"")+'>'+t.nombre+'</option>'; }).join(""):"");
+    sel.innerHTML='<option value="">—</option>'+TMA.PD.TIPOS.map(function(t){
+      return '<option value="'+t+'"'+(t===c.tipo?" selected":"")+'>'+t+'</option>'; }).join("");
     if(c.tipo) sel.value=c.tipo;
-    var num=d.querySelector(".f-num"), rpm=d.querySelector(".f-rpm"),
-        bg=d.querySelector(".f-bg"), dem=d.querySelector(".f-dem");
-    num.value=c.num||""; rpm.value=c.rpm||""; bg.value=c.bg||""; dem.value=c.dem||"";
-    num.addEventListener("input",function(){ c.num=num.value; cab(d,c); guardar(); pintaRosa(); });
+    var num=d.querySelector(".f-num"), rpm=d.querySelector(".f-rpm"), dem=d.querySelector(".f-dem");
+    num.value=c.num||""; rpm.value=c.rpm||""; dem.value=c.dem||"";
+    num.addEventListener("input",function(){ c.num=num.value.replace(/\D/g,""); num.value=c.num;
+      cab(d,c); guardar(); pintaRosa(); });
     rpm.addEventListener("input",function(){ c.rpm=rpm.value; guardar(); });
-    bg.addEventListener("change",function(){ c.bg=bg.value; cab(d,c); guardar(); });
     sel.addEventListener("change",function(){ c.tipo=sel.value; cab(d,c); guardar(); });
+    /* Tendencia del tramo actual: lo que marque el oficial manda; AUTO vuelve a la ley */
+    var zt=d.querySelector(".f-tend");
+    function pintaTend(){
+      var i=PD.tramos.length-1, man=(c.tend||{})[i], hay=(i>=0);
+      zt.classList.toggle("mudo",!hay);
+      zt.querySelectorAll("button").forEach(function(b){
+        b.classList.toggle("on",hay&&(man===undefined?"":man)===b.dataset.s);
+        /* No se deshabilitan: un botón muerto no puede explicar por qué lo está */
+        b.disabled=false;
+      });
+    }
+    zt.querySelectorAll("button").forEach(function(b){
+      b.addEventListener("click",function(){
+        var i=PD.tramos.length-1;
+        if(i<0){ avisa("La tendencia va pegada a un rumbo: pulsa CA\u00cdDA primero."); return; }
+        c.tend=c.tend||{};
+        if(b.dataset.s==="") delete c.tend[i]; else c.tend[i]=b.dataset.s;
+        pintaTend(); guardar(); pintaRosa();
+      });
+    });
+    pintaTend();
     dem.addEventListener("input",function(){ c.dem=dem.value; deriva(d,c); pintaRosa(); guardar(); });
     d.querySelector(".f-obs").addEventListener("click",function(){
       if(!tramoAct()){ avisa("Antes de observar hay que fijar un rumbo: usa CAÍDA."); return; }
-      observa(c); deriva(d,c); pintaRosa(); guardar(); });
+      observa(c); deriva(d,c); pintaObsL(d,c); pintaRosa(); guardar(); });
     d.querySelector(".f-ekb").addEventListener("click",function(){
       c.ekAbierto=!c.ekAbierto; pintaEk(d,c); });
+    d.querySelector(".f-anb").addEventListener("click",function(){
+      c.anAbierto=!c.anAbierto; pintaAn(d,c); });
     d.querySelector(".f-del").addEventListener("click",function(){
       PD.cs=PD.cs.filter(function(x){return x.id!==c.id}); guardar(); pinta(); });
-    cab(d,c); deriva(d,c); pintaEk(d,c);
+    cab(d,c); deriva(d,c); pintaObsL(d,c); pintaAn(d,c); pintaEk(d,c);
     return d;
   }
   function cab(d,c){
     d.querySelector(".cab b").textContent=
-      (c.num?c.num+" · ":"")+(c.tipo||"sin clasificar")+(c.bg==="SÍ"?" · B/G":"");
+      (c.num?c.num+" · ":"")+(c.tipo||"sin clasificar");
   }
 
   /* Lo observado y nada más: marcación, cómo desfila y la ley. */
@@ -5423,24 +5571,130 @@ window.APTRZ_UI={nuevo:function(t,s){A.tipo=t;A.ej=TRZ.nuevo(t,s||7);A.paso=0;$(
     z.innerHTML=p.join(' · ');
   }
 
+  /* ---------------- observaciones tomadas ----------------
+     Demora y hora corregibles: rara vez se apunta en el instante exacto,
+     y una demora mal tecleada no debe obligar a rehacer el contacto. */
+  function pintaObsL(d,c){
+    var z=d.querySelector(".f-obsl"); if(!z) return;
+    var o=c.obs||[];
+    if(!o.length){ z.innerHTML=""; return; }
+    z.innerHTML='<div class="obsTit">OBSERVACIONES</div>'+o.map(function(x,k){
+      var col=colTramo(x.tr);
+      return '<div class="obsFila" data-k="'+k+'">'+
+        '<span class="pto" style="background:'+col+'"></span>'+
+        '<input class="oDem" value="'+TMA.fmtDem(x.b)+'" maxlength="5" inputmode="decimal" aria-label="demora">'+
+        '<input class="oHora" value="'+hhmm(x.t)+'" maxlength="5" inputmode="numeric" aria-label="hora">'+
+        '<button type="button" class="oDel" aria-label="borrar observaci\u00f3n">\u00d7</button>'+
+        '</div>';
+    }).join("");
+    z.querySelectorAll(".obsFila").forEach(function(f){
+      var k=+f.dataset.k;
+      f.querySelector(".oDem").addEventListener("change",function(){
+        var v=TMA.leeDem(this.value);
+        if(isFinite(v)) c.obs[k].b=v;
+        refrescaFicha(d,c);
+      });
+      f.querySelector(".oHora").addEventListener("change",function(){
+        var m=/^(\d{1,2})[:.]?(\d{2})$/.exec(this.value.trim());
+        if(m && +m[1]<24 && +m[2]<60){
+          var dd=new Date(c.obs[k].t); dd.setHours(+m[1],+m[2],0,0);
+          c.obs[k].t=dd.getTime();
+        }
+        refrescaFicha(d,c);
+      });
+      f.querySelector(".oDel").addEventListener("click",function(){
+        c.obs.splice(k,1); refrescaFicha(d,c);
+      });
+    });
+  }
+  /* Un cambio en una observaci\u00f3n toca la ley, la signatura y la rosa */
+  function refrescaFicha(d,c){
+    deriva(d,c); pintaObsL(d,c); pintaRosa(); guardar();
+    var dm=d.querySelector(".f-dem");
+    var o=c.obs||[];
+    if(dm && o.length){ c.dem=TMA.fmtDem(o[o.length-1].b); dm.value=c.dem; }
+  }
+
+  /* ---------------- anotaciones del oficial ----------------
+     Los campos de la tabla de papel que no se calculan: se apuntan. */
+  function pintaAn(d,c){
+    var z=d.querySelector(".f-an"); if(!z) return;
+    var bt=d.querySelector(".f-anb");
+    if(bt){ bt.classList.toggle("on",!!c.anAbierto);
+      bt.querySelector(".cv").textContent=c.anAbierto?"\u25be":"\u25b8"; }
+    z.hidden=!c.anAbierto; if(!c.anAbierto) return;
+    c.an=c.an||{};
+    ["alac","lc","dmin","dminT","dmax","dmaxT","dder","cpa","adR","adV","adD"].forEach(function(k){
+      if(c.an[k]===undefined) c.an[k]=""; });
+    /* Si viene de una versi\u00f3n anterior con el R/V/D en una sola casilla,
+       se conserva el texto en el rumbo para no perder lo escrito. */
+    if(c.an.rvd){ if(!c.an.adR) c.an.adR=c.an.rvd; delete c.an.rvd; }
+    /* Dos opciones y nada más: se marca una, y repulsarla la desmarca. */
+    var sg=function(k,rot,ops){
+      return '<div class="ce"><label>'+rot+'</label>'+
+        '<div class="pdTend an-sg" data-k="'+k+'">'+ops.map(function(o){
+          return '<button type="button" data-s="'+o+'"'+(c.an[k]===o?' class="on"':'')+'>'+o+'</button>';
+        }).join("")+'</div></div>';
+    };
+    var tx=function(k,rot,ph){
+      return '<div class="ce"><label>'+rot+'</label>'+
+        '<input class="an-tx" data-k="'+k+'" value="'+(c.an[k]||"")+'" placeholder="'+(ph||"")+'" inputmode="numeric"></div>';
+    };
+    /* El minuto del cálculo va aparte del valor: 7'm4,5 son dos datos.
+       Se teclea, no se sella: no tiene por qué coincidir con el momento
+       en que se apunta. */
+    z.innerHTML='<div class="pdPanTit">LO QUE OBSERVAS Y APUNTAS</div>'+
+      '<div class="anGrid">'+
+        sg("alac","AL / AC",["AL","AC"])+
+        sg("lc","L / C",["L","C"])+
+        tx("dmin","Dmin","4500")+tx("dminT","MIN\u2019 del c\u00e1lculo","7")+
+        tx("dmax","Dmax","17000")+tx("dmaxT","MIN\u2019 del c\u00e1lculo","18")+
+        tx("dder","DIST DERR","")+tx("cpa","CPA","")+
+        tx("adR","RUMBO","130")+
+        tx("adV","VEL","20")+
+        tx("adD","DIST","16000")+
+      '</div>';
+    z.querySelectorAll(".an-sg").forEach(function(g){
+      var k=g.dataset.k;
+      g.querySelectorAll("button").forEach(function(b){
+        b.addEventListener("click",function(){
+          var ya=(c.an[k]===b.dataset.s);
+          c.an[k]=ya?"":b.dataset.s;
+          g.querySelectorAll("button").forEach(function(x){ x.classList.toggle("on",!ya&&x===b); });
+          guardar();
+        });
+      });
+    });
+    z.querySelectorAll(".an-tx").forEach(function(inp){
+      inp.addEventListener("input",function(){ c.an[inp.dataset.k]=inp.value; guardar(); });
+    });
+  }
+
   /* ---------------- maniobra Ekelund ---------------- */
   function pintaEk(d,c){
     var z=d.querySelector(".f-ek"); if(!z) return;
+    var bt=d.querySelector(".f-ekb");
+    if(bt){ bt.classList.toggle("on",!!c.ekAbierto);
+      bt.querySelector(".cv").textContent=c.ekAbierto?"\u25be":"\u25b8"; }
     z.hidden=!c.ekAbierto; if(!c.ekAbierto) return;
     c.ek=c.ek||{ t1:{rumbo:"",vel:"5",dem:"",ley:""}, t2:{rumbo:"",vel:"5",dem:"",ley:""} };
     var fila=function(k,rot){
       var t=c.ek[k];
-      return '<div class="pdEkFila" data-t="'+k+'"><span class="t">'+rot+'</span>'+
-        '<div><label style="display:block;font:600 9px var(--sans);letter-spacing:.14em;color:var(--faint);margin-bottom:2px">RUMBO</label><input class="e-rumbo" value="'+(t.rumbo||"")+'"></div>'+
-        '<div><label style="display:block;font:600 9px var(--sans);letter-spacing:.14em;color:var(--faint);margin-bottom:2px">VEL</label><input class="e-vel" value="'+(t.vel||"")+'"></div>'+
-        '<div><label style="display:block;font:600 9px var(--sans);letter-spacing:.14em;color:var(--faint);margin-bottom:2px">DEMORA</label><input class="e-dem" value="'+(t.dem||"")+'"></div>'+
-        '<div><label style="display:block;font:600 9px var(--sans);letter-spacing:.14em;color:var(--faint);margin-bottom:2px">Ḃ °/min</label><input class="e-ley" value="'+(t.ley||"")+'"></div>'+
-        '</div>';
+      var campo=function(cl,rot2,ph){
+        return '<div class="ce"><label>'+rot2+'</label><input class="'+cl+'" value="'+(t[cl.replace("e-","")]||"")+'" placeholder="'+(ph||"")+'" inputmode="decimal"></div>';
+      };
+      return '<div class="pdEkFila" data-t="'+k+'">'+
+        '<span class="t">'+rot+'</span>'+
+        '<div class="ceGrid">'+
+          campo("e-rumbo","RUMBO","270")+campo("e-vel","VEL","5")+
+          campo("e-dem","DEMORA","300")+campo("e-ley","\u1e04 \u00b0/min","0,6")+
+        '</div></div>';
     };
-    z.innerHTML=fila("t1","TRAMO 1")+fila("t2","TRAMO 2")+
+    z.innerHTML='<div class="pdPanTit">MANIOBRA EKELUND \u00b7 dos tramos con la lateral invertida</div>'+
+      fila("t1","TRAMO 1")+fila("t2","TRAMO 2")+
       '<button type="button" class="pdEkBtn f-ektraer">TRAER DE LOS TRAMOS</button>'+
       '<div class="pdEkRes f-ekres"></div><div class="pdEkAviso f-ekav"></div>';
-    z.querySelectorAll(".pdEkFila").forEach(function(f){
+    z.querySelectorAll(".pdEkFila[data-t]").forEach(function(f){
       var k=f.dataset.t;
       f.querySelectorAll("input").forEach(function(inp){
         var campo=inp.className.replace("e-","");
@@ -5490,6 +5744,62 @@ window.APTRZ_UI={nuevo:function(t,s){A.tipo=t;A.ej=TRZ.nuevo(t,s||7);A.paso=0;$(
   }
 
   /* ---------------- rosa de demoras ---------------- */
+  /* Cada tramo tiene su color; la proa y las flechas de tendencia lo usan,
+     así que se ve de un golpe con qué rumbo se apuntó cada cosa. */
+  var TRC=["var(--ok)","var(--bad)","var(--amber)","var(--teal)"];
+  function colTramo(i){ return TRC[((i%TRC.length)+TRC.length)%TRC.length]; }
+  /* Tendencia por tramo: manda la marcada a mano; sin ella, la ley del tramo */
+  function tendTramo(c,i){
+    var man=(c.tend||{})[i];
+    if(man==="D"||man==="I") return man;
+    var L=leyTramo(c,i);
+    if(L===null||Math.abs(L)<0.05) return null;
+    return L>0?"D":"I";
+  }
+  /* Demora del contacto en un tramo: la última de ese tramo; sin ella, la
+     última conocida hasta entonces; y si tampoco, la tecleada. */
+  function demEnTramo(c,i){
+    var o=(c.obs||[]).filter(function(x){return x.tr===i;});
+    if(o.length) return o[o.length-1].b;
+    var prev=(c.obs||[]).filter(function(x){return x.tr<=i;});
+    if(prev.length) return prev[prev.length-1].b;
+    return ultDem(c);
+  }
+  /* Qué dos tendencias dibujar: la actual y la más reciente que se tomara
+     con la LATERAL PROPIA OPUESTA — que es la pareja que informa — saltando
+     las de igual lateral. Si no existe pareja, solo la actual. */
+  function tendencias(c){
+    var T=[];
+    for(var i=0;i<PD.tramos.length;i++){
+      var t=tendTramo(c,i); if(!t) continue;
+      var dd=demEnTramo(c,i); if(!isFinite(dd)) continue;
+      var b=TMA.bandaMarc(TMA.marcacion(dd, PD.tramos[i].rumbo));
+      if(!b) continue;
+      T.push({i:i, s:t, lado:b});
+    }
+    if(!T.length) return [];
+    var ult=T[T.length-1], prev=null;
+    for(var k=T.length-2;k>=0;k--){
+      if(T[k].lado!==ult.lado){ prev=T[k]; break; }
+    }
+    return prev?[prev,ult]:[ult];
+  }
+  /* Arco con punta que rodea el círculo del contacto en el sentido de la
+     tendencia. dem orienta el arco para que quede tangencial a la rosa. */
+  function arcoTend(x,y,r,dem,s,col){
+    var base=(dem-90)*Math.PI/180;
+    var barr=(110*Math.PI/180)*(s==="D"?1:-1);
+    var a0=base-barr/2, a1=base+barr/2;
+    var x0=x+r*Math.cos(a0), y0=y+r*Math.sin(a0);
+    var x1=x+r*Math.cos(a1), y1=y+r*Math.sin(a1);
+    var g='<path d="M '+x0.toFixed(1)+' '+y0.toFixed(1)+' A '+r+' '+r+' 0 0 '+(s==="D"?1:0)+' '+x1.toFixed(1)+' '+y1.toFixed(1)+'" fill="none" stroke="'+col+'" stroke-width="2"/>';
+    var tang=a1+(s==="D"?1:-1)*Math.PI/2;
+    var px=x1, py=y1, L=6;
+    var b1x=px-L*Math.cos(tang)+3.2*Math.cos(a1), b1y=py-L*Math.sin(tang)+3.2*Math.sin(a1);
+    var b2x=px-L*Math.cos(tang)-3.2*Math.cos(a1), b2y=py-L*Math.sin(tang)-3.2*Math.sin(a1);
+    g+='<polygon points="'+px.toFixed(1)+','+py.toFixed(1)+' '+b1x.toFixed(1)+','+b1y.toFixed(1)+' '+b2x.toFixed(1)+','+b2y.toFixed(1)+'" fill="'+col+'"/>';
+    return g;
+  }
   function pintaRosa(){
     var svg=$("#rosaPD"); if(!svg) return;
     var tr=tramoAct();
@@ -5497,8 +5807,8 @@ window.APTRZ_UI={nuevo:function(t,s){A.tipo=t;A.ej=TRZ.nuevo(t,s||7);A.paso=0;$(
       '<line class="eje" x1="0" y1="-100" x2="0" y2="100"/><line class="eje" x1="-100" y1="0" x2="100" y2="0"/>'+
       '<text class="card" x="0" y="-104">000</text><text class="card" x="108" y="3">090</text>'+
       '<text class="card" x="0" y="113">180</text><text class="card" x="-108" y="3">270</text>';
-    if(tr){ var a=(tr.rumbo-90)*Math.PI/180;
-      g+='<line class="proa" x1="0" y1="0" x2="'+(104*Math.cos(a)).toFixed(1)+'" y2="'+(104*Math.sin(a)).toFixed(1)+'"/>'; }
+    if(tr){ var a=(tr.rumbo-90)*Math.PI/180, colA=colTramo(PD.tramos.length-1);
+      g+='<line class="proa" style="stroke:'+colA+'" x1="0" y1="0" x2="'+(104*Math.cos(a)).toFixed(1)+'" y2="'+(104*Math.sin(a)).toFixed(1)+'"/>'; }
     g+='<circle class="prop" cx="0" cy="0" r="4"/>';
     PD.cs.forEach(function(c){
       var d=ultDem(c); if(!isFinite(d)) return;
@@ -5508,6 +5818,12 @@ window.APTRZ_UI={nuevo:function(t,s){A.tipo=t;A.ej=TRZ.nuevo(t,s||7);A.paso=0;$(
       g+='<line class="vec" x1="0" y1="0" x2="'+x+'" y2="'+y+'" style="stroke:'+col+'"/>';
       g+='<circle class="marca" cx="'+x+'" cy="'+y+'" r="12" style="fill:'+col+';stroke:'+col+'"/>';
       g+='<text class="num" x="'+x+'" y="'+y+'">'+(c.num||"·")+'</text>';
+      /* tendencias: la anterior por fuera, la actual pegada al círculo */
+      var ts=tendencias(c);
+      ts.forEach(function(tt,j){
+        var rr=(ts.length===2&&j===0)?19:26;   /* vieja dentro, nueva fuera */
+        g+=arcoTend(x,y,rr,d,tt.s,colTramo(tt.i));
+      });
       var o=c.obs||[]; if(o.length) g+='<text class="min" x="'+x+'" y="'+(y+24).toFixed(1)+'">'+
         ("0"+new Date(o[o.length-1].t).getMinutes()).slice(-2)+'</text>';
     });
@@ -5520,17 +5836,38 @@ window.APTRZ_UI={nuevo:function(t,s){A.tipo=t;A.ej=TRZ.nuevo(t,s||7);A.paso=0;$(
   /* ---------------- tramos ---------------- */
   function pintaTramos(){
     var z=$("#pdTramos"); if(!z) return;
-    if(!PD.tramos.length){ z.innerHTML='<div class="regVacio">sin tramos: teclea el rumbo y pulsa CAÍDA</div>'; return; }
+    if(!PD.tramos.length){ z.innerHTML='<div class="regVacio">sin tramos: teclea el rumbo y pulsa CA\u00cdDA</div>';
+      var ra0=$("#pdRumboAct"), de0=$("#pdTramoDesde");
+      if(ra0){ ra0.textContent="\u2014"; ra0.style.color=""; }
+      if(de0) de0.textContent="";
+      return; }
+    /* La hora se puede corregir: casi nunca se apunta la ca\u00edda en el instante
+       en que ocurre. Si el orden queda desbaratado, la fila lo avisa. */
     z.innerHTML=PD.tramos.map(function(t,i){
       var fin=(i<PD.tramos.length-1)?PD.tramos[i+1].t:null;
       var dur=Math.round(((fin||Date.now())-t.t)/60000);
-      return '<div class="pdTramoFila'+(i===PD.tramos.length-1?" act":"")+'">'+
-        '<span class="r">'+("00"+t.rumbo).slice(-3)+'</span>'+
-        '<span>'+hhmm(t.t)+'</span><span>'+dur+' min</span>'+
+      var mal=(i>0&&t.t<PD.tramos[i-1].t)||(fin!==null&&fin<t.t);
+      return '<div class="pdTramoFila'+(i===PD.tramos.length-1?" act":"")+(mal?" mal":"")+'" data-i="'+i+'">'+
+        '<span class="pto" style="background:'+colTramo(i)+'"></span>'+
+        '<span class="r" style="color:'+colTramo(i)+'">'+("00"+t.rumbo).slice(-3)+'</span>'+
+        '<input class="tHora" value="'+hhmm(t.t)+'" maxlength="5" inputmode="numeric" aria-label="hora del tramo">'+
+        '<span>'+(mal?"\u26a0":dur+" min")+'</span>'+
         '<span style="margin-left:auto">'+t.vel+' kn</span></div>';
     }).join("");
+    z.querySelectorAll(".tHora").forEach(function(inp){
+      inp.addEventListener("change",function(){
+        var i=+inp.parentNode.dataset.i, m=/^(\d{1,2})[:.]?(\d{2})$/.exec(inp.value.trim());
+        if(!m){ pintaTramos(); return; }
+        var h=+m[1], mi=+m[2];
+        if(h>23||mi>59){ pintaTramos(); return; }
+        var d0=new Date(PD.tramos[i].t); d0.setHours(h,mi,0,0);
+        PD.tramos[i].t=d0.getTime();
+        guardar(); pintaTramos();
+      });
+    });
     var ra=$("#pdRumboAct"), de=$("#pdTramoDesde"), a=tramoAct();
-    if(ra) ra.textContent=a?("00"+a.rumbo).slice(-3):"—";
+    if(ra){ ra.textContent=a?("00"+a.rumbo).slice(-3):"\u2014";
+      ra.style.color=a?colTramo(PD.tramos.length-1):""; }
     if(de) de.textContent=a?("desde "+hhmm(a.t)):"";
   }
   function crono(){
@@ -5581,11 +5918,7 @@ window.APTRZ_UI={nuevo:function(t,s){A.tipo=t;A.ej=TRZ.nuevo(t,s||7);A.paso=0;$(
     marc:marcDe, ley:leyDe };
 })();
 
-/* ============ SERVICE WORKER · actualización en iOS ====================
-   El HTML va por red primero (lo decide el sw.js), así que basta con pedir
-   comprobación al cargar y cada vez que la app vuelve a primer plano.
-   Cuando entra una versión nueva se recarga UNA sola vez: el indicador
-   evita el bucle de recargas. */
+/* ============ SERVICE WORKER · actualización en iOS ==================== */
 (function(){
   if(!("serviceWorker" in navigator)) return;
   var recargado=false;
