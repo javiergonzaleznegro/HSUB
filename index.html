@@ -93,6 +93,7 @@ table.pnt{width:100%;border-collapse:collapse;font:13px var(--mono)}
 table.pnt th,table.pnt td{border-bottom:1px solid var(--line);padding:5px 6px;text-align:center}
 table.pnt th{color:var(--dim)}
 table.pnt td:first-child{color:var(--amber);font-weight:700}
+#tStats td:first-child{color:var(--dim);font-weight:400}
 
 /* Autocomprobación (firma de la tanda 1) */
 #chkPanel .fila{display:flex;align-items:center;gap:10px;padding:6px 2px;
@@ -152,10 +153,6 @@ button.accion:disabled{opacity:.35;cursor:default}
 #dVeredicto.ok{color:var(--ok)} #dVeredicto.bad{color:var(--bad)}
 .pista{font:13px var(--sans);color:var(--dim);margin-top:6px}
 .pista b{color:var(--ink)}
-#tStats td:first-child{text-align:left;color:var(--ink);font-weight:400}
-#tStats td.pc{color:var(--amber)}
-#tStats tr.tot td{border-top:1px solid var(--teal);color:var(--teal);font-weight:700;padding-top:7px}
-#tStats tr.tot td.pc{color:var(--amber)}
 
 /* ==================== CALCULAR ==================== */
 .cIn{display:flex;flex-wrap:wrap;gap:2px 22px}
@@ -528,6 +525,11 @@ details.expl{border-left-color:var(--amber2)}
 .anGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 @media (min-width:520px){ .anGrid{grid-template-columns:repeat(3,minmax(0,1fr))} }
 @media (min-width:900px){ .anGrid{grid-template-columns:repeat(4,minmax(0,1fr))} }
+.anGrid .ce.rvd{grid-column:1/-1}
+.rvdFila{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.rvdFila input{width:100%;appearance:none;background:var(--bg);border:1px solid var(--line);
+  color:var(--ink);border-radius:7px;padding:7px 6px;font:600 14px var(--mono);text-align:center;min-width:0}
+.rvdFila input:focus{outline:none;border-color:var(--amber2)}
 .anGrid .pdTend{display:grid;grid-template-columns:1fr 1fr;gap:4px}
 .anGrid .pdTend button{padding:9px 4px}
 .ceGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;flex:1;min-width:0}
@@ -555,6 +557,8 @@ details.expl{border-left-color:var(--amber2)}
 #rosaPD .rosaCard{fill:var(--faint);font:600 9px var(--sans);letter-spacing:.1em;text-anchor:middle}
 #rosaPD .proa{stroke:var(--teal);stroke-width:1.6;opacity:.9}
 #rosaPD .prop{fill:var(--teal)}
+#rosaPD .proa.vieja{opacity:.42;stroke-dasharray:5 4}
+#rosaPD .rumboEt{font:600 8.5px var(--mono);text-anchor:middle;opacity:.85}
 #rosaPD .vec{stroke-width:1.6;opacity:.85}
 #rosaPD .marca{stroke-width:1.6}
 #rosaPD .num{font:700 11px var(--mono);text-anchor:middle;dominant-baseline:central;fill:#0d1319}
@@ -570,6 +574,67 @@ details.expl{border-left-color:var(--amber2)}
 .obsFila .oDel{appearance:none;background:none;border:none;color:var(--faint);
   font:600 16px var(--sans);cursor:pointer;padding:0 6px;line-height:1}
 .obsFila .oDel:hover{color:var(--bad)}
+.sesGuardar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:6px 0 10px}
+.sesGuardar input{flex:1;min-width:150px;appearance:none;background:var(--bg);
+  border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:9px 10px;
+  font:13px var(--sans)}
+.sesGuardar input:focus{outline:none;border-color:var(--amber2)}
+/* Los tres niveles llevan filo azul; el resto de desplegables no cambia. */
+#listaNiveles details.expl{border-left-color:var(--teal)}
+
+/* ---- Tabla de estadística: un solo criterio de color ----
+   Antes mezclaba ámbar, teal y blanco según la columna y la fila, y el
+   estilo genérico de tabla pintaba además la primera casilla en ámbar.
+   Ahora: rótulos apagados, cifras en ámbar y el total resaltado. */
+#tStats td:first-child{text-align:left;color:var(--dim);font-weight:400}
+#tStats td.pc{color:var(--amber);font-weight:600}
+/* La nota va en azul a propósito: distingue de un vistazo la cuenta fina
+   (casilla a casilla) de la de ejercicios enteros. */
+#tStats td.pc2{color:var(--teal);font-weight:600}
+#tStats th{color:var(--faint)}
+#tStats tr.tot td{border-top:1px solid var(--line);color:var(--ink);
+  font-weight:700;padding-top:7px}
+#tStats tr.tot td.pc{color:var(--amber)}
+#tStats tr.tot td.pc2{color:var(--teal)}
+#tStats tr.sep td{font:700 9px var(--sans);letter-spacing:.16em;color:var(--teal);
+  padding-top:10px;border-bottom:1px solid var(--line)}
+table.sesTab{width:100%;border-collapse:collapse;font:12px var(--mono)}
+table.sesTab th{font:600 9px var(--sans);letter-spacing:.14em;color:var(--faint);
+  text-align:left;padding:4px 6px;border-bottom:1px solid var(--line)}
+table.sesTab td{padding:6px 6px;border-bottom:1px solid var(--line);color:var(--dim)}
+table.sesTab tr:last-child td{border-bottom:none}
+table.sesTab td.nom{color:var(--ink);font-family:var(--sans);font-weight:600}
+table.sesTab td.res{color:var(--amber);font-weight:600;text-align:right;white-space:nowrap}
+table.sesTab td.acc{text-align:right;width:34px}
+table.sesTab tr.act td{background:rgba(255,180,84,.07)}
+table.sesTab tr.act td.nom{color:var(--amber)}
+table.sesTab .ensesion{font:700 9px var(--sans);letter-spacing:.1em;color:var(--amber);
+  border:1px solid var(--amber2);border-radius:5px;padding:3px 6px;margin-right:4px;
+  display:inline-block}
+table.sesTab .abre{appearance:none;background:none;border:1px solid var(--line);
+  color:var(--amber);border-radius:5px;font:600 9px var(--sans);letter-spacing:.1em;
+  cursor:pointer;padding:3px 6px;margin-right:4px}
+table.sesTab .abre:hover{border-color:var(--amber)}
+table.sesTab .pdf{appearance:none;background:none;border:1px solid var(--line);
+  color:var(--teal);border-radius:5px;font:600 9px var(--sans);letter-spacing:.1em;
+  cursor:pointer;padding:3px 6px;margin-right:4px}
+table.sesTab .pdf:hover{border-color:var(--teal)}
+table.sesTab td.acc{white-space:nowrap;width:auto}
+table.sesTab .del{appearance:none;background:none;border:none;color:var(--faint);
+  font:600 16px var(--sans);cursor:pointer;padding:0 4px;line-height:1}
+table.sesTab .del:hover{color:var(--bad)}
+.sesVacio{color:var(--faint);font:11.5px var(--mono);padding:4px 2px}
+table.cmpExa{width:100%;border-collapse:collapse;font:12.5px var(--mono);margin-top:4px}
+table.cmpExa th{font:600 9px var(--sans);letter-spacing:.14em;color:var(--faint);
+  text-align:right;padding:3px 8px;border-bottom:1px solid var(--line)}
+table.cmpExa th:first-child{text-align:left}
+table.cmpExa td{padding:4px 8px;text-align:right;color:var(--dim)}
+table.cmpExa td:first-child{text-align:left;color:var(--faint);font-family:var(--sans);font-size:11px}
+table.cmpExa .m{color:var(--amber);font-weight:600}
+table.cmpExa .x{color:var(--teal)}
+h2.plegable{cursor:pointer;user-select:none;display:flex;align-items:center;gap:8px}
+h2.plegable .cv{font-size:10px;color:var(--teal);opacity:1}
+h2.plegable:hover{color:var(--amber)}
 .pdTogs{display:flex;justify-content:center;gap:10px;margin:10px 0 0}
 .pdTog{appearance:none;background:transparent;border:1px dashed var(--line);border-radius:8px;
   padding:9px 12px;font:700 10.5px var(--sans);letter-spacing:.1em;cursor:pointer;
@@ -603,6 +668,31 @@ details.expl{border-left-color:var(--amber2)}
 #blqPd input::placeholder{color:var(--faint);opacity:.35}
 .selGrp button.tn{border-style:dashed;color:var(--faint);letter-spacing:.06em}
 #rosaPD .min{font:9px var(--mono);text-anchor:middle;fill:var(--faint)}
+/* ---- Resumen imprimible ----------------------------------------------
+   Vive dentro de la página y solo aparece al imprimir. Se pinta en claro
+   para que salga legible en papel o en el PDF. */
+#impresion{display:none}
+@media print{
+  html.imprimiendo body>*{display:none!important}
+  html.imprimiendo #impresion{display:block!important;color:#111;background:#fff}
+  html.imprimiendo body{background:#fff;margin:0}
+  #impresion h1{font:700 17px/1.3 -apple-system,system-ui,sans-serif;color:#111;margin:0 0 2px}
+  #impresion h2{font:700 11px/1.4 -apple-system,system-ui,sans-serif;letter-spacing:.12em;
+    text-transform:uppercase;color:#555;margin:18px 0 6px;border-bottom:1px solid #ccc;padding-bottom:3px}
+  #impresion .sub{color:#666;margin:0 0 14px;font-size:11.5px}
+  #impresion .cab{display:flex;gap:26px;flex-wrap:wrap;margin:10px 0 4px}
+  #impresion .cab div{font-size:11px;color:#666}
+  #impresion .cab b{display:block;font-size:19px;color:#111}
+  #impresion table{width:100%;border-collapse:collapse;margin-bottom:4px;font-size:12px}
+  #impresion th{font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#777;
+    text-align:right;padding:4px 6px;border-bottom:1px solid #bbb}
+  #impresion th:first-child,#impresion th:nth-child(2){text-align:left}
+  #impresion td{padding:4px 6px;text-align:right;border-bottom:1px solid #eee;color:#222}
+  #impresion td:first-child,#impresion td:nth-child(2){text-align:left}
+  #impresion tr.tot td{font-weight:700;border-top:1px solid #999;border-bottom:none}
+  #impresion .pie{font-size:10.5px;color:#777;margin-top:4px}
+  @page{margin:12mm}
+}
 </style>
 </head>
 <body>
@@ -629,8 +719,8 @@ details.expl{border-left-color:var(--amber2)}
 
   <div class="ajuste" style="margin:0 0 12px"><span class="eti">MODO</span>
     <div class="selGrp" id="selEnt">
-      <button type="button" data-v="pen" class="on">MINUTO PEÑIQUERO</button>
-      <button type="button" data-v="trz">TRAZADO</button>
+      <button type="button" data-v="pen" class="on">CÁLCULO MENTAL</button>
+      <button type="button" data-v="trz">DIBUJO</button>
     </div></div>
 
   
@@ -651,7 +741,7 @@ details.expl{border-left-color:var(--amber2)}
     <div class="ajuste"><span class="eti">GRUPO</span>
       <div class="selGrp" id="selGrupo">
         <button type="button" data-v="todos" class="on">TODOS</button>
-        <button type="button" data-v="demoras">DEMORAS·RUMBOS</button>
+        <button type="button" data-v="demoras">DEMORAS · RUMBOS</button>
         <button type="button" data-v="velocidades">VELOCIDADES</button>
         <button type="button" data-v="distancias">DISTANCIAS</button>
         <button type="button" data-v="punteo">PUNTEO</button>
@@ -659,26 +749,7 @@ details.expl{border-left-color:var(--amber2)}
     
     <p style="margin:10px 0"><button class="accion" id="btnComenzar" type="button">COMENZAR</button>
       <span class="nota">(<span id="poolInfo"></span>)</span></p>
-    <div style="margin:6px 0 10px">
-      <details class="expl"><summary>BÁSICO</summary><div class="expl-body">
-        <span class="lvlcat">DEMORAS Y RUMBOS</span><span class="k">T01 · Inversa de una demora<br>T02 · Rumbo del blanco</span>
-        <span class="lvlcat">DISTANCIAS</span><span class="k">T03 · Regla de los 3'<br>T04 · Regla de los 6'<br>T05 · Distancia a la derrota</span>
-        <span class="lvlcat">VELOCIDADES</span><span class="k">T06 · Tabla de senos<br>T07 · Componente ALOS</span>
-        <span class="lvlcat">PUNTEO PERISCÓPICO</span><span class="k">T08 · Distancia periscópica</span>
-      </div></details>
-      <details class="expl"><summary>INTERMEDIO</summary><div class="expl-body">
-        <span class="lvlcat">DEMORAS Y RUMBOS</span><span class="k">T09 · Beta del contacto<br>T10 · Ángulo LA</span>
-        <span class="lvlcat">VELOCIDADES</span><span class="k">T11 · Componente ILOS</span>
-        <span class="lvlcat">DISTANCIAS</span><span class="k">T12 · Distancia lateral<br>T13 · Separación de escoltas</span>
-        <span class="lvlcat">TIEMPOS</span><span class="k">T14 · Tiempo al CPA</span>
-        <span class="lvlcat">PUNTEO PERISCÓPICO</span><span class="k">T15 · Tiempo entre observaciones</span>
-      </div></details>
-      <details class="expl"><summary>EXPERTO</summary><div class="expl-body">
-        <span class="lvlcat">VELOCIDADES</span><span class="k">T16 · SrALOS con bandas<br>T17 · St en POINTING</span>
-        <span class="lvlcat">DISTANCIAS</span><span class="k">T18 · Dmin y Dmax<br>T19 · Distancia Ekelund</span>
-        <span class="lvlcat">DEMORAS Y RUMBOS</span><span class="k">T20 · Rumbo ZBR</span>
-      </div></details>
-    </div>
+    <div style="margin:6px 0 10px" id="listaNiveles"></div>
     </div>
 
   </div>
@@ -694,7 +765,7 @@ details.expl{border-left-color:var(--amber2)}
     <div id="dCampos"></div>
     <div class="drillBtns">
       <button class="accion" id="btnCorregir" type="button">CORREGIR</button>
-      <button class="accion sec" id="btnSiguiente" type="button" hidden>SIGUIENTE</button>
+      <button class="accion" id="btnSiguiente" type="button" hidden>SIGUIENTE</button>
       <button class="accion sec" id="btnTerminar" type="button">TERMINAR</button>
     </div>
     <div id="dResultado" hidden>
@@ -704,6 +775,7 @@ details.expl{border-left-color:var(--amber2)}
         <summary>Ver resolución paso a paso</summary>
         <div class="expl-body">
           <div class="blq"><span class="et2">DESARROLLO</span><ol class="pasos" id="dPasos"></ol></div>
+          <div class="blq" id="dExacto" hidden></div>
           <div class="blq idea" id="dTeoria"></div>
         </div>
       </details>
@@ -714,23 +786,17 @@ details.expl{border-left-color:var(--amber2)}
 
   <div id="modoTrz" hidden>
     <div class="card">
-      <h2>EJERCICIOS DE TRAZADO <span class="chip">MESA + ROSA</span></h2>
+      <h2>ROSA Y MESA</h2>
       <div class="ajuste"><span class="eti">TIPO</span>
         <div class="selGrp" id="trzTipo">
-          <button type="button" data-v="TZ1" class="on">CPA</button>
+          <button type="button" data-v="TZ1" class="on">CPA POR DATOS</button>
           <button type="button" data-v="TZ2">SITUARSE</button>
-          <button type="button" data-v="TZ3">2 OBSERV.</button>
-          <button type="button" data-v="TZ4">INTERCEPT.</button>
-          <button type="button" data-v="TZ5">ALEJAM.</button>
+          <button type="button" data-v="TZ3">Ct/St POR 2 OBSERVACIONES</button>
+          <button type="button" data-v="TZ4">INTERCEPTACIÓN</button>
+          <button type="button" data-v="TZ5">ALEJAMIENTO</button>
         </div></div>
-      <div class="ajuste"><span class="eti"></span>
-        <div class="selGrp">
-          <button type="button" class="accion" id="trzNuevo">NUEVO EJERCICIO</button>
-          <button type="button" id="trzDoc0">DOCTRINA 1·CPA</button>
-          <button type="button" id="trzDoc1">DOCTRINA 1·SIT.</button>
-          <button type="button" id="trzDoc2">DOCTRINA 2</button>
-        </div></div>
-      <p class="enun" id="trzEnun">Elige tipo y pulsa NUEVO EJERCICIO — o carga uno de doctrina. Resuélvelo en tu rosa o mesa de papel y comprueba después, paso a paso.</p>
+      <p style="margin:10px 0"><button type="button" class="accion" id="trzNuevo">NUEVO EJERCICIO</button></p>
+      <p class="enun" id="trzEnun">Elige el tipo y pulsa NUEVO EJERCICIO. Resuélvelo en tu rosa o mesa de papel, anota tus valores y comprueba después, paso a paso.</p>
       <div id="trzCorr" hidden>
         <div id="trzCampos"></div>
         <p><button class="accion sec" id="trzCorrBtn" type="button">CORREGIR MIS VALORES</button></p>
@@ -758,10 +824,25 @@ details.expl{border-left-color:var(--amber2)}
     </div>
   </div>
   <div class="card" id="penStats">
-    <h2>ESTADÍSTICA <span class="chip" id="stSesion"></span></h2>
+    <h2 class="plegable" id="stTit" role="button" tabindex="0" aria-expanded="false"
+        aria-controls="stCuerpo"><span class="cv">▸</span>ESTADÍSTICA
+        <span class="chip" id="stSesion"></span></h2>
+    <div id="stCuerpo" hidden>
     <table class="pnt" id="tStats"></table>
+    <hr class="sep">
+    <div class="blq">
+      <span class="et2">SESIONES GUARDADAS</span>
+      <div class="sesGuardar">
+        <input id="sesNombre" type="text" maxlength="28" autocomplete="off"
+               placeholder="nombre de la sesión">
+        <button class="accion sec" id="btnSesGuardar" type="button">GUARDAR SESIÓN</button>
+      </div>
+      <div id="sesLista"></div>
+    </div>
+    <hr class="sep">
     <p><button class="accion sec" id="btnResetStats" type="button">BORRAR ESTADÍSTICA GUARDADA</button></p>
     <p class="nota" id="stAviso"></p>
+    </div>
   </div>
 
   </div>
@@ -834,13 +915,13 @@ details.expl{border-left-color:var(--amber2)}
       <hr class="sep">
       <div class="ajuste"><span class="eti">MANIOBRA</span>
         <div class="selGrp" id="selMan">
-          <button type="button" data-v="pos" class="on">POSICIONARSE • DIST BANDA</button>
-          <button type="button" data-v="der">POSICIONARSE • DIST DERROTA</button>
+          <button type="button" data-v="pos" class="on">POSICIONARSE · DIST BANDA</button>
+          <button type="button" data-v="der">POSICIONARSE · DIST DERROTA</button>
           <button type="button" data-v="ace">ACERCARSE</button>
           <button type="button" data-v="ale">ALEJARSE</button>
         </div></div>
       <div id="manPos">
-        <div class="ajuste"><span class="eti">MARCAC.</span>
+        <div class="ajuste"><span class="eti">MARCACIÓN</span>
           <div class="selGrp" id="mMarc">
             <button type="button" data-v="0" class="on">PROA 000</button>
             <button type="button" data-v="45">AMURA 045</button>
@@ -998,6 +1079,7 @@ details.expl{border-left-color:var(--amber2)}
         <h2>TRAMOS</h2>
         <div id="pdTramos"></div>
       </div>
+      <p style="margin:14px 0 0"><button class="accion sec" id="btnPdReset" type="button">REINICIAR SUBIDA</button></p>
     </div>
   </div>
 </div>
@@ -1017,7 +1099,7 @@ details.expl{border-left-color:var(--amber2)}
       <button type="button" data-v="senos">SENOS · REGLAS</button>
       <button type="button" data-v="punteo">PUNTEO</button>
       <button type="button" data-v="laminas">LÁMINAS</button>
-      <button type="button" data-v="trazado">TRAZADO</button>
+      <button type="button" data-v="trazado">ROSA Y MESA</button>
     </div></div>
 
   <div class="grid" data-sec="senos">
@@ -1037,7 +1119,7 @@ details.expl{border-left-color:var(--amber2)}
 
     <div>
       <div class="card">
-        <h2>REGLAS RÁPIDAS · MEMORIZAR</h2>
+        <h2>REGLAS RÁPIDAS <span class="chip">MEMORIZAR</span></h2>
         <p class="nota">Pulsa cualquier regla para ver un ejemplo resuelto.</p>
         <div class="fgrid" id="gridReglas"></div>
       </div>
@@ -1058,7 +1140,7 @@ details.expl{border-left-color:var(--amber2)}
       </div>
     </details>
     <details class="expl">
-      <summary>Vuelta de Seguridad</summary>
+      <summary>Vuelta de seguridad</summary>
       <div class="expl-body">
         <p class="expl-intro">Es el tiempo entre observaciones del contacto <b>«fantasma»</b>: el que aún no ves.</p>
         <div class="paso-e"><span class="paso-n">1</span><div>En una vuelta completa (1,5 aumentos, ≈ 20 s) barres el horizonte: cada tipo de contacto aparecería por primera vez a su <b>distancia límite de visibilidad</b>.</div></div>
@@ -1137,7 +1219,7 @@ details.expl{border-left-color:var(--amber2)}
 
   <div class="grid" data-sec="punteo">
     <div class="card">
-      <h2>GUARDIA EN PERISCÓPICA · MEMORIZAR</h2>
+      <h2>GUARDIA EN PERISCÓPICA <span class="chip">MEMORIZAR</span></h2>
       <ul class="limpia">
         <li>Puntear todo contacto en un radio de <span class="k">10.000 m</span>.</li>
         <li>Evitar CPA &lt; <span class="k">2.000 m de día</span> · <span class="k">3.000 m de noche</span>; ante la duda dentro de la distancia de seguridad: <span class="k">«COTA 55 RÁPIDAMENTE»</span>.</li>
@@ -1150,7 +1232,7 @@ details.expl{border-left-color:var(--amber2)}
 
   <div class="card" data-sec="laminas">
     <details class="expl">
-    <summary>MESA ↔ ROSA · dos medios, una cinemática</summary>
+    <summary>ROSA ↔ MESA · dos medios, una cinemática</summary>
     <p><b>Mesa trazadora (DRT)</b> — movimiento <b>verdadero</b>: la cruceta se desplaza
     con tu Co/So (punteo cada minuto, escala 1000 yds/pulgada; 2000 si &gt;20 Kyds).
     Su terreno: derrota verdadera del contacto por observaciones sucesivas, Ct/St,
@@ -1168,16 +1250,16 @@ details.expl{border-left-color:var(--amber2)}
   </div>
 
   <div class="card" id="apTrz" data-sec="trazado">
-    <h2>TRAZADO PASO A PASO · MESA Y ROSA</h2>
+    <h2>ROSA Y MESA · PASO A PASO</h2>
     <p class="nota">Carga un ejemplo y recórrelo paso a paso. En la <b>rosa</b> verás la rosa
     sombreada (los vectores parten del centro); en la <b>mesa</b>, la cruceta de 1000 yds
     sobre tu posición. Lo nuevo de cada paso, en ámbar.</p>
     <div class="selGrp" id="apTipo" style="margin:8px 0">
-      <button type="button" data-v="TZ1" class="on">CPA</button>
+      <button type="button" data-v="TZ1" class="on">CPA POR DATOS</button>
       <button type="button" data-v="TZ2">SITUARSE</button>
-      <button type="button" data-v="TZ3">2 OBSERV.</button>
-      <button type="button" data-v="TZ4">INTERCEPT.</button>
-      <button type="button" data-v="TZ5">ALEJAM.</button>
+      <button type="button" data-v="TZ3">Ct/St POR 2 OBSERVACIONES</button>
+      <button type="button" data-v="TZ4">INTERCEPTACIÓN</button>
+      <button type="button" data-v="TZ5">ALEJAMIENTO</button>
     </div>
     <p><button class="accion" id="apNuevo" type="button">CARGAR EJEMPLO</button></p>
     <div id="apVisor" hidden>
@@ -1258,7 +1340,7 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
   else root.TMA = factory();
 })(typeof self !== "undefined" ? self : this, function () {
   "use strict";
-  const TMA = { version: "1.16.0" };
+  const TMA = { version: "1.26.4" };
 
   /*---------------- UTIL ----------------*/
   const norm360 = a => ((a % 360) + 360) % 360;
@@ -1269,7 +1351,10 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
 
   /*---------------- SENO/COSENO ----------------
   MENTAL (tabla doctrinal I-SB-01 T2.1.1 + TACAID):
-    Φ≤30  -> hito más próximo de la tabla del 6 (0,1 por cada 6°)
+    Φ≤30  -> hito MÁS PRÓXIMO de la tabla del 6 (0,1 por cada 6°)
+             OJO: el I-SB-01 trunca en algunos ejercicios resueltos (2A-41 y
+             2A-75a toman sen20=0,30). Aquí se toma el más próximo por
+             decisión de Javi: 0,35 se acerca más al real 0,342 que 0,30.
     30<Φ≤70 -> (Φ+25)/100 redondeado al 0,05 más próximo
     Φ>70  -> 1
     cos Φ = sen(90−Φ) (seno del complementario)
@@ -1277,18 +1362,27 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
   function senM(a) {
     a = fold90(a);
     if (a === 0) return 0;
-    if (a <= 30) return Math.floor(a / 3) * 0.05; // hitos de 6° y medios (12→0,2 · 15→0,25 · 20→0,3)
+    if (a <= 30) return Math.round(a / 3) * 0.05; // 12→0,20 · 15→0,25 · 20→0,35
     if (a <= 70) return Math.round(((a + 25) / 100) / 0.05) * 0.05;
     return 1;
   }
   function cosMagM(a) { return senM(90 - fold90(a)); }
   const senE = a => Math.sin(a * Math.PI / 180);
   const cosMagE = a => Math.abs(Math.cos(a * Math.PI / 180));
-  TMA.sen = (a, m) => m === "exacto" ? Math.abs(senE(a)) : senM(a);
-  TMA.cosMag = (a, m) => m === "exacto" ? cosMagE(a) : cosMagM(a);
+  /* Modo "todo exacto": con esto activado, las razones mentales devuelven el
+     valor real. Sirve para regenerar un ejercicio ya hecho y ver a cuánto
+     asciende el redondeo de la tabla; NO cambia nada del entrenamiento. */
+  let TODO_EXACTO = false;
+  TMA.conExacto = fn => {
+    TODO_EXACTO = true;
+    try { return fn(); } finally { TODO_EXACTO = false; }
+  };
+  TMA.sen = (a, m) => (m === "exacto" || TODO_EXACTO) ? Math.abs(senE(a)) : senM(a);
+  TMA.cosMag = (a, m) => (m === "exacto" || TODO_EXACTO) ? cosMagE(a) : cosMagM(a);
   /* inversa de la tabla mental (para hallar ángulo desde una razón) */
   TMA.asenM = v => {
     v = Math.abs(v);
+    if (TODO_EXACTO) return Math.round(Math.asin(Math.min(1, v)) * 180 / Math.PI);
     if (v >= 0.975) return 90;
     if (v > 0.525) return Math.round(100 * v - 25);
     return Math.round(v * 60);
@@ -1670,6 +1764,190 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
         pasos: [`St en yds/min = ${St}·100/3 = ${Math.round(St*100/3)}`, `Tcpa = R·cosβ/St = ${R}·sen${90-be}°/${Math.round(St*100/3)} = ${R}·${fmt(senM(90-be))}/${Math.round(St*100/3)} = ${fmt(TMA.tcpaMesa(R,be,St,M0))} min`],
         pista: "Tcpa = R·cosβ / St(yds/min) · St yds/min = kn·100/3" }; } });
 
+  /* ===== T08 · distancia recorrida en N minutos =====
+     Regla de los 6 minutos: en 6 min se recorre la décima parte de la
+     velocidad en millas. Para otros tiempos, proporción directa. */
+  T({ id: "T08", nombre: "Distancia recorrida en N minutos", grupo: "velocidades", nivel: 1,
+    gen(r) { const cs = [];
+      for (let i = 0; i < 4; i++) {
+        const v = pick(r, [4, 5, 6, 7, 8, 10, 12, 14, 15, 16, 18, 20, 24]);
+        const t = pick(r, [1.5, 2, 3, 4, 4.5, 6, 7.5, 9, 12, 15]);
+        cs.push({ label: `${fmt(v)} kn \u00b7 ${fmt(t)} min`, sol: TMA.regla6nm(v, t), tol: "v",
+          paso: `en 6 min ${fmt(v / 10)} NM \u2192 \u00d7 ${fmt(t)}/6 = ${fmt(TMA.regla6nm(v, t))} NM` }); }
+      return Object.assign(PEN.bat(cs, "NM"), {
+        enun: "Distancia recorrida en cada caso.",
+        pista: "en 6 min se anda la d\u00e9cima parte de la velocidad en millas \u00b7 resto proporcional" }); } });
+
+  /* ===== T11 · StALOS y StILOS juntos =====
+     Las dos componentes del blanco a la vez, sobre su propia LOS. */
+  T({ id: "T11", nombre: "StALOS y StILOS", grupo: "velocidades", nivel: 2,
+    gen(r) { const St = ri(r, 6, 24), be = pick(r, [15, 20, 25, 30, 40, 45, 50, 60, 70, 80]);
+      const bd = pick(r, BANDA);
+      return { enun: `Contacto a ${St} nudos con \u03b2 ${be}\u00b0 ${bd}. Componentes sobre la LOS.`,
+        campos: [{ k: "a", label: "StALOS (kn)" }, { k: "i", label: "StILOS (kn)" }],
+        sol: { a: TMA.alos(St, be, M0), i: TMA.ilos(St, be, M0) }, tol: { a: "v", i: "v" },
+        dibujo: TMA.svgComponentes(St, be, bd),
+        pasos: [`StALOS = ${St}\u00b7sen(${be}) = ${fmt(TMA.alos(St, be, M0))} kn`,
+                `StILOS = ${St}\u00b7cos(${be}) = ${fmt(TMA.ilos(St, be, M0))} kn`,
+                `comprobaci\u00f3n: la ALOS mueve la demora, la ILOS abre o cierra la distancia`],
+        pista: "StALOS = St\u00b7sen\u03b2 (mueve la demora) \u00b7 StILOS = St\u00b7cos\u03b2 (abre/cierra)" }; } });
+
+  /* ===== T17 · distancia por BRC completa =====
+     R = K·SrALOS/Ḃ, con SrALOS la suma de las dos laterales según banda.
+     Es el BRC de verdad: no supone StALOS nula como la Dmin. */
+  T({ id: "T17", nombre: "Distancia por BRC", grupo: "distancias", nivel: 3,
+    gen(r) { const So = ri(r, 4, 10), la = pick(r, [20, 30, 40, 45, 60, 70, 90]);
+      const St = ri(r, 6, 20), be = pick(r, [20, 30, 40, 45, 60, 70, 90]);
+      const bo = pick(r, BANDA), bt = pick(r, BANDA);
+      const dB = pick(r, [0.5, 0.8, 1, 1.2, 1.5, 2, 2.5, 3]);
+      const soA = TMA.alos(So, la, M0), stA = TMA.alos(St, be, M0);
+      /* Laterales a bandas contrarias se suman; a la misma banda, restan. */
+      const sr = bo === bt ? Math.abs(soA - stA) : soA + stA;
+      const R = TMA.dLat(sr, dB, TMA.K.mentalYds);
+      return { enun: `Propio ${So} kn con \u00e1ngulo a la LOS ${la}\u00b0 ${bo}; blanco ${St} kn con \u03b2 ${be}\u00b0 ${bt}. `
+          + `\u1e04 medida ${fmt(dB)}\u00b0/min. Distancia al contacto.`,
+        campos: [{ k: "d", label: "Distancia (yds)" }],
+        sol: { d: R }, tol: { d: "d" },
+        pasos: [`SoALOS = ${So}\u00b7sen(${la}) = ${fmt(soA)} kn a la ${bo}`,
+                `StALOS = ${St}\u00b7sen(${be}) = ${fmt(stA)} kn a la ${bt}`,
+                bo === bt ? `misma banda \u2192 restan: SrALOS = ${fmt(sr)} kn`
+                          : `bandas contrarias \u2192 suman: SrALOS = ${fmt(sr)} kn`,
+                `R = 2000\u00b7${fmt(sr)}/${fmt(dB)} = ${Math.round(R)} yds`],
+        pista: "R = K\u00b7SrALOS/\u1e04 \u00b7 laterales contrarias suman, iguales restan" }; } });
+
+  /* ===== T18 · velocidad del blanco por BRC =====
+     La inversa del anterior: conocida la distancia, se despeja StALOS y de
+     ahí la velocidad del blanco. */
+  T({ id: "T18", nombre: "Velocidad del blanco por BRC", grupo: "velocidades", nivel: 3,
+    gen(r) { let So, la, be, dB, Rk, soA, sr, stA, St;
+      /* Se reintenta hasta que el caso cuadre con lo que dice el enunciado:
+         laterales a bandas contrarias (SrALOS > SoALOS) y velocidad de blanco
+         cre\u00edble. Sin este filtro sal\u00edan restas negativas y blancos a 0 kn. */
+      for (let i = 0; i < 40; i++) {
+        So = ri(r, 4, 10); la = pick(r, [30, 40, 45, 60, 90]);
+        be = pick(r, [30, 40, 45, 60, 90]);
+        dB = pick(r, [0.5, 0.8, 1, 1.5, 2]);
+        Rk = ri(r, 4, 20);
+        soA = TMA.alos(So, la, M0);
+        sr = dB * (Rk * 1000) / TMA.K.mentalYds;
+        stA = sr - soA;
+        St = stA / TMA.sen(be, M0);
+        if (stA > 0.5 && St >= 4 && St <= 26) break;
+      }
+      const R = Rk * 1000;
+      return { enun: `Propio ${So} kn con \u00e1ngulo a la LOS ${la}\u00b0; contacto a ${Rk} kyds `
+          + `con \u1e04 ${fmt(dB)}\u00b0/min y \u03b2 ${be}\u00b0 a la banda contraria. Velocidad del blanco.`,
+        campos: [{ k: "v", label: "St (kn)" }],
+        sol: { v: St }, tol: { v: "v" },
+        pasos: [`SrALOS = \u1e04\u00b7R/K = ${fmt(dB)}\u00b7${R}/2000 = ${fmt(sr)} kn`,
+                `SoALOS = ${So}\u00b7sen(${la}) = ${fmt(soA)} kn`,
+                `StALOS = ${fmt(sr)} \u2212 ${fmt(soA)} = ${fmt(stA)} kn`,
+                `St = StALOS/sen(${be}) = ${fmt(stA)}/${fmt(TMA.sen(be, M0))} = ${fmt(St)} kn`],
+        pista: "de R se saca SrALOS = \u1e04\u00b7R/K \u00b7 se descuenta la propia \u00b7 St = StALOS/sen\u03b2" }; } });
+
+  /* ===== T21 · Ekelund completo por tramos =====
+     Dos tramos con laterales propias contrarias: la distancia sale del
+     salto de SoALOS dividido por el salto de Ḃ. Nivel 4 porque exige
+     encadenar componentes, signos y despeje. */
+  T({ id: "T21", nombre: "Ekelund por tramos", grupo: "distancias", nivel: 3,
+    gen(r) { const So1 = ri(r, 4, 10), So2 = ri(r, 4, 10);
+      const la1 = pick(r, [30, 40, 45, 60, 70, 90]), la2 = pick(r, [30, 40, 45, 60, 70, 90]);
+      const b1 = pick(r, BANDA), b2 = b1 === "Er" ? "Br" : "Er";   // lateral invertida
+      const dB1 = pick(r, [0.4, 0.6, 0.8, 1, 1.2, 1.5]);
+      const dB2 = pick(r, [-0.5, -0.8, -1, -1.2, 0.3, 0.5]);
+      const s1 = TMA.alos(So1, la1, M0), s2 = TMA.alos(So2, la2, M0);
+      const R = TMA.ekelund(s1, b1, s2, b2, Math.abs(dB1), dB1 >= 0 ? "der" : "izq",
+                            Math.abs(dB2), dB2 >= 0 ? "der" : "izq", TMA.K.mentalYds);
+      return { enun: `Tramo 1: propio ${So1} kn, \u00e1ngulo a la LOS ${la1}\u00b0 ${b1}, `
+          + `\u1e04 ${fmt(Math.abs(dB1))}\u00b0/min a la ${dB1 >= 0 ? "derecha" : "izquierda"}. `
+          + `Tramo 2: propio ${So2} kn, \u00e1ngulo a la LOS ${la2}\u00b0 ${b2}, `
+          + `\u1e04 ${fmt(Math.abs(dB2))}\u00b0/min a la ${dB2 >= 0 ? "derecha" : "izquierda"}. Distancia.`,
+        campos: [{ k: "d", label: "Distancia (yds)" }],
+        sol: { d: R }, tol: { d: "d" },
+        dibujo: TMA.svgEkelund(s1, b1, s2, b2, R),
+        pasos: [`SoALOS\u2081 = ${So1}\u00b7sen(${la1}) = ${fmt(s1)} kn a la ${b1}`,
+                `SoALOS\u2082 = ${So2}\u00b7sen(${la2}) = ${fmt(s2)} kn a la ${b2}`,
+                `laterales contrarias \u2192 \u0394SoALOS = ${fmt(s1 + s2)} kn`,
+                `R = 2000\u00b7\u0394SoALOS/\u0394\u1e04 = ${Math.round(R)} yds`,
+                `la lateral del blanco se va en la resta: por eso no hace falta conocerla`],
+        pista: "R = K\u00b7\u0394SoALOS/\u0394\u1e04 \u2014 hay que invertir la lateral entre los dos tramos" }; } });
+
+  /* ===== T23 · β y Ct con Ḃ = 0 =====
+     Con la demora constante, la lateral del blanco iguala a la propia y
+     queda a la banda contraria. De ahí sale su β y su rumbo. */
+  T({ id: "T23", nombre: "\u03b2 y Ct con \u1e04 = 0", grupo: "demoras", nivel: 3,
+    gen(r) { let D, So, la, bl, St, senB;
+      for (let i = 0; i < 30; i++) {
+        D = ri(r, 1, 359); So = ri(r, 5, 10);
+        la = pick(r, [20, 30, 40, 45, 60, 70, 90]); bl = pick(r, BANDA);
+        St = ri(r, 8, 24);
+        senB = TMA.alos(So, la, M0) / St;
+        if (senB > 0.08 && senB <= 0.95) break;
+      }
+      const be = TMA.asenM(senB);
+      const bb = bl === "Er" ? "Br" : "Er";          // el blanco, a la banda contraria
+      const Ct = TMA.ct(D, be, bb);
+      return { enun: `Contacto en demora ${g3(D)} con la demora constante. Propio ${So} kn `
+          + `y \u00e1ngulo a la LOS ${la}\u00b0 ${bl}; el blanco anda ${St} kn. Su \u03b2 y su rumbo.`,
+        campos: [{ k: "b", label: "\u03b2 (\u00b0)" }, { k: "c", label: "Ct", tipo: "num" }],
+        sol: { b: be, c: Ct }, tol: { b: "a", c: "a" },
+        pasos: [`\u1e04 = 0 \u21d2 StALOS = SoALOS, a bandas contrarias`,
+                `SoALOS = ${So}\u00b7sen(${la}) = ${fmt(TMA.alos(So, la, M0))} kn`,
+                `sen\u03b2 = SoALOS/St = ${fmt(TMA.alos(So, la, M0))}/${St} = ${fmt(senB)} \u2192 \u03b2 = ${be}\u00b0`,
+                `\u03b2 a la ${bb} \u2192 Ct = inversa(${g3(D)}) ${bb === "Br" ? "+" : "\u2212"} ${be} = ${g3(Ct)}`],
+        pista: "\u1e04 = 0 \u21d2 las dos laterales se anulan \u00b7 sen\u03b2 = SoALOS/St, banda contraria" }; } });
+
+  /* ===== T24 · rumbo propio para colisionar =====
+     El caso simétrico del ZBR visto desde el blanco: hace falta que la
+     lateral propia iguale a la del contacto. Si el blanco anda tanto que
+     su lateral no se puede igualar, NO ES POSIBLE. */
+  T({ id: "T24", nombre: "Rumbo para colisionar", grupo: "demoras", nivel: 3,
+    gen(r) { const D = ri(r, 1, 359);
+      /* Uno de cada tres casos se fuerza imposible: el blanco corre tanto que
+         su lateral no se puede igualar. Los dem\u00e1s se filtran para que S\u00cd
+         tengan soluci\u00f3n; sin el filtro sal\u00eda imposible casi la mitad. */
+      const buscaImposible = ri(r, 1, 3) === 1;
+      let So, be, bb, St, stA, senLA;
+      for (let i = 0; i < 40; i++) {
+        So = ri(r, 4, 10);
+        be = pick(r, [20, 30, 40, 45, 60, 70, 90]); bb = pick(r, BANDA);
+        St = buscaImposible ? ri(r, 14, 30) : ri(r, 4, 14);
+        stA = TMA.alos(St, be, M0);
+        senLA = stA / So;
+        if (buscaImposible ? senLA > 1.05 : senLA <= 0.95) break;
+      }
+      const Ct = TMA.ct(D, be, bb);
+      const puede = senLA <= 1;
+      const Co = puede ? TMA.zbrCo(D, Ct, St, So) : null;
+      return { enun: `Contacto en demora ${g3(D)}, rumbo ${g3(Ct)} y ${St} kn. Propio ${So} kn. `
+          + `\u00bfRumbo para ir a colisi\u00f3n?`,
+        campos: [{ k: "v", label: "Co (o NO)", tipo: "co" }],
+        sol: { v: puede ? Co : "NO" }, tol: { v: "co" },
+        pasos: [`\u03b2 del contacto = ${be}\u00b0 a la ${bb}`,
+                `StALOS = ${St}\u00b7sen(${be}) = ${fmt(stA)} kn`,
+                `senLA = StALOS/So = ${fmt(stA)}/${So} = ${fmt(senLA)}`,
+                puede ? `LA = ${TMA.asenM(senLA)}\u00b0 a la banda contraria \u2192 Co ${g3(Co)}`
+                      : `senLA > 1: con ${So} kn no se puede igualar su lateral \u2192 NO ES POSIBLE`],
+        pista: "igualar laterales: senLA = St\u00b7sen\u03b2/So \u00b7 si sale mayor que 1, no hay rumbo posible" }; } });
+
+  /* ===== T28 · tiempo entre observaciones (m\u00e9todo del TACAID) =====
+     El de la tarjeta 8, distinto del de CRONOS: aqu\u00ed se descuenta la
+     distancia de seguridad de 2.000 yds que fija el D-SB-03, no el minuto
+     de bajada a cota. */
+  T({ id: "T28", nombre: "Tiempo entre observaciones", grupo: "punteo", nivel: 2,
+    gen(r) { const cs = [];
+      for (let i = 0; i < 3; i++) {
+        const R = ri(r, 6, 30) * 1000;
+        const St = pick(r, [8, 10, 12, 15, 18, 20]);
+        const Sr = TMA.knToYdsMin(7 + St);            // acercamiento en yds/min
+        const t = TMA.tObs(R - 2000, Sr);
+        cs.push({ label: `${R / 1000} kyds \u00b7 blanco ${St} kn`, sol: t, tol: "v",
+          paso: `(${R} \u2212 2000)/${Math.round(Sr)} \u2212 1 = ${t} min` }); }
+      return Object.assign(PEN.bat(cs, "min"), {
+        enun: "Tiempo hasta la siguiente observaci\u00f3n, dejando las 2.000 yardas de seguridad. "
+          + "Velocidad propia 7 nudos.",
+        pista: "acercamiento = (7 + St)\u00b7100/3 yds/min \u00b7 se descuentan 2.000 yds y un minuto" }); } });
+
   T({ id: "T27", nombre: "Crono de punteo intermitente", grupo: "punteo", nivel: 2,
     gen(r) { const d = ri(r, 6, 99) * 100; const tipo = pick(r, ["12/5", "10/6", "8/8", "5/12"]);
       const c = TMA.crono(d, tipo);
@@ -1688,18 +1966,52 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
     if (m) return m[1].padStart(2, "0") + ":" + m[2];
     return txt;
   };
+  /* Rumbo que puede no existir: se admite el \u00e1ngulo o la negativa escrita
+     de varias formas ("NO", "no es posible", "imposible"\u2026). */
+  PEN.normCo = txt => {
+    const t = String(txt || "").trim().toUpperCase();
+    if (!t) return "";
+    if (/^(NO|NO ES POSIBLE|IMPOSIBLE|NP|N\/P|-)$/.test(t)) return "NO";
+    return t;
+  };
   PEN.okCampo = (tol, got, exp) => {
     if (tol === "label") return String(got) === String(exp);
     if (tol === "crono") return PEN.normCrono(got) === exp;
+    if (tol === "co") {
+      const g0 = PEN.normCo(got);
+      if (exp === "NO" || g0 === "NO") return g0 === exp;
+      return PEN.okCampo("a", g0, exp);
+    }
     const g = parseFloat(String(got).replace(",", "."));
     if (!isFinite(g)) return false;
     return okTol(tol === "a" ? norm360(g) : g, tol === "a" ? norm360(exp) : exp, tol);
   };
+  /* Peso de cada casilla al puntuar, por dificultad medida.
+     Se respondieron 4.000 ejercicios AL AZAR y se anotó qué proporción salía
+     bien de cada tipo de casilla; de ahí, la información que aporta acertarla:
+
+        banda Br/Er ....... 52,9 % al azar ..... 0,9 bits
+        sentido IZ/DE ..... 47,3 % ............. 1,1 bits
+        rumbo o "NO" ...... 10,9 % ............. 3,2 bits
+        valor numérico .....  2,0 % ............ 5,3–5,7 bits
+        crono ..............  0,0 % ............ muy alta
+
+     Redondeando a una escala de 1 a 3 queda: binario 1, mixto 2, número 3.
+     Con eso, en un ejercicio de ángulo + banda el ángulo se lleva el 75 %
+     de la puntuación y la banda el 25 %, que es la proporción pedida.
+
+     El veredicto del ejercicio NO usa estos pesos: ahí sigue mandando el
+     criterio del mazo, acierto solo si está todo bien. */
+  PEN.PESO = { banda: 1, sentido: 1, co: 2 };
+  PEN.pesoCampo = c => PEN.PESO[c.tipo] || 3;
   PEN.corrige = (ej, resp) => {
-    const out = { ok: true, campos: {}, aciertos: 0, total: ej.campos.length };
+    const out = { ok: true, campos: {}, aciertos: 0, total: ej.campos.length,
+                  peso: 0, pesoOk: 0 };
     ej.campos.forEach(c => {
       const ok = PEN.okCampo(ej.tol[c.k], resp[c.k], ej.sol[c.k]);
-      out.campos[c.k] = ok; if (ok) out.aciertos++; else out.ok = false;
+      const w = PEN.pesoCampo(c);
+      out.campos[c.k] = ok; out.peso += w;
+      if (ok) { out.aciertos++; out.pesoOk += w; } else out.ok = false;
     });
     return out;
   };
@@ -2202,8 +2514,8 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
     { id: "atk15", nombre: "Peri ataque 1,5×", corta: "ATK 1,5×", k: 105.7, grupo: "ATAQUE" },
     { id: "vis12", nombre: "Perco visible 12×", corta: "VIS 12×", k: 352.4, grupo: "PERCO" },
     { id: "vis6", nombre: "Perco visible 6×", corta: "VIS 6×", k: 176.2, grupo: "PERCO" },
-    { id: "irAnch", nombre: "Perco IR ancho", corta: "IR ancho", k: 141.0, grupo: "PERCO" },
-    { id: "irEstr", nombre: "Perco IR estrecho", corta: "IR estr.", k: 422.9, grupo: "PERCO" }
+    { id: "irAnch", nombre: "Perco IR ancho", corta: "IR ANCHO", k: 141.0, grupo: "PERCO" },
+    { id: "irEstr", nombre: "Perco IR estrecho", corta: "IR ESTR.", k: 422.9, grupo: "PERCO" }
   ];
   TMA.periDist = (col, alturaM, div) => {
     const c = TMA.PERI_COLS.find(x => x.id === col) || TMA.PERI_COLS[0];
@@ -3050,7 +3362,7 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
     { id: "2A-36", fn: "tObs", args: [6000, 2000], exp: 2, tol: "e" },
     { id: "2A-37", fn: "tObs", args: [8000, 2000], exp: 3, tol: "e" },
     { id: "2A-40", fn: "alos", args: [18, 15, M], exp: 4.5, tol: "v", note: "β=15 sale de inv(250)↔Ct085" },
-    { id: "2A-41", fn: "ilos", args: [12, 70, M], exp: 3.6, tol: "v", note: "β=70 sale de inv(130)↔Ct240" },
+    { id: "2A-41", fn: "ilos", args: [12, 70, M], exp: 4.2, tol: "v", note: "β=70 sale de inv(130)↔Ct240 · el manual da 3,6 truncando sen20=0,30; aquí 0,35 (hito más próximo, exacto 0,342)" },
     { id: "2A-42", fn: "srAlosDeB", args: [2, 2], exp: 4, tol: "v" },
     { id: "2A-43", fn: "dLatLa", args: [7, 63, 3, M], exp: 2.1, tol: "d" },
     { id: "2A-44", fn: "dLat", args: [12, 1.6, 1], exp: 7, tol: "d", note: "manual redondea 7,5→7" },
@@ -3126,7 +3438,7 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
     { id: "2A-72", fn: "ct", args: [18, 7, "Er"], exp: 191, tol: "a", note: "β=7 Er; el '+' impreso en el manual es errata (191=198−7)" },
     { id: "2A-73", fn: "asenM", args: [0.4], exp: 25, tol: "a", note: "manual 25; tabla exacta inversa da 24" },
     { id: "2A-74", fn: "dLat", args: [1.0, 0.5, 1], exp: 2, tol: "d" },
-    { id: "2A-75a", fn: "alos", args: [10, 20, M], exp: 3, tol: "v" },
+    { id: "2A-75a", fn: "alos", args: [10, 20, M], exp: 3.5, tol: "v", note: "el manual da 3 truncando sen20=0,30; aquí 0,35 (hito más próximo, exacto 0,342)" },
     { id: "2A-75b", fn: "asenM", args: [0.5], exp: 30, tol: "a" },
     { id: "2A-76", fn: "dt", args: [12000, 15, M], exp: 3000, tol: "d" },
     { id: "2A-77", fn: "asenM", args: [0.5], exp: 30, tol: "a", note: "StAlos=8·sen30=4; senLA=4/8" },
@@ -3384,16 +3696,87 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
     add("G13 corrección", "crono COTA55/cont", cor("crono", "cota 55", "COTA 55") && cor("crono", "cont", "CONT."), true, true);
     add("G13 corrección", "crono erróneo falla", !cor("crono", "04:13", "04:12"), true, true);
     add("G13 corrección", "vacío falla", !cor("d", "", 1000) && !cor("crono", "", "CONT."), true, true);
-    add("G13 corrección", "ZBR 2A-75", TMA.zbrCo(0, 160, 10, 6) === 30, TMA.zbrCo(0, 160, 10, 6), 30);
+    /* El manual da 30 truncando sen20=0,30; con el hito más próximo sale 33,
+       que se acerca más al exacto (34,8°). Misma divergencia que 2A-41/2A-75a. */
+    add("G13 corrección", "ZBR 2A-75", TMA.zbrCo(0, 160, 10, 6) === 33, TMA.zbrCo(0, 160, 10, 6), 33);
+    /* G27 — los ocho tipos que faltaban del mazo. */
+    (function () {
+      const G = id => PEN.TYPES.filter(t => t.id === id)[0];
+      ["T08", "T11", "T17", "T18", "T21", "T23", "T24", "T28"].forEach(id =>
+        add("G27 tipos nuevos", id + " registrado", !!G(id), !!G(id), true));
+      /* T08: la regla de los 6 minutos */
+      add("G27 tipos nuevos", "T08 12 kn en 6 min = 1,2 NM",
+        Math.abs(TMA.regla6nm(12, 6) - 1.2) < 1e-9, TMA.regla6nm(12, 6), 1.2);
+      add("G27 tipos nuevos", "T08 12 kn en 3 min = 0,6 NM",
+        Math.abs(TMA.regla6nm(12, 3) - 0.6) < 1e-9, TMA.regla6nm(12, 3), 0.6);
+      /* T11: las dos componentes de un mismo blanco */
+      const e11 = G("T11").gen(mulberry32(5));
+      add("G27 tipos nuevos", "T11 pide ALOS e ILOS",
+        e11.campos.length === 2 && e11.sol.a !== undefined && e11.sol.i !== undefined,
+        e11.campos.length, 2);
+      /* T17: la distancia por BRC coincide con la fórmula */
+      add("G27 tipos nuevos", "T17 R = K·SrALOS/Ḃ",
+        TMA.dLat(6, 1.5, TMA.K.mentalYds) === 8000, TMA.dLat(6, 1.5, TMA.K.mentalYds), 8000);
+      /* T18: velocidades de blanco creíbles en 200 tiradas */
+      (function () {
+        let fuera = 0;
+        for (let sd = 1; sd <= 200; sd++) { const v = G("T18").gen(mulberry32(sd * 31)).sol.v;
+          if (!(v >= 3.5 && v <= 27)) fuera++; }
+        add("G27 tipos nuevos", "T18 velocidad de blanco creíble", fuera === 0, fuera, 0);
+      })();
+      /* T21: Ekelund por tramos con laterales contrarias suma */
+      add("G27 tipos nuevos", "T21 laterales contrarias suman",
+        Math.abs(TMA.ekelund(5, "Er", 5, "Br", 0.6, "der", 0.9, "izq", 1) - (10 / 1.5)) < 1e-9,
+        r2(TMA.ekelund(5, "Er", 5, "Br", 0.6, "der", 0.9, "izq", 1)), r2(10 / 1.5));
+      /* T23: con Ḃ nula las dos laterales se igualan */
+      (function () {
+        let malo = 0;
+        for (let sd = 1; sd <= 120; sd++) { const e = G("T23").gen(mulberry32(sd * 17));
+          if (!(e.sol.b > 0 && e.sol.b <= 90) || !(e.sol.c >= 0 && e.sol.c <= 359)) malo++; }
+        add("G27 tipos nuevos", "T23 β y Ct en rango", malo === 0, malo, 0);
+      })();
+      /* T24: debe salir imposible a veces, pero no siempre */
+      (function () {
+        let no = 0, si = 0;
+        for (let sd = 1; sd <= 300; sd++) {
+          const v = G("T24").gen(mulberry32(sd * 13)).sol.v;
+          if (v === "NO") no++; else si++;
+        }
+        add("G27 tipos nuevos", "T24 mezcla posibles e imposibles",
+          no > 30 && si > 30, { no: no, si: si }, "los dos > 30");
+        add("G27 tipos nuevos", "T24 admite la negativa escrita",
+          PEN.okCampo("co", "no es posible", "NO") && PEN.okCampo("co", "NO", "NO")
+          && !PEN.okCampo("co", "120", "NO"), true, true);
+        add("G27 tipos nuevos", "T24 admite el rumbo con tolerancia",
+          PEN.okCampo("co", "121", 120) && !PEN.okCampo("co", "NO", 120), true, true);
+      })();
+      /* T28: método antiguo, descuenta las 2.000 yds de seguridad */
+      add("G27 tipos nuevos", "T28 descuenta la distancia de seguridad",
+        TMA.tObs(12000 - 2000, TMA.knToYdsMin(7 + 13)) === 14,
+        TMA.tObs(12000 - 2000, TMA.knToYdsMin(7 + 13)), 14);
+      add("G27 tipos nuevos", "T28 difiere del método de CRONOS",
+        TMA.tObs(12000 - 2000, TMA.knToYdsMin(20)) !== Math.round(TMA.ctrlLI(12000, 1000, 2)),
+        true, true);
+    })();
     add("G13 corrección", "ZBR 2A-77", TMA.zbrCo(65, 215, 8, 8) === 95, TMA.zbrCo(65, 215, 8, 8), 95);
     add("G13 corrección", "ZBR 2A-79", TMA.zbrCo(330, 165, 12, 6) === 300, TMA.zbrCo(330, 165, 12, 6), 300);
     (function () { let okb = true;
         for (let i = 1; i <= 12; i++) { const m = /β = (\d+)°/.exec(PEN.byId("T19").gen(TMA.rng(i * 7)).enun); if (!m || +m[1] <= 90) okb = false; }
         add("G13 corrección", "T17 genera β > 90°", okb, okb ? "12/12" : "fallo", "12/12");
       })();
-      add("G13 corrección", "20 tipos registrados", PEN.TYPES.length === 20, PEN.TYPES.length, 20);
-    add("G13 corrección", "pool nivel 1 'todos'", PEN.pool(1, "todos").length === 8, PEN.pool(1, "todos").length, 8);
-    add("G13 corrección", "pool nivel 3 'todos'", PEN.pool(3, "todos").length === 20, PEN.pool(3, "todos").length, 20);
+      add("G13 corrección", "28 tipos registrados", PEN.TYPES.length === 28, PEN.TYPES.length, 28);
+    add("G13 corrección", "sin huecos T01–T28",
+      PEN.TYPES.map(t => t.id).join(",") ===
+        Array.from({ length: 28 }, (_, i) => "T" + String(i + 1).padStart(2, "0")).join(","),
+      PEN.TYPES.length, 28);
+    add("G13 corrección", "pool nivel 1 'todos'", PEN.pool(1, "todos").length === 9, PEN.pool(1, "todos").length, 9);
+    add("G13 corrección", "pool nivel 3 'todos'", PEN.pool(3, "todos").length === 28, PEN.pool(3, "todos").length, 28);
+    add("G13 corrección", "solo tres niveles",
+      Math.max.apply(null, PEN.TYPES.map(t => t.nivel)) === 3,
+      Math.max.apply(null, PEN.TYPES.map(t => t.nivel)), 3);
+    add("G13 corrección", "cuatro grupos",
+      Array.from(new Set(PEN.TYPES.map(t => t.grupo))).sort().join(",") === "demoras,distancias,punteo,velocidades",
+      Array.from(new Set(PEN.TYPES.map(t => t.grupo))).sort().join(","), "demoras,distancias,punteo,velocidades");
     (function () {
       let okPasos = true;
       PEN.TYPES.forEach(t => {
@@ -3987,7 +4370,7 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
     "Ejercicios del Anexo 2A dependientes de figura: excluidos de la validación automática y listados; no se inventan sus datos.",
     "Tolerancias de corrección aprobadas: ±10% en distancias, ±3° en rumbos/demoras, ±0,5 kn en velocidades.",
     "CPA y maniobras operan SIEMPRE en exacto (vectorial). Las tres maniobras (posición relativa al blanco, distancia a su derrota con avance, y acercarse a X) se resuelven interceptando un punto virtual solidario al blanco (mismo Ct/St) y están validadas con identidades de llegada, fronteras de So mínima y bordes de sector (G17). La solución por 3 demoras se retiró por decisión del 16JUL26.",
-    "MANIOBRA con doble solución doctrinal (rápida y lenta) y So mínima por tangencia; la lenta existe si β del punto < 90° y So mínima < So < St. TRAZADO: los pasos de rosa siguen el curso S-74 (triángulo de velocidades, DRM por M1/M2, tangencia) y los de mesa el PUNTEO GEOGRÁFICO (cruceta por minutos, demoras desde posiciones sucesivas, CPA en el DRT con la inversa de So). Toda primitiva dibujada procede del motor validado (G20). ALEJAMIENTO: las diapositivas de la sección 6 del curso S-74 son solo-imagen (ilegibles por el conector); el módulo espeja la construcción de acercamiento del mismo curso — DRM tangente al círculo de seguridad de radio X — sobre el CPA exacto validado (G21). Pendiente de contraste con las diapositivas originales si se fotografían. Los procedimientos de rosa de TZ1 (CPA) y TZ2 (situarse) quedan CONFIRMADOS literalmente por el TACAID PO-03 (capturas 16JUL–18JUL26), incluida la variante con el blanco en el centro (A1→A2), construcción simétrica de la implementada.",
+    "MANIOBRA con doble solución doctrinal (rápida y lenta) y So mínima por tangencia; la lenta existe si β del punto < 90° y So mínima < So < St. ROSA Y MESA: los pasos de rosa siguen el curso S-74 (triángulo de velocidades, DRM por M1/M2, tangencia) y los de mesa el PUNTEO GEOGRÁFICO (cruceta por minutos, demoras desde posiciones sucesivas, CPA en el DRT con la inversa de So). Toda primitiva dibujada procede del motor validado (G20). ALEJAMIENTO: las diapositivas de la sección 6 del curso S-74 son solo-imagen (ilegibles por el conector); el módulo espeja la construcción de acercamiento del mismo curso — DRM tangente al círculo de seguridad de radio X — sobre el CPA exacto validado (G21). Pendiente de contraste con las diapositivas originales si se fotografían. Los procedimientos de rosa de TZ1 (CPA) y TZ2 (situarse) quedan CONFIRMADOS literalmente por el TACAID PO-03 (capturas 16JUL–18JUL26), incluida la variante con el blanco en el centro (A1→A2), construcción simétrica de la implementada.",
     "Tarjetas fotografiadas (Minuto Peñiquero) y tabla de senos: transcritas por la herramienta desde las fotos del proyecto y validadas como G18; ante cualquier duda prevalece la fotografía original.",
     "ENTRENADOR DE CÁLCULO MENTAL 4.xlsm verificado en directo: mismos cinco generadores (RAND), trigonometría exacta y K=2000; su combinación de laterales por sentidos (mismo sentido resta, contrario suma) es la representación dual de la regla por bandas de la PLANTILLA. UTYLIDADES CAMARA DE MANDO es una calculadora de SUBNOTE (fuera del alcance de esta herramienta)."
   ];
@@ -4043,8 +4426,8 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
     T09-T12 componentes       · T13-T16 distancias directas
     T17-T21 BRC completo      · T22-T26 maniobra y decisión
     T27-T28 punteo y observación
-  HUECOS RESERVADOS para los tipos aún no implementados (sacados del mazo
-  del Minuto Peñiquero); se dejan libres para no tener que renumerar otra vez:
+  El mazo del Minuto Peñiquero queda cubierto entero: los ocho huecos que
+  estaban reservados ya tienen su ejercicio.
     T08 distancia recorrida en N minutos   T11 StALOS y StILOS juntos
     T17 distancia por BRC completa         T18 velocidad del blanco por BRC
     T21 Ekelund completo por tramos        T23 β y Ct con Ḃ = 0
@@ -4434,7 +4817,7 @@ $("#stAviso").textContent = persistible? "La estadística se guarda en este disp
 
 /* --- estado de sesión --- */
 var S={activo:false,nivel:3,grupo:"todos",ej:null,tipo:null,rng:null,
-       corregido:false,t0:0,timer:null,ses:{ok:0,tot:0,racha:0,mejor:0}};
+       corregido:false,t0:0,timer:null,ses:{ok:0,tot:0}};
 
 /* --- selectores --- */
 function selGrp(id,cb){ document.querySelectorAll(id+" button").forEach(function(b){
@@ -4461,7 +4844,10 @@ function tick(){ var rest=DUR-(Date.now()-S.t0)/1000;
 function nuevo(){
   var pool=PEN.pool(S.nivel,S.grupo);
   S.tipo=pool[Math.floor(S.rng()*pool.length)];
-  S.ej=S.tipo.gen(S.rng); S.corregido=false;
+  /* Cada ejercicio con su semilla: as\u00ed se puede regenerar id\u00e9ntico con la
+     tabla exacta y ver a cu\u00e1nto asciende el redondeo mental. */
+  S.semilla=Math.floor(S.rng()*2147483647)>>>0;
+  S.ej=S.tipo.gen(TMA.rng(S.semilla)); S.corregido=false;
   $("#dTipo").textContent=S.tipo.id+" · "+S.tipo.nombre.toUpperCase();
   $("#dEnun").textContent=S.ej.enun;
   $("#dResultado").hidden=true; $("#dVeredicto").textContent=""; $("#dPista").textContent="";
@@ -4516,7 +4902,11 @@ function respuestas(){
 }
 
 /* --- corrección --- */
-var PEN_REGLA={T01:"inv",T02:"ct",T03:"ct",T04:"la",T05:null,T06:"r3",T07:"r6",T09:"comp",T10:"comp",T12:"comp",T13:"dt",T14:"dperi",T15:"tsr",T16:"dlat",T19:"pointing",T20:"ekel",T22:"zbr",T25:"dminmax",T26:"tcpa",T27:null};
+/* Ficha de teoría que acompaña a cada ejercicio (null = no la necesita). */
+var PEN_REGLA={T01:"inv",T02:"ct",T03:"ct",T04:"la",T05:null,T06:"r3",T07:"r6",
+  T08:"r6",T09:"comp",T10:"comp",T11:"comp",T12:"comp",T13:"dt",T14:"dperi",
+  T15:"tsr",T16:"dlat",T17:"dlat",T18:"dlat",T19:"pointing",T20:"ekel",T21:"ekel",
+  T22:"zbr",T23:"zbr",T24:"zbr",T25:"dminmax",T26:"tcpa",T27:null,T28:"tobs"};
 function corregir(porTiempo){
   if(!S.ej||S.corregido) return;
   S.corregido=true; clearInterval(S.timer);
@@ -4531,6 +4921,31 @@ function corregir(porTiempo){
   $("#dVeredicto").className=res.ok?"ok":"bad";
   $("#dVeredicto").textContent=(res.ok?"CORRECTO":"FALLO")+(res.total>1?" · "+res.aciertos+" de "+res.total:"")+(porTiempo?" · TIEMPO AGOTADO":"");
   $("#dPista").innerHTML="<b>Regla:</b> "+S.ej.pista;
+  /* Comparativa con la tabla exacta: solo si alg\u00fan valor difiere de verdad. */
+  (function(){
+    var z=$("#dExacto"); if(!z) return;
+    z.hidden=true; z.innerHTML="";
+    var exa=null;
+    try{ exa=TMA.conExacto(function(){ return S.tipo.gen(TMA.rng(S.semilla)); }); }catch(e){ return; }
+    if(!exa||!exa.sol) return;
+    var fils=[];
+    Object.keys(S.ej.sol).forEach(function(k){
+      var a=S.ej.sol[k], b=exa.sol[k];
+      if(typeof a!=="number"||typeof b!=="number") return;
+      if(Math.abs(a-b)<0.005) return;
+      var et=(S.ej.campos||[]).filter(function(c){return c.k===k;})[0];
+      fils.push("<tr><td>"+((et&&et.label)||k)+"</td><td class='m'>"+
+        PEN.fmtSol(S.ej,k)+"</td><td class='x'>"+
+        (Math.round(b*100)/100).toString().replace(".",",")+"</td></tr>");
+    });
+    if(!fils.length) return;
+    z.hidden=false;
+    z.innerHTML="<span class='et2'>TABLA MENTAL FRENTE A EXACTO</span>"+
+      "<table class='cmpExa'><thead><tr><th></th><th class='m'>CON LA TABLA</th>"+
+      "<th class='x'>EXACTO</th></tr></thead><tbody>"+fils.join("")+"</tbody></table>"+
+      "<p class='nota'>La respuesta buena es la de la tabla: es con la que se opera de cabeza.</p>";
+  })();
+
   // resolución paso a paso
   var pah=""; (S.ej.pasos||[]).forEach(function(p){ pah+="<li>"+p+"</li>"; });
   $("#dPasos").innerHTML=pah;
@@ -4541,32 +4956,535 @@ function corregir(porTiempo){
   $("#dResol").open=false;
   $("#btnCorregir").hidden=true; $("#btnSiguiente").hidden=false;
   /* estadística */
-  S.ses.tot++; if(res.ok){S.ses.ok++;S.ses.racha++;S.ses.mejor=Math.max(S.ses.mejor,S.ses.racha);} else S.ses.racha=0;
-  var e=stats[S.tipo.id]||{ok:0,tot:0}; e.tot++; if(res.ok)e.ok++; stats[S.tipo.id]=e; stSave(stats);
+  S.ses.tot++; if(res.ok) S.ses.ok++;
+  S.ses.pw=(S.ses.pw||0)+res.peso; S.ses.pwOk=(S.ses.pwOk||0)+res.pesoOk;
+  /* Dos cuentas a la vez: el ejercicio (todo o nada, como el mazo) y el
+     detalle por casillas ponderado, que enseña el progreso fino. */
+  var e=stats[S.tipo.id]||{ok:0,tot:0};
+  e.tot++; if(res.ok)e.ok++;
+  e.pw=(e.pw||0)+res.peso; e.pwOk=(e.pwOk||0)+res.pesoOk;
+  stats[S.tipo.id]=e; stSave(stats);
+  /* Desglose de la tanda en curso, para el resumen de la sesión */
+  S.ses.det=S.ses.det||{};
+  var dd=S.ses.det[S.tipo.id]||{ok:0,tot:0,pw:0,pwOk:0};
+  dd.tot++; if(res.ok)dd.ok++; dd.pw+=res.peso; dd.pwOk+=res.pesoOk;
+  S.ses.det[S.tipo.id]=dd;
   pintaStats();
 }
 
 /* --- estadística --- */
+/* Trazados corregidos. Se declara aquí, antes de pintaStats, porque la
+   tabla de estadística los incluye. */
+var TRZ_LS="tma_trz_vistos_v1";
+function trzLoad(){ try{ var t=localStorage.getItem(TRZ_LS); return t?JSON.parse(t):{}; }catch(e){ return {}; } }
+var trzTot=trzLoad();
+
+/* "3/4 (75%)" en una sola casilla, y la nota sobre 10 con un decimal. */
+function fracPc(a,b){ return b ? a+"/"+b+" ("+Math.round(100*a/b)+"%)" : "—"; }
+function nota(a,b){ return b ? (Math.round(1000*a/b)/100).toFixed(1).replace(".",",") : "—"; }
+/* La lista de ejercicios por nivel se dibuja desde el propio motor: así no
+   puede quedarse desfasada cuando se añaden o renumeran ejercicios. */
+function pintaNiveles(){
+  var z=document.getElementById("listaNiveles"); if(!z) return;
+  var NOM={1:"BÁSICO",2:"INTERMEDIO",3:"EXPERTO"};
+  var h="";
+  [1,2,3].forEach(function(n){
+    var propios=PEN.TYPES.filter(function(t){return t.nivel===n;});
+    if(!propios.length) return;
+    var total=PEN.pool(n,"todos").length;
+    var gs={};
+    propios.forEach(function(t){ (gs[t.grupo]=gs[t.grupo]||[]).push(t); });
+    h+='<details class="expl"><summary>'+NOM[n]+' <span class="k">\u00b7 '+
+      propios.length+' nuevo'+(propios.length>1?"s":"")+' \u00b7 '+total+' en total</span></summary>'+
+      '<div class="expl-body">';
+    Object.keys(gs).sort().forEach(function(g){
+      h+='<span class="lvlcat">'+g.toUpperCase()+'</span><span class="k">'+
+        gs[g].map(function(t){ return t.id+" \u00b7 "+t.nombre; }).join("<br>")+'</span>';
+    });
+    h+='</div></details>';
+  });
+  z.innerHTML=h;
+}
 function pintaStats(){
-  $("#stSesion").textContent="SESIÓN "+S.ses.ok+"/"+S.ses.tot+" · RACHA "+S.ses.racha+" (MEJOR "+S.ses.mejor+")";
-  var html="<tr><th>Tipo</th><th>Aciertos</th><th>%</th></tr>";
+  var so=S.ses.ok, st=S.ses.tot, sw=S.ses.pw||0, swo=S.ses.pwOk||0;
+  Object.keys(S.ses.trz||{}).forEach(function(k){ var e=S.ses.trz[k];
+    if(e&&e.tot){ so+=e.ok; st+=e.tot; sw+=(e.pw||0); swo+=(e.pwOk||0); } });
+  var nomSes="SESIÓN";
+  if(sesActiva!==null){
+    var xs=sesLoad().filter(function(z){return z.t===sesActiva;})[0];
+    if(xs) nomSes="SIGUIENDO «"+xs.nombre+"»";
+  }
+  $("#stSesion").textContent=nomSes+" "+fracPc(so,st)+(sw?" · NOTA "+nota(swo,sw):"");
+  var html="<tr><th>TIPO</th><th>EJERCICIOS</th><th>NOTA</th></tr>";
   PEN.TYPES.forEach(function(t){
     var e=stats[t.id]; if(!e||!e.tot) return;
-    html+="<tr><td>"+t.id+" · "+t.nombre+"</td><td>"+e.ok+"/"+e.tot+"</td><td class='pc'>"+
-      Math.round(100*e.ok/e.tot)+"%</td></tr>";
+    html+="<tr><td>"+t.id+" · "+t.nombre+"</td><td class='pc'>"+fracPc(e.ok,e.tot)+
+      "</td><td class='pc2'>"+nota(e.pwOk,e.pw)+"</td></tr>";
   });
-  var tOk=0,tTot=0; PEN.TYPES.forEach(function(t){ var e=stats[t.id]; if(e&&e.tot){tOk+=e.ok;tTot+=e.tot;} });
-  if(tTot) html+="<tr class='tot'><td>TOTAL</td><td>"+tOk+"/"+tTot+"</td><td class='pc'>"+Math.round(100*tOk/tTot)+"%</td></tr>";
+  var tOk=0,tTot=0,tPw=0,tPwOk=0;
+  PEN.TYPES.forEach(function(t){ var e=stats[t.id];
+    if(e&&e.tot){tOk+=e.ok;tTot+=e.tot;tPw+=(e.pw||0);tPwOk+=(e.pwOk||0);} });
+  /* Los trazados van en el mismo cuadro: también se corrigen y puntúan. */
+  var TZ=(TMA.TRAZADO&&TMA.TRAZADO.TIPOS)||[];
+  var hayTz=false;
+  TZ.forEach(function(t){ var e=trzTot[t.id]; if(e&&e.tot) hayTz=true; });
+  if(hayTz){
+    html+="<tr class='sep'><td colspan='3'>TRAZADO</td></tr>";
+    TZ.forEach(function(t){ var e=trzTot[t.id]; if(!e||!e.tot) return;
+      tOk+=e.ok; tTot+=e.tot; tPw+=(e.pw||0); tPwOk+=(e.pwOk||0);
+      html+="<tr><td>"+t.id+" · "+t.nombre+"</td><td class='pc'>"+fracPc(e.ok,e.tot)+
+        "</td><td class='pc2'>"+nota(e.pwOk,e.pw)+"</td></tr>"; });
+  }
+  if(tTot) html+="<tr class='tot'><td>TOTAL</td><td class='pc'>"+fracPc(tOk,tTot)+
+    "</td><td class='pc2'>"+nota(tPwOk,tPw)+"</td></tr>";
   if(html.indexOf("<td>")<0) html+="<tr><td colspan='3' style='text-align:left;color:var(--dim)'>Sin intentos todavía. Empieza una tanda.</td></tr>";
   $("#tStats").innerHTML=html;
 }
-pintaStats();
+pintaStats(); pintaNiveles();
+/* ---- sesiones guardadas ----------------------------------------------
+   Una sesión es la tanda que se acaba de hacer: aciertos, total y el
+   desglose por tipo de ejercicio. Se guarda con un nombre para
+   poder mirarla luego y comparar. No toca la estadística acumulada. */
+var SES_LS="tma_pen_sesiones_v1";
+function sesLoad(){ try{ var t=localStorage.getItem(SES_LS);
+  var a=t?JSON.parse(t):[]; return Array.isArray(a)?a:[]; }catch(e){ return []; } }
+function sesSave(a){ try{ localStorage.setItem(SES_LS,JSON.stringify(a)); }catch(e){} }
+function sesFecha(t){ var d=new Date(t), z=function(n){return (n<10?"0":"")+n};
+  return z(d.getDate())+"/"+z(d.getMonth()+1)+" "+z(d.getHours())+":"+z(d.getMinutes()); }
+function pintaSes(){
+  var z=$("#sesLista"); if(!z) return;
+  var L=sesLoad();
+  if(!L.length){ z.innerHTML='<div class="sesVacio">todavía no hay ninguna sesión guardada</div>'; return; }
+  var h='<table class="sesTab"><thead><tr><th>NOMBRE</th><th>FECHA</th>'+
+        '<th style="text-align:right">RESULTADO</th><th></th></tr></thead><tbody>';
+  L.forEach(function(x,i){
+    var act=(sesActiva!==null && x.t===sesActiva);
+    h+='<tr'+(act?' class="act"':'')+'><td class="nom">'+(act?"\u25b8 ":"")+x.nombre+'</td><td>'+sesFecha(x.t)+'</td>'+
+       '<td class="res">'+fracPc(x.ok,x.tot)+
+         ((x.pw||0)?' \u00b7 NOTA '+nota(x.pwOk,x.pw):"")+'</td>'+
+       '<td class="acc">'+(act?'<span class="ensesion">EN CURSO</span>':
+         '<button type="button" class="abre" data-i="'+i+'" title="continuar esta sesi\u00f3n">SEGUIR</button>')+
+       '<button type="button" class="pdf" data-i="'+i+'" title="resumen imprimible">PDF</button>'+
+       '<button type="button" class="del" data-i="'+i+'" aria-label="borrar">×</button></td></tr>';
+  });
+  z.innerHTML=h+'</tbody></table>';
+  z.querySelectorAll(".del").forEach(function(b){
+    b.addEventListener("click",function(){
+      var L2=sesLoad(); L2.splice(+b.dataset.i,1); sesSave(L2); pintaSes();
+    });
+  });
+  z.querySelectorAll(".pdf").forEach(function(b){
+    b.addEventListener("click",function(){ exportaSes(+b.dataset.i); });
+  });
+  z.querySelectorAll(".abre").forEach(function(b){
+    b.addEventListener("click",function(){ retomaSes(+b.dataset.i); });
+  });
+}
+/* Retomar una sesión: sus contadores vuelven a ser los de la tanda en
+   curso y se sigue sumando encima. Al guardar de nuevo se actualiza esa
+   misma entrada en vez de crear otra, mientras no se empiece otra tanda. */
+var sesActiva=null;
+function retomaSes(i){
+  var L=sesLoad(), x=L[i]; if(!x) return null;
+  S.ses={ ok:x.ok||0, tot:x.tot||0,
+    pw:x.pw||0, pwOk:x.pwOk||0,
+    det:JSON.parse(JSON.stringify(x.det||{})),
+    trz:JSON.parse(JSON.stringify(x.trz||{})) };
+  sesActiva=x.t;                                  // se identifica por su hora
+  if(x.nivel){ S.nivel=x.nivel;
+    document.querySelectorAll("#selNivel button").forEach(function(b){
+      b.classList.toggle("on", +b.dataset.v===x.nivel); }); }
+  if(x.grupo){ S.grupo=x.grupo;
+    document.querySelectorAll("#selGrupo button").forEach(function(b){
+      b.classList.toggle("on", b.dataset.v===x.grupo); }); }
+  $("#sesNombre").value=x.nombre;
+  /* Puede retomarse sin haber pulsado COMENZAR antes — por ejemplo viniendo
+     del modo DIBUJO — y entonces no hay generador: se crea aquí. */
+  if(typeof S.rng!=="function") S.rng=TMA.rng((Date.now()%2147483647)>>>0);
+  /* Retomar es seguir entrenando: se vuelve al modo de cálculo mental. */
+  var bModo=document.querySelector('#selEnt button[data-v="pen"]');
+  if(bModo && !bModo.classList.contains("on")) bModo.click();
+  S.activo=true;
+  try{ nuevo(); }catch(e){}
+  pintaStats(); pintaSes();
+  var bTab=document.querySelector('nav.tabs button[data-v="entrenar"]');
+  if(bTab) bTab.click();
+  return S.ses;
+}
+function guardaSes(nombre){
+  if(!S.ses.tot && !Object.keys(S.ses.trz||{}).length)
+    return "sin actividad: haz algún ejercicio o mira un trazado";
+  var L=sesLoad();
+  if(sesActiva!==null){
+    /* Se está continuando una sesión ya guardada: se actualiza la suya. */
+    for(var q=0;q<L.length;q++){ if(L[q].t===sesActiva){ L.splice(q,1); break; } }
+  }
+  L.unshift({ nombre:(nombre||"").trim()||("sesión "+sesFecha(Date.now())),
+    t:(sesActiva!==null?sesActiva:Date.now()), ok:S.ses.ok, tot:S.ses.tot,
+    pw:S.ses.pw||0, pwOk:S.ses.pwOk||0,
+    nivel:S.nivel, grupo:S.grupo,
+    det:JSON.parse(JSON.stringify(S.ses.det||{})),
+    trz:JSON.parse(JSON.stringify(S.ses.trz||{})) });
+  if(L.length>40) L=L.slice(0,40);
+  sesSave(L); pintaSes(); return null;
+}
+/* Trazados estudiados: se acumulan igual que los ejercicios, pero como
+   actividad, no como puntuación. */
+/* Sin resultado (res===undefined) solo se anota que se ha abierto el
+   trazado; con resultado se acumula igual que un ejercicio del mazo. */
+function anotaTrz(tipo,res){
+  var g=function(m){ var e=m[tipo]||{vistos:0,ok:0,tot:0,pw:0,pwOk:0};
+    if(res===undefined){ e.vistos++; }
+    else { e.tot++; if(res.ok)e.ok++; e.pw+=res.peso; e.pwOk+=res.pesoOk; }
+    m[tipo]=e; return m; };
+  g(trzTot);
+  try{ localStorage.setItem(TRZ_LS,JSON.stringify(trzTot)); }catch(e){}
+  S.ses.trz=S.ses.trz||{}; g(S.ses.trz);
+  if(res!==undefined && typeof pintaStats==="function") pintaStats();
+}
+/* ---- resumen imprimible de una sesión ---------------------------------
+   Se abre una ventana con el resumen maquetado y se lanza la impresión;
+   desde ahí el sistema ofrece "Guardar como PDF" (en iOS, Compartir →
+   Imprimir → guardar en Archivos). No se usa ninguna biblioteca: la app
+   sigue siendo un solo fichero sin dependencias. */
+/* ---- Generador de PDF ------------------------------------------------
+   Instalada como app, iOS no abre el diálogo de impresión, así que
+   window.print() no hace nada. Aquí se arma el PDF a mano: son objetos de
+   texto plano con una tabla de referencias al final. Solo hace falta texto
+   y líneas, así que basta con las fuentes Helvetica que todo lector trae.
+   Sin bibliotecas: la app sigue siendo un único fichero. */
+var PDF=(function(){
+  var A4=[595.28,841.89], MI=42, INTER=13.2;
+
+  /* El PDF clásico usa WinAnsi: los acentos van como un solo byte. */
+  /* Signos que WinAnsi no tiene: se escriben con lo que sí hay, en vez de
+     dejar un interrogante. */
+  var FUERA={"\u2316":"+","\u1e04":"B\u0307","\u1e05":"b","\u0307":"'","\u2192":"->",
+    "\u2264":"<=","\u2265":">=","\u2212":"-","\u2026":"..."};
+  var WIN={"€":128,"‚":130,"ƒ":131,"„":132,"…":133,"†":134,"‡":135,"ˆ":136,"‰":137,
+    "Š":138,"‹":139,"Œ":140,"Ž":142,"‘":145,"’":146,"“":147,"”":148,"•":149,"–":150,
+    "—":151,"˜":152,"™":153,"š":154,"›":155,"œ":156,"ž":158,"Ÿ":159};
+  function esc(t){
+    var o="";
+    for(var i=0;i<t.length;i++){
+      var c=t[i], n=t.charCodeAt(i);
+      if(WIN[c]!==undefined) n=WIN[c];
+      else if(FUERA[c]!==undefined){ o+=FUERA[c]; continue; }
+      else if(n>255) n=63;                       // lo que no tenga apaño, "?"
+      if(n===40||n===41||n===92) o+="\\"+String.fromCharCode(n);
+      else if(n<32) o+=" ";
+      else o+=String.fromCharCode(n);
+    }
+    return o;
+  }
+  /* Ancho aproximado de Helvetica, suficiente para alinear a la derecha. */
+  function ancho(t,sz,neg){
+    var w=0;
+    for(var i=0;i<t.length;i++){
+      var c=t[i];
+      w += /[iljI.,:;'|!\[\]()]/.test(c) ? 0.30 : /[mwMW@]/.test(c) ? 0.86
+         : /[A-Z0-9]/.test(c) ? 0.63 : 0.52;
+    }
+    return w*sz*(neg?1.06:1);
+  }
+
+  function doc(){
+    var pgs=[], cur=null, y=0;
+    function nueva(){ cur={ops:[]}; pgs.push(cur); y=A4[1]-MI; }
+    nueva();
+    var api={
+      salto:function(h){ y-=(h||INTER); if(y<MI+24) nueva(); return api; },
+      /* al:"i" izquierda (por defecto) · "d" derecha desde x */
+      texto:function(t,x,sz,neg,gris,al){
+        sz=sz||10;
+        var xx=(al==="d")? x-ancho(String(t),sz,neg) : x;
+        cur.ops.push("BT /"+(neg?"F2":"F1")+" "+sz+" Tf "+
+          (gris!==undefined?gris+" g ":"0 g ")+
+          xx.toFixed(2)+" "+y.toFixed(2)+" Td ("+esc(String(t))+") Tj ET");
+        return api;
+      },
+      linea:function(x1,x2,gris){
+        cur.ops.push((gris===undefined?0.75:gris)+" G 0.6 w "+
+          x1.toFixed(2)+" "+(y+4).toFixed(2)+" m "+x2.toFixed(2)+" "+(y+4).toFixed(2)+" l S");
+        return api;
+      },
+      y:function(){ return y; },
+      ancho:ancho,
+      /* Ensambla el fichero completo */
+      build:function(){
+        var objs=[], n=0;
+        function add(s){ objs.push(s); return ++n; }
+        var kids=[], contIds=[];
+        pgs.forEach(function(){ contIds.push(0); });
+        /* 1 catálogo · 2 páginas · luego, por cada hoja, página y contenido */
+        var idCat=1, idPgs=2, base=3;
+        var pagIds=[], conIds=[];
+        pgs.forEach(function(p,i){ pagIds.push(base+i*2); conIds.push(base+i*2+1); });
+        var idF1=base+pgs.length*2, idF2=idF1+1;
+        var out=[];
+        out[idCat]="<< /Type /Catalog /Pages "+idPgs+" 0 R >>";
+        out[idPgs]="<< /Type /Pages /Kids ["+pagIds.map(function(k){return k+" 0 R";}).join(" ")+
+          "] /Count "+pgs.length+" >>";
+        pgs.forEach(function(p,i){
+          out[pagIds[i]]="<< /Type /Page /Parent "+idPgs+" 0 R /MediaBox [0 0 "+
+            A4[0]+" "+A4[1]+"] /Contents "+conIds[i]+" 0 R /Resources << /Font << /F1 "+
+            idF1+" 0 R /F2 "+idF2+" 0 R >> >> >>";
+          var flujo=p.ops.join("\n");
+          out[conIds[i]]="<< /Length "+flujo.length+" >>\nstream\n"+flujo+"\nendstream";
+        });
+        out[idF1]="<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>";
+        out[idF2]="<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>";
+        var cab="%PDF-1.4\n", cuerpo="", pos=[], off=cab.length;
+        for(var k=1;k<=idF2;k++){
+          pos[k]=off;
+          var t=k+" 0 obj\n"+out[k]+"\nendobj\n";
+          cuerpo+=t; off+=t.length;
+        }
+        var xref="xref\n0 "+(idF2+1)+"\n0000000000 65535 f \n";
+        for(var k2=1;k2<=idF2;k2++) xref+=("0000000000"+pos[k2]).slice(-10)+" 00000 n \n";
+        var fin="trailer\n<< /Size "+(idF2+1)+" /Root "+idCat+" 0 R >>\nstartxref\n"+off+"\n%%EOF";
+        return cab+cuerpo+xref+fin;
+      }
+    };
+    return api;
+  }
+  return { doc:doc, MI:MI, A4:A4 };
+})();
+
+function resumenHTML(x){
+  var esc=function(t){ return String(t).replace(/[&<>]/g,function(c){
+    return c==="&"?"&amp;":c==="<"?"&lt;":"&gt;"; }); };
+  var pc=function(a,b){ return b?Math.round(100*a/b)+"%":"—"; };
+  var fr=fracPc, nt=nota;
+  var det=x.det||{}, ids=Object.keys(det);
+  /* Por nivel */
+  var niv={}, gru={};
+  ids.forEach(function(id){
+    var t=PEN.TYPES.filter(function(y){return y.id===id;})[0]; if(!t) return;
+    var d=det[id];
+    [[niv,"N"+t.nivel],[gru,t.grupo]].forEach(function(par){
+      var m=par[0], k=par[1];
+      m[k]=m[k]||{ok:0,tot:0,pw:0,pwOk:0};
+      m[k].ok+=d.ok; m[k].tot+=d.tot; m[k].pw+=d.pw; m[k].pwOk+=d.pwOk;
+    });
+  });
+  var tabla=function(tit,mapa,orden){
+    var ks=(orden||Object.keys(mapa).sort()).filter(function(k){return mapa[k];});
+    if(!ks.length) return "";
+    var h='<h2>'+tit+'</h2><table><thead><tr><th>'+(tit.indexOf("nivel")>=0?"Nivel":"Grupo")+
+      '</th><th>Ejercicios</th><th>Nota</th></tr></thead><tbody>';
+    var so=0,st=0,sw=0,swo=0;
+    ks.forEach(function(k){ var d=mapa[k];
+      so+=d.ok; st+=d.tot; sw+=d.pw; swo+=d.pwOk;
+      h+='<tr><td>'+esc(k)+'</td><td>'+fr(d.ok,d.tot)+'</td><td>'+nt(d.pwOk,d.pw)+'</td></tr>'; });
+    h+='<tr class="tot"><td>TOTAL</td><td>'+fr(so,st)+'</td><td>'+nt(swo,sw)+'</td></tr>';
+    return h+'</tbody></table>';
+  };
+  var so=0,st=0,sw=0,swo=0;
+  var filas=ids.sort().map(function(id){
+    var t=PEN.TYPES.filter(function(y){return y.id===id;})[0], d=det[id];
+    if(!t) return "";
+    so+=d.ok; st+=d.tot; sw+=d.pw; swo+=d.pwOk;
+    return '<tr><td>'+esc(id)+'</td><td>'+esc(t.nombre)+'</td><td>'+t.nivel+
+      '</td><td>'+esc(t.grupo)+'</td><td>'+fr(d.ok,d.tot)+
+      '</td><td>'+nt(d.pwOk,d.pw)+'</td></tr>';
+  }).join("");
+  if(filas) filas+='<tr class="tot"><td colspan="4">TOTAL</td><td>'+fr(so,st)+
+    '</td><td>'+nt(swo,sw)+'</td></tr>';
+  var trz=x.trz||{}, tks=Object.keys(trz).filter(function(k){
+    var e=trz[k]; return e && ((e.tot||0)>0 || (e.vistos||0)>0); });
+  var tso=0,tst=0,tsw=0,tswo=0;
+  var trzT=tks.length ? '<h2>Trazado</h2><table><thead><tr><th>Tipo</th>'+
+      '<th>Trazado</th><th>Ejercicios</th><th>Nota</th><th>Solo vistos</th></tr></thead><tbody>'+
+      tks.sort().map(function(k){
+        var t=(TMA.TRAZADO&&TMA.TRAZADO.TIPOS||[]).filter(function(y){return y.id===k;})[0];
+        var e=trz[k];
+        tso+=(e.ok||0); tst+=(e.tot||0); tsw+=(e.pw||0); tswo+=(e.pwOk||0);
+        return '<tr><td>'+esc(k)+'</td><td>'+esc(t?t.nombre:"")+'</td><td>'+
+          ((e.tot||0)?fr(e.ok,e.tot):"\u2014")+'</td><td>'+((e.pw||0)?nt(e.pwOk,e.pw):"\u2014")+
+          '</td><td>'+(e.vistos||0)+'</td></tr>';
+      }).join("")+
+      '<tr class="tot"><td colspan="2">TOTAL</td><td>'+(tst?fr(tso,tst):"\u2014")+
+      '</td><td>'+(tsw?nt(tswo,tsw):"\u2014")+'</td><td></td></tr></tbody></table>'+
+      '<p class="pie">"Solo vistos" son los trazados que se abrieron sin llegar a corregir: '+
+      'cuentan como estudio, no como puntuaci\u00f3n.</p>' : "";
+  return '<!DOCTYPE html><html lang="es"><head><meta charset="utf-8">'+
+    '<title>'+esc(x.nombre)+'</title><style>'+
+    'body{font:12px/1.5 -apple-system,system-ui,sans-serif;color:#111;margin:26px;max-width:760px}'+
+    'h1{font-size:17px;letter-spacing:.06em;margin:0 0 2px}'+
+    'h2{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#555;'+
+      'margin:20px 0 6px;border-bottom:1px solid #ccc;padding-bottom:3px}'+
+    '.sub{color:#666;margin:0 0 14px;font-size:11.5px}'+
+    '.cab{display:flex;gap:26px;flex-wrap:wrap;margin:10px 0 4px}'+
+    '.cab div{font-size:11px;color:#666}.cab b{display:block;font-size:19px;color:#111}'+
+    'table{width:100%;border-collapse:collapse;margin-bottom:4px}'+
+    'th{font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#777;'+
+      'text-align:right;padding:4px 6px;border-bottom:1px solid #bbb}'+
+    'th:first-child,th:nth-child(2){text-align:left}'+
+    'td{padding:4px 6px;text-align:right;border-bottom:1px solid #eee}'+
+    'td:first-child,td:nth-child(2){text-align:left}'+
+    '.pie{font-size:10.5px;color:#777;margin-top:4px}'+
+    'tr.tot td{font-weight:700;border-top:1px solid #999;border-bottom:none}'+
+    '@media print{body{margin:12mm}}'+
+    '</style></head><body>'+
+    '<h1>\u2316HSUB\u2316 \u00b7 '+esc(x.nombre)+'</h1>'+
+    '<p class="sub">'+sesFecha(x.t)+' \u00b7 nivel '+(x.nivel||"?")+' \u00b7 grupo '+esc(x.grupo||"todos")+'</p>'+
+    '<div class="cab">'+
+      '<div>EJERCICIOS<b>'+fr(x.ok,x.tot)+'</b></div>'+
+      '<div>NOTA<b>'+nt(x.pwOk||0,x.pw||0)+'</b></div></div>'+
+    tabla("Por nivel",niv,["N1","N2","N3","N4"])+
+    tabla("Por grupo",gru)+
+    (filas?'<h2>Detalle por ejercicio</h2><table><thead><tr><th>Id</th><th>Ejercicio</th>'+
+      '<th>Niv</th><th>Grupo</th><th>Ejercicios</th><th>Nota</th></tr></thead><tbody>'+
+      filas+'</tbody></table>':"")+
+    trzT+
+    '<p class="pie">Ejercicios: se cuenta acierto solo si todas las casillas est\u00e1n bien, '+
+    'como en el mazo. Nota: sobre diez, casilla a casilla, con las bandas y los sentidos '+
+    'valiendo la mitad que un n\u00famero.</p>'+
+    '</body></html>';
+}
+/* Compone el resumen de una sesión como PDF y lo entrega. */
+function resumenPDF(x){
+  var D=PDF.doc(), M=PDF.MI, W=PDF.A4[0]-PDF.MI;
+  var fr=fracPc, nt=nota;
+  var det=x.det||{}, ids=Object.keys(det).sort();
+  var niv={}, gru={};
+  ids.forEach(function(id){
+    var t=PEN.TYPES.filter(function(y){return y.id===id;})[0]; if(!t) return;
+    var dd=det[id];
+    [[niv,"Nivel "+t.nivel],[gru,t.grupo]].forEach(function(par){
+      var m=par[0], k=par[1];
+      m[k]=m[k]||{ok:0,tot:0,pw:0,pwOk:0};
+      m[k].ok+=dd.ok; m[k].tot+=dd.tot; m[k].pw+=dd.pw; m[k].pwOk+=dd.pwOk;
+    });
+  });
+
+  /* cabecera */
+  D.texto("HSUB \u00b7 "+x.nombre, M, 15, true).salto(15);
+  D.texto(sesFecha(x.t)+"   nivel "+(x.nivel||"?")+"   grupo "+(x.grupo||"todos"),
+    M, 9.5, false, 0.45).salto(20);
+  D.texto("EJERCICIOS", M, 8, false, 0.45);
+  D.texto("NOTA", M+150, 8, false, 0.45).salto(14);
+  D.texto(fr(x.ok,x.tot), M, 15, true);
+  D.texto(nt(x.pwOk||0,x.pw||0), M+150, 15, true).salto(20);
+
+  function titulo(t){ D.salto(8); D.texto(t.toUpperCase(), M, 9, true, 0.35);
+    D.salto(4); D.linea(M,W,0.75); D.salto(11); }
+  function fila(c1,c2,c3,neg,c0){
+    if(c0!==undefined) D.texto(c0, M, 9.5, neg, neg?0:0.25);
+    D.texto(c1, c0!==undefined?M+42:M, 9.5, neg, neg?0:0.25);
+    D.texto(c2, W-92, 9.5, neg, 0, "d");
+    D.texto(c3, W, 9.5, neg, 0, "d");
+    D.salto();
+  }
+  function tabla(tit,mapa,orden){
+    var ks=(orden||Object.keys(mapa).sort()).filter(function(k){return mapa[k];});
+    if(!ks.length) return;
+    titulo(tit);
+    D.texto("", M, 8);
+    D.texto("EJERCICIOS", W-92, 7.5, false, 0.5, "d");
+    D.texto("NOTA", W, 7.5, false, 0.5, "d"); D.salto(11);
+    var so=0,st=0,sw=0,swo=0;
+    ks.forEach(function(k){ var dd=mapa[k];
+      so+=dd.ok; st+=dd.tot; sw+=dd.pw; swo+=dd.pwOk;
+      fila(k, fr(dd.ok,dd.tot), nt(dd.pwOk,dd.pw), false);
+    });
+    D.linea(M,W,0.6); D.salto(11);
+    fila("TOTAL", fr(so,st), nt(swo,sw), true);
+  }
+
+  tabla("Por nivel", niv, ["Nivel 1","Nivel 2","Nivel 3"]);
+  tabla("Por grupo", gru);
+
+  if(ids.length){
+    titulo("Detalle por ejercicio");
+    D.texto("", M, 8);
+    D.texto("EJERCICIOS", W-92, 7.5, false, 0.5, "d");
+    D.texto("NOTA", W, 7.5, false, 0.5, "d"); D.salto(11);
+    var so=0,st=0,sw=0,swo=0;
+    ids.forEach(function(id){
+      var t=PEN.TYPES.filter(function(y){return y.id===id;})[0], dd=det[id];
+      if(!t) return;
+      so+=dd.ok; st+=dd.tot; sw+=dd.pw; swo+=dd.pwOk;
+      var nom=t.nombre; if(nom.length>34) nom=nom.slice(0,33)+"\u2026";
+      fila(nom+"  (n"+t.nivel+")", fr(dd.ok,dd.tot), nt(dd.pwOk,dd.pw), false, id);
+    });
+    D.linea(M,W,0.6); D.salto(11);
+    fila("TOTAL", fr(so,st), nt(swo,sw), true, "");
+  }
+
+  var trz=x.trz||{}, tks=Object.keys(trz).filter(function(k){
+    var e=trz[k]; return e && ((e.tot||0)>0 || (e.vistos||0)>0); });
+  if(tks.length){
+    titulo("Dibujo \u00b7 rosa y mesa");
+    D.texto("", M, 8);
+    D.texto("EJERCICIOS", W-92, 7.5, false, 0.5, "d");
+    D.texto("NOTA", W, 7.5, false, 0.5, "d"); D.salto(11);
+    var to=0,tt=0,tw=0,two=0;
+    tks.sort().forEach(function(k){
+      var t=(TMA.TRAZADO&&TMA.TRAZADO.TIPOS||[]).filter(function(y){return y.id===k;})[0];
+      var e=trz[k];
+      to+=(e.ok||0); tt+=(e.tot||0); tw+=(e.pw||0); two+=(e.pwOk||0);
+      var nom=(t?t.nombre:k); if(nom.length>34) nom=nom.slice(0,33)+"\u2026";
+      fila(nom+((e.vistos||0)?"  ("+e.vistos+" solo vistos)":""),
+        (e.tot||0)?fr(e.ok,e.tot):"\u2014", (e.pw||0)?nt(e.pwOk,e.pw):"\u2014", false, k);
+    });
+    D.linea(M,W,0.6); D.salto(11);
+    fila("TOTAL", tt?fr(to,tt):"\u2014", tw?nt(two,tw):"\u2014", true, "");
+  }
+
+  D.salto(16);
+  D.texto("Ejercicios: acierto solo si todas las casillas est\u00e1n bien, como en el mazo.",
+    M, 8, false, 0.5).salto(10);
+  D.texto("Nota: sobre diez, casilla a casilla, con las bandas y sentidos valiendo menos.",
+    M, 8, false, 0.5);
+  return D.build();
+}
+
+function exportaSes(i){
+  var x=sesLoad()[i]; if(!x) return null;
+  var txt=resumenPDF(x);
+  /* El PDF se arma como texto; se pasa a bytes uno a uno porque cada
+     carácter ya es un byte WinAnsi. */
+  var n=txt.length, bytes=new Uint8Array(n);
+  for(var k=0;k<n;k++) bytes[k]=txt.charCodeAt(k)&0xff;
+  var blob=new Blob([bytes],{type:"application/pdf"});
+  var nombre=("HSUB "+x.nombre).replace(/[^\w\u00c0-\u017f .-]/g,"").trim()+".pdf";
+  /* En iOS lo que funciona es la hoja de compartir: desde ahí, "Guardar en
+     Archivos". Si no está, se cae a la descarga de toda la vida. */
+  try{
+    var f=new File([blob],nombre,{type:"application/pdf"});
+    if(navigator.canShare && navigator.canShare({files:[f]})){
+      navigator.share({files:[f],title:x.nombre}).catch(function(){});
+      return blob;
+    }
+  }catch(e){}
+  try{
+    var url=URL.createObjectURL(blob);
+    var a=document.createElement("a");
+    a.href=url; a.download=nombre; a.rel="noopener";
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ document.body.removeChild(a); URL.revokeObjectURL(url); },4000);
+  }catch(e){}
+  return blob;
+}
+$("#btnSesGuardar").addEventListener("click",function(){
+  var av=guardaSes($("#sesNombre").value);
+  if(av){ $("#sesNombre").placeholder=av; return; }
+  $("#sesNombre").value=""; $("#sesNombre").placeholder="nombre de la sesión";
+});
+$("#sesNombre").addEventListener("keydown",function(e){
+  if(e.key==="Enter") $("#btnSesGuardar").click(); });
+pintaSes();
 $("#btnResetStats").addEventListener("click",function(){ stats={}; stSave(stats); pintaStats(); });
 
 /* --- flujo --- */
 $("#btnComenzar").addEventListener("click",function(){
   S.activo=true; S.rng=TMA.rng((Date.now()%2147483647)>>>0);
-  S.ses={ok:0,tot:0,racha:0,mejor:0};
+  S.ses={ok:0,tot:0}; sesActiva=null;
+  /* Al empezar tanda nueva hay que repintar la lista: si no, la sesión que
+     se venía siguiendo se queda marcada como si aún lo estuviera. */
+  if(typeof pintaSes==="function") pintaSes();
   $("#penSetup").hidden=true; $("#penDrill").hidden=false; pintaStats(); nuevo();
 });
 $("#btnCorregir").addEventListener("click",function(){corregir(false)});
@@ -4584,7 +5502,7 @@ document.addEventListener("keydown",function(e){
 /* --- API interna para el harness (jsdom) --- */
 window.PEN_UI={
   iniciarTest:function(nivel,grupo,seed){ S.nivel=nivel;S.grupo=grupo;S.activo=true;
-    S.rng=TMA.rng(seed>>>0); S.ses={ok:0,tot:0,racha:0,mejor:0};
+    S.rng=TMA.rng(seed>>>0); S.ses={ok:0,tot:0}; sesActiva=null;
     $("#penSetup").hidden=true; $("#penDrill").hidden=false; nuevo(); },
   ej:function(){return S.ej}, tipo:function(){return S.tipo},
   rellenar:function(obj){
@@ -4595,7 +5513,11 @@ window.PEN_UI={
       else d.dataset.val=v;
     });},
   corregir:function(){corregir(false); return $("#dVeredicto").textContent;},
-  siguiente:nuevo, sesion:function(){return S.ses}, stats:function(){return stats}
+  siguiente:nuevo, sesion:function(){return S.ses}, stats:function(){return stats},
+  guardaSes:guardaSes, sesiones:sesLoad, pintaSes:pintaSes,
+  anotaTrz:anotaTrz, trazados:function(){return trzTot;},
+  exportaSes:exportaSes, resumenHTML:resumenHTML, resumenPDF:resumenPDF,
+  retomaSes:retomaSes, sesActiva:function(){return sesActiva;}
 };
 })();
 
@@ -4866,7 +5788,7 @@ $("#btnMan").addEventListener("click",calcMan);
     // tabla completa: cabecera de grupo + columnas coloreadas
     var nA=TMA.PERI_COLS.filter(function(c){return c.grupo==="ATAQUE"}).length;
     var nP=TMA.PERI_COLS.filter(function(c){return c.grupo==="PERCO"}).length;
-    var th="<tr><th rowspan='2' class='thdiv'>Div.</th><th colspan='"+nA+"' class='thA'>PERI ATAQUE</th><th colspan='"+nP+"' class='thP'>PERCO</th></tr>";
+    var th="<tr><th rowspan='2' class='thdiv'>DIV.</th><th colspan='"+nA+"' class='thA'>PERI ATAQUE</th><th colspan='"+nP+"' class='thP'>PERCO</th></tr>";
     th+="<tr>"; TMA.PERI_COLS.forEach(function(c){th+="<th class='"+(c.grupo==="ATAQUE"?"colA":"colP")+"'>"+c.corta+"</th>";}); th+="</tr>";
     var body="";
     TMA.DIVISIONES.forEach(function(dv){
@@ -4959,6 +5881,12 @@ document.querySelectorAll("#trzMedio button").forEach(function(b){
   });});
 
 function carga(ej){
+  /* El trazado no se corrige: no hay respuesta que dar, se estudia paso a
+     paso. Lo que se registra es la actividad — qué trazados se han visto —
+     y eso aparece aparte en el resumen, sin mezclarse con los aciertos. */
+  try{
+    if(ej&&ej.tipo&&window.PEN_UI&&PEN_UI.anotaTrz) PEN_UI.anotaTrz(ej.tipo);
+  }catch(e){}
   S.ej=ej; S.paso=-1;
   $("#trzEnun").textContent=ej.datos.enun;
   $("#trzVisor").hidden=true; $("#trzVer").hidden=false;
@@ -4978,25 +5906,27 @@ function carga(ej){
 $("#trzNuevo").addEventListener("click",function(){
   carga(TRZ.nuevo(S.tipo,(Date.now()%2147483647)>>>0));
 });
-[["#trzDoc0",0],["#trzDoc1",1],["#trzDoc2",2]].forEach(function(par){
-  $(par[0]).addEventListener("click",function(){
-    var D=TRZ.DOCTRINA[par[1]];
-    document.querySelectorAll("#trzTipo button").forEach(function(x){x.classList.toggle("on",x.dataset.v===D.tipo)});
-    S.tipo=D.tipo; carga(TRZ.crear(D.tipo,D.datos));
-  });});
 
 $("#trzCorrBtn").addEventListener("click",function(){
   if(!S.ej) return;
-  var todo=true;
+  var todo=true, peso=0, pesoOk=0;
   document.querySelectorAll("#trzCampos .campo").forEach(function(d){
     var k=d.dataset.k, ok=TMA.PEN.okCampo(S.ej.res.tol[k], d.querySelector("input").value, S.ej.res.sol[k]);
-    d.querySelector(".marca").textContent=ok?"✓":"✗";
+    d.querySelector(".marca").textContent=ok?"\u2713":"\u2717";
     d.querySelector(".marca").className="marca "+(ok?"ok":"bad");
     var v=S.ej.res.sol[k];
-    d.querySelector(".solTxt").textContent="→ "+(typeof v==="number"? (S.ej.res.tol[k]==="a"? String(Math.round(((v%360)+360)%360).toString()).padStart(3,"0") : (Math.round(v*10)/10).toString().replace(".",",")) : v);
-    if(!ok) todo=false;
+    d.querySelector(".solTxt").textContent="\u2192 "+(typeof v==="number"? (S.ej.res.tol[k]==="a"? String(Math.round(((v%360)+360)%360).toString()).padStart(3,"0") : (Math.round(v*10)/10).toString().replace(".",",")) : v);
+    /* El trazado puntúa igual que el resto: casilla a casilla, con los
+       mismos pesos por dificultad. */
+    var w=TMA.PEN.pesoCampo({});
+    peso+=w; if(ok){ pesoOk+=w; } else todo=false;
   });
-  $("#trzCorrOut").innerHTML="<span class='par'><b class='"+(todo?"x":"mal")+"'>"+(todo?"CORRECTO":"REVISA — mira los pasos")+"</b></span>";
+  $("#trzCorrOut").innerHTML="<span class='par'><b class='"+(todo?"x":"mal")+"'>"+
+    (todo?"CORRECTO":"REVISA \u2014 mira los pasos")+"</b>"+
+    (peso?"  <span class='k'>nota "+(Math.round(1000*pesoOk/peso)/100).toFixed(1).replace(".",",")+"</span>":"")+
+    "</span>";
+  try{ if(window.PEN_UI&&PEN_UI.anotaTrz)
+    PEN_UI.anotaTrz(S.tipo,{ok:todo,peso:peso,pesoOk:pesoOk}); }catch(e){}
 });
 
 $("#trzVer").addEventListener("click",function(){ if(!S.ej)return;
@@ -5034,7 +5964,7 @@ function dibujaTrz(svg, ej, paso, medio){
     var tc=el("text",{x:ox,y:Math.max(oy-Rmax-2,-105),"text-anchor":"middle","class":"bglbl"}); tc.textContent="centro (vectores)"; gBg.appendChild(tc);
   } else {
     var paso1k=1000*esc; // 1000 yds en pantalla
-    [1,2,3,4].forEach(function(n){ gBg.appendChild(el("circle",{cx:ox,cy:oy,r:paso1k*n,"class":"bgcir"})); });
+    [1,2,3].forEach(function(n){ gBg.appendChild(el("circle",{cx:ox,cy:oy,r:paso1k*n,"class":"bgcir"})); });
     for(var a2=0;a2<360;a2+=45){ var rr2=a2*Math.PI/180; gBg.appendChild(el("line",{x1:ox,y1:oy,x2:ox+paso1k*4.4*Math.sin(rr2),y2:oy-paso1k*4.4*Math.cos(rr2),"class":"bgspoke"})); }
     var tc2=el("text",{x:ox,y:Math.max(oy-paso1k*4-2,-105),"text-anchor":"middle","class":"bglbl"}); tc2.textContent="cruceta 1000 yds"; gBg.appendChild(tc2);
   }
@@ -5467,7 +6397,17 @@ window.APTRZ_UI={nuevo:function(t,s){A.tipo=t;A.ej=TRZ.nuevo(t,s||7);A.paso=0;$(
     return c;
   }
   function obsDeTramo(c,i){ return (c.obs||[]).filter(function(o){ return o.tr===i; }); }
-  function leyDe(c){ var r=TMA.leyDemSerie(c.obs||[]); return r?r:null; }
+    /* Dos observaciones demasiado seguidas dan una Ḃ disparatada —el doble
+       toque en OBSERVADO es el caso típico—. Por debajo de este intervalo no
+       se da ley ni se clasifica nada: se avisa y se pide separar la toma. */
+    var DT_MIN_OBS=30000;
+    function obsSeguidas(c){
+      var o=(c.obs||[]).filter(function(x){return x&&x.b!==null&&x.b!==undefined;});
+      if(o.length<2) return false;
+      return Math.abs(o[o.length-1].t-o[o.length-2].t)<DT_MIN_OBS;
+    }
+    function leyDe(c){ if(obsSeguidas(c)) return null;
+      var r=TMA.leyDemSerie(c.obs||[]); return r?r:null; }
   /* Ley dentro de un tramo concreto, para prellenar el Ekelund */
   function leyTramo(c,i){ var r=TMA.leyDemSerie(obsDeTramo(c,i)); return r?r.v:null; }
   function ultDem(c){ var o=c.obs||[]; return o.length?o[o.length-1].b:TMA.leeDem(c.dem); }
@@ -5570,7 +6510,8 @@ window.APTRZ_UI={nuevo:function(t,s){A.tipo=t;A.ej=TRZ.nuevo(t,s||7);A.paso=0;$(
       var sig=(m!==null)?TMA.signatura(m,L.v):null;
       if(sig) p.push('<span class="sig">'+sig+'</span> <span class="nobs">'+TMA.sigTexto(sig)+'</span>');
       if(Math.abs(L.v)>5) p.push('<b style="color:var(--bad)">Ḃ&gt;5°/min · contacto muy próximo</b>');
-    } else if((c.obs||[]).length===1) p.push('<span class="nobs">1 observación: hace falta otra para la ley</span>');
+    } else if(obsSeguidas(c)) p.push('Ḃ <b>—</b> <span class="nobs">observaciones demasiado seguidas (menos de 30 s): separa la toma</span>');
+    else if((c.obs||[]).length===1) p.push('<span class="nobs">1 observación: hace falta otra para la ley</span>');
     z.innerHTML=p.join(' · ');
   }
 
@@ -5653,9 +6594,12 @@ window.APTRZ_UI={nuevo:function(t,s){A.tipo=t;A.ej=TRZ.nuevo(t,s||7);A.paso=0;$(
         tx("dmin","Dmin","4500")+tx("dminT","MIN\u2019 del c\u00e1lculo","7")+
         tx("dmax","Dmax","17000")+tx("dmaxT","MIN\u2019 del c\u00e1lculo","18")+
         tx("dder","DIST DERR","")+tx("cpa","CPA","")+
-        tx("adR","RUMBO","130")+
-        tx("adV","VEL","20")+
-        tx("adD","DIST","16000")+
+        '<div class="ce rvd"><label>RUMBO \u00b7 VEL \u00b7 DIST</label>'+
+          '<div class="rvdFila">'+
+            '<input class="an-tx" data-k="adR" value="'+(c.an.adR||"")+'" placeholder="130" inputmode="numeric">'+
+            '<input class="an-tx" data-k="adV" value="'+(c.an.adV||"")+'" placeholder="20" inputmode="numeric">'+
+            '<input class="an-tx" data-k="adD" value="'+(c.an.adD||"")+'" placeholder="16000" inputmode="numeric">'+
+          '</div></div>'+
       '</div>';
     z.querySelectorAll(".an-sg").forEach(function(g){
       var k=g.dataset.k;
@@ -5810,8 +6754,15 @@ window.APTRZ_UI={nuevo:function(t,s){A.tipo=t;A.ej=TRZ.nuevo(t,s||7);A.paso=0;$(
       '<line class="eje" x1="0" y1="-100" x2="0" y2="100"/><line class="eje" x1="-100" y1="0" x2="100" y2="0"/>'+
       '<text class="rosaCard" x="0" y="-104">000</text><text class="rosaCard" x="108" y="3">090</text>'+
       '<text class="rosaCard" x="0" y="113">180</text><text class="rosaCard" x="-108" y="3">270</text>';
-    if(tr){ var a=(tr.rumbo-90)*Math.PI/180, colA=colTramo(PD.tramos.length-1);
-      g+='<line class="proa" style="stroke:'+colA+'" x1="0" y1="0" x2="'+(104*Math.cos(a)).toFixed(1)+'" y2="'+(104*Math.sin(a)).toFixed(1)+'"/>'; }
+    /* Todos los rumbos por los que se ha pasado, cada uno de su color.
+       El actual va entero y opaco; los anteriores, m\u00e1s cortos y tenues. */
+    PD.tramos.forEach(function(t,i){
+      var act=(i===PD.tramos.length-1), a=(t.rumbo-90)*Math.PI/180, L=act?104:88;
+      g+='<line class="proa'+(act?"":" vieja")+'" style="stroke:'+colTramo(i)+'" x1="0" y1="0" x2="'
+        +(L*Math.cos(a)).toFixed(1)+'" y2="'+(L*Math.sin(a)).toFixed(1)+'"/>';
+      g+='<text class="rumboEt" x="'+((L+9)*Math.cos(a)).toFixed(1)+'" y="'+((L+9)*Math.sin(a)+3).toFixed(1)
+        +'" style="fill:'+colTramo(i)+'">'+("00"+t.rumbo).slice(-3)+'</text>';
+    });
     g+='<circle class="prop" cx="0" cy="0" r="4"/>';
     PD.cs.forEach(function(c){
       var d=ultDem(c); if(!isFinite(d)) return;
@@ -5899,12 +6850,29 @@ window.APTRZ_UI={nuevo:function(t,s){A.tipo=t;A.ej=TRZ.nuevo(t,s||7);A.paso=0;$(
   };
   if($("#btnPdCaida")) $("#btnPdCaida").addEventListener("click",caida);
   if(inp) inp.addEventListener("keydown",function(e){ if(e.key==="Enter") caida(); });
+  /* Reiniciar borra contactos, tramos y crono: en plena subida un toque
+     accidental costaría toda la situación, así que pide un segundo toque
+     dentro de cuatro segundos antes de hacer nada. */
+  var RESET_ETI="REINICIAR SUBIDA", pdResetT=null;
+  if($("#btnPdReset")) $("#btnPdReset").addEventListener("click",function(){
+    var b=$("#btnPdReset");
+    if(!pdResetT){
+      b.textContent="¿SEGURO? TOCA OTRA VEZ";
+      pdResetT=setTimeout(function(){ pdResetT=null; b.textContent=RESET_ETI; },4000);
+      return;
+    }
+    clearTimeout(pdResetT); pdResetT=null; b.textContent=RESET_ETI;
+    PD={ tIni:null, tramos:[], cs:[] }; seq=1;
+    if($("#pdRumboNuevo")) $("#pdRumboNuevo").value="";
+    guardar(); pinta();
+  });
   if($("#btnPdAdd")) $("#btnPdAdd").addEventListener("click",function(){
     PD.cs.push({ id:"p"+(seq++), num:"", tipo:"", rpm:"", bg:"", dem:"", obs:[] });
     guardar(); pinta(); });
   pinta(); setInterval(function(){ crono(); pintaTramos(); },1000);
 
   window.PD_UI={ estado:function(){return PD;}, pinta:pinta,
+    reset:function(){ var b=$("#btnPdReset"); if(b){ b.click(); b.click(); } },
     caida:function(r){ if(!PD.tIni) PD.tIni=Date.now();
       PD.tramos.push({rumbo:r,vel:TMA.PD.So_DEF,t:Date.now()}); guardar(); pinta(); },
     add:function(num,tipo,dem){ var c={id:"p"+(seq++),num:num,tipo:tipo||"",rpm:"",bg:"",
@@ -5921,6 +6889,27 @@ window.APTRZ_UI={nuevo:function(t,s){A.tipo=t;A.ej=TRZ.nuevo(t,s||7);A.paso=0;$(
     marc:marcDe, ley:leyDe };
 })();
 
+
+/* La estadística nace plegada: se consulta cuando se quiere, no estorba
+   mientras entrenas. El estado del pliegue se recuerda. */
+(function(){
+  var t=document.getElementById("stTit"), z=document.getElementById("stCuerpo");
+  if(!t||!z) return;
+  var K="tma_stats_abierta_v1";
+  function pinta(){
+    var ab=z.hidden===false;
+    t.setAttribute("aria-expanded", ab?"true":"false");
+    t.querySelector(".cv").textContent = ab?"\u25be":"\u25b8";
+  }
+  try{ if(localStorage.getItem(K)==="1") z.hidden=false; }catch(e){}
+  pinta();
+  function alterna(){ z.hidden=!z.hidden;
+    try{ localStorage.setItem(K, z.hidden?"0":"1"); }catch(e){}
+    pinta(); }
+  t.addEventListener("click",alterna);
+  t.addEventListener("keydown",function(e){
+    if(e.key==="Enter"||e.key===" "){ e.preventDefault(); alterna(); } });
+})();
 
 /* ============ SERVICE WORKER · actualización en iOS ==================== */
 (function(){
