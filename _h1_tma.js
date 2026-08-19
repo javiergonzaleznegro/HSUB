@@ -72,7 +72,7 @@ async function correr() {
 
   /* ========================= B · HERRAMIENTAS ========================== */
   const btns = [...d.querySelectorAll('#selCalc button[data-v]')].map(b => b.dataset.v);
-  add("B01 cinco herramientas", btns.join() === "brc,cpa,dist,cronos,pd", btns.join(), "brc,cpa,dist,cronos,pd");
+  add("B01 seis herramientas", btns.join() === "brc,cpa,dist,cronos,pd,viento", btns.join(), "brc,cpa,dist,cronos,pd,viento");
   const VIS0 = w.CALCVIS_UI.estado();
   add("B02 todas apagadas al abrir", Object.values(VIS0).every(v => v === false), JSON.stringify(VIS0), "todo false");
   add("B03 marca de agua visible", !d.querySelector("#calcNada").hidden, "hidden=" + d.querySelector("#calcNada").hidden, "visible");
@@ -81,12 +81,12 @@ async function correr() {
       "brc=" + w.CALCVIS_UI.estado().brc + " marca=" + !d.querySelector("#calcNada").hidden, "brc on · marca oculta");
   const tn = d.querySelector("#btnCalcTN");
   tn.click();
-  add("B05 TODAS enciende las 5", Object.values(w.CALCVIS_UI.estado()).every(v => v === true),
+  add("B05 TODAS enciende las 6", Object.values(w.CALCVIS_UI.estado()).every(v => v === true),
       JSON.stringify(w.CALCVIS_UI.estado()), "todo true");
   const n2 = [...d.querySelectorAll(".calcBlq .intro-2 b")].map(x => x.textContent.trim());
   add("B06 rótulos nivel 2",
-      n2.join("|") === "BRC|CPA · MANIOBRA|ESTADIMETRÍA · ALTURA DE PALO|CRONOS · PUNTEO INTERMITENTE|SUBIDA A COTA PERISCÓPICA",
-      n2.join("|"), "los cinco largos");
+      n2.join("|") === "BRC|CPA · MANIOBRA|ESTADIMETRÍA · ALTURA DE PALO|CRONOS · PUNTEO INTERMITENTE|SUBIDA A COTA PERISCÓPICA|VIENTO · REAL Y RELATIVO",
+      n2.join("|"), "los seis largos");
   let dup = [];
   d.querySelectorAll(".calcBlq").forEach(blq => {
     const t2 = ((blq.querySelector(".intro-2 b") || {}).textContent || "").trim();
@@ -97,7 +97,7 @@ async function correr() {
   });
   add("B07 ningún nivel 3 repite su nivel 2", dup.length === 0, dup.join(","), "ninguno");
   tn.click();
-  add("B08 NINGUNA apaga las 5 y vuelve la marca",
+  add("B08 NINGUNA apaga las 6 y vuelve la marca",
       Object.values(w.CALCVIS_UI.estado()).every(v => v === false) && !d.querySelector("#calcNada").hidden,
       JSON.stringify(w.CALCVIS_UI.estado()), "todo false · marca visible");
   let ls = {};
@@ -415,6 +415,225 @@ async function correr() {
         .join(" ");
   add("N01 ninguna pestaña dice ya «TRAZADO»", !/TRAZADO/.test(textoVisible),
       (textoVisible.match(/.{0,20}TRAZADO.{0,20}/) || ["ninguno"])[0], "sin TRAZADO visible");
+
+  /* ===== O · COHERENCIA TIPO↔EJERCICIO (auditoría T2, v1.26.5) ========= */
+  /* Raíz de la queja «pulso CPA y me sale un situarse»: en ENTRENAR el
+     selector de tipo solo movía el resaltado. Ahora recarga, como APUNTES. */
+  const O_TIT0 = { TZ1: null, TZ2: null, TZ3: null, TZ4: null, TZ5: null };
+  const O_CLAVE = {
+    TZ1: { kw: "Calcular el CPA", campos: "dc,dm,tc" },
+    TZ2: { kw: "situarnos",       campos: "c1,t1,sm" },
+    TZ3: { kw: "observamos",      campos: "ct,st,dc,dt" },
+    TZ4: { kw: "interceptaci",    campos: "c1,t1" },
+    TZ5: { kw: "rumbo",           campos: "c1,c2,mx" } };
+  let oMal = [];
+  Object.keys(O_CLAVE).forEach(t => {
+    for (let sd = 1; sd <= 60; sd++) {
+      const e = w.TMA.TRAZADO.nuevo(t, sd);
+      const ok = e.tipo === t && e.datos.enun.indexOf(O_CLAVE[t].kw) >= 0 &&
+                 e.res.campos.map(c => c.k).join(",") === O_CLAVE[t].campos && e.pasos.length >= 3;
+      if (O_TIT0[t] === null) O_TIT0[t] = e.pasos[0].tit;
+      if (!ok || e.pasos[0].tit !== O_TIT0[t]) { oMal.push(t + " s" + sd); break; }
+    }
+  });
+  add("O01 motor: tipo↔enunciado↔campos↔pasos (5×60 semillas)", oMal.length === 0,
+      oMal.join(" | ") || "coherente", "sin desajustes");
+  w.TRZ_UI.nuevo("TZ2", 11); w.TRZ_UI.ver();
+  const oEnun2 = d.querySelector("#trzEnun").textContent;
+  [...d.querySelectorAll("#trzTipo button")].find(x => x.dataset.v === "TZ1").click();
+  const oSel = [...d.querySelectorAll("#trzTipo button")].find(x => x.classList.contains("on")).dataset.v;
+  const oEnun1 = d.querySelector("#trzEnun").textContent;
+  add("O02 ENTRENAR: cambiar de tipo recarga el ejercicio",
+      oSel === "TZ1" && oEnun1 !== oEnun2 && oEnun1.indexOf("Calcular el CPA") >= 0,
+      "selector=" + oSel + " · enun=" + oEnun1.slice(0, 40), "selector y enunciado del mismo tipo");
+  add("O03 ENTRENAR: lo demás también es del tipo nuevo",
+      w.TRZ_UI.estado().ej.tipo === "TZ1" && w.TRZ_UI.estado().paso === -1,
+      "ej.tipo=" + w.TRZ_UI.estado().ej.tipo + " paso=" + w.TRZ_UI.estado().paso, "TZ1, recién cargado");
+  w.APTRZ_UI.nuevo("TZ2", 11);
+  [...d.querySelectorAll("#apTipo button")].find(x => x.dataset.v === "TZ1").click();
+  add("O04 APUNTES: mismo gesto, mismo comportamiento",
+      d.querySelector("#apPasoTit").textContent === O_TIT0.TZ1,
+      d.querySelector("#apPasoTit").textContent, O_TIT0.TZ1);
+  w.PEN_UI.iniciarTest(2, "todos", 4242);
+  let oPen = true, oPenDet = "";
+  for (let i = 0; i < 15; i++) {
+    const ej = w.PEN_UI.ej();
+    const enDom = [...d.querySelectorAll("#penDrill *")].some(x => x.children.length === 0 &&
+                    x.textContent.trim() === ej.enun.trim());
+    if (!enDom) { oPen = false; oPenDet = w.PEN_UI.tipo().id; break; }
+    w.PEN_UI.rellenar(ej.sol); w.PEN_UI.corregir(); w.PEN_UI.siguiente();
+  }
+  add("O05 peñiquero: el enunciado mostrado es el del ejercicio real", oPen,
+      oPenDet || "15/15", "sin desajustes");
+
+  /* ===== P · AVISOS DE LA DOTACIÓN (v1.27.0) ========================== */
+  /* Regla general que faltaba: todo dato pedido en el enunciado debe tener
+     casilla donde escribirse. Sin esto, el alumno mete el valor en la
+     casilla más parecida y la corrección parece caprichosa. */
+  const P_PIDE = { dcpa: /CPA/i, derrota: /distancia a su derrota/i };
+  let pMal = [];
+  for (let sd = 1; sd <= 40; sd++) {
+    const e = w.TMA.TRAZADO.nuevo("TZ3", sd);
+    const labels = e.res.campos.map(c => c.label).join(" | ");
+    if (P_PIDE.dcpa.test(e.datos.enun) && !/DCPA/.test(labels)) pMal.push("s" + sd + " sin casilla DCPA");
+    if (P_PIDE.derrota.test(e.datos.enun) && !/derrota/i.test(labels)) pMal.push("s" + sd + " sin casilla DT");
+  }
+  add("P01 TZ3: cada dato del enunciado tiene su casilla (40 semillas)",
+      pMal.length === 0, pMal.slice(0, 3).join(" | ") || "completo", "sin datos huérfanos");
+  const eP = w.TMA.TRAZADO.nuevo("TZ3", 2);
+  add("P02 TZ3: DCPA y DT son valores distintos y cada uno en su casilla",
+      Math.round(eP.res.sol.dc) === 13588 && Math.round(eP.res.sol.dt) === 10444 &&
+      eP.res.campos.length === 4,
+      "dc=" + Math.round(eP.res.sol.dc) + " dt=" + Math.round(eP.res.sol.dt) + " campos=" + eP.res.campos.length,
+      "13588 / 10444 en 4 casillas");
+  w.TRZ_UI.nuevo("TZ3", 2);
+  const ponP = (sol, cam) => d.querySelectorAll("#trzCampos .campo").forEach(c => {
+    const k = c.dataset.k, v2 = (cam && k in cam) ? cam[k] : sol[k];
+    c.querySelector("input").value = (k === "ct") ? String(Math.round(v2)).padStart(3, "0")
+                                                  : String(Math.round(v2 * 10) / 10).replace(".", ","); });
+  const ejP = w.TRZ_UI.estado().ej;
+  ponP(ejP.res.sol, null); d.querySelector("#trzCorrBtn").click();
+  add("P03 TZ3: la solución exacta se da por buena con las cuatro casillas",
+      /CORRECTO/.test(d.querySelector("#trzCorrOut").textContent),
+      d.querySelector("#trzCorrOut").textContent.replace(/\s+/g, " ").slice(0, 40), "CORRECTO");
+  ponP(ejP.res.sol, { dt: ejP.res.sol.dc }); d.querySelector("#trzCorrBtn").click();
+  const marcasP = [...d.querySelectorAll("#trzCampos .marca")].map(m => m.textContent).join("");
+  add("P04 TZ3: confundir DCPA con DT falla solo en esa casilla",
+      marcasP === "✓✓✓✗", marcasP, "✓✓✓✗");
+  let p2Mal = 0;
+  for (let sd = 1; sd <= 60; sd++) if (!/RÁPIDA/.test(w.TMA.TRAZADO.nuevo("TZ2", sd).datos.enun)) p2Mal++;
+  add("P05 TZ2: el enunciado dice qué solución se pide (60 semillas)", p2Mal === 0,
+      p2Mal + " sin decirlo", "todos lo dicen");
+  w.TRZ_UI.nuevo("TZ2", 3); w.TRZ_UI.ver(); w.TRZ_UI.paso(2);
+  const rotP = [...d.querySelectorAll("#trzSvg text")].map(t => t.textContent.trim());
+  add("P06 TZ2: el dibujo distingue las dos soluciones",
+      rotP.includes("RÁPIDA") && rotP.includes("LENTA"), rotP.join(" | "), "RÁPIDA y LENTA rotuladas");
+
+  /* ===== Q · TARJETA VIENTO REAL (v1.28.0) ============================ */
+  /* TODAS/NINGUNA es un conmutador: en vez de pulsarlo a ciegas, se
+     enciende solo lo que hace falta para esta sección. */
+  if (!w.CALCVIS_UI.estado().viento) w.CALCVIS_UI.alterna("viento");
+  const setW = (id, val) => { const e = d.querySelector(id); e.value = val;
+                              e.dispatchEvent(new w.Event("input", { bubbles: true })); };
+  setW("#wCo", "090"); setW("#wSo", "10"); setW("#wMarc", "045"); setW("#wVel", "20");
+  const outQ = d.querySelector("#wOut").textContent;
+  add("Q01 el caso comprobado a mano sale en pantalla",
+      /164/.test(outQ) && /14,7/.test(outQ), outQ.replace(/\s+/g, " ").slice(0, 60), "164 · 14,7 kn");
+  add("Q02 se da también la demora del relativo", /135/.test(outQ),
+      outQ.replace(/\s+/g, " ").slice(-30), "demora 135");
+  [...d.querySelectorAll("#wBanda button")].find(b => b.dataset.v === "Br").click();
+  const outBr = d.querySelector("#wOut").textContent;
+  add("Q03 cambiar de banda recalcula", /016/.test(outBr) && /045/.test(outBr),
+      outBr.replace(/\s+/g, " ").slice(0, 50), "016 · demora 045");
+  [...d.querySelectorAll("#wBanda button")].find(b => b.dataset.v === "Er").click();
+  const rot = [...d.querySelectorAll("#rosaW text")].map(t => t.textContent);
+  add("Q04 la rosa pinta los tres vectores rotulados",
+      rot.includes("propio") && rot.includes("relativo") && rot.includes("real") && rot.includes("N"),
+      rot.join(" | "), "propio, relativo, real y N");
+  setW("#wSo", "0"); setW("#wVel", "0");
+  add("Q05 calma: se declara y no se inventa demora",
+      /CALMA/.test(d.querySelector("#wOut").textContent) && !/\d{3}/.test(d.querySelector("#wOut").textContent),
+      d.querySelector("#wOut").textContent.replace(/\s+/g, " ").slice(0, 40), "CALMA sin demora");
+  setW("#wSo", "10"); setW("#wVel", "20");
+  add("Q06 la herramienta se apaga y enciende como las demás",
+      (() => { w.CALCVIS_UI.alterna("viento");
+               const off = d.querySelector("#blqViento").hidden;
+               w.CALCVIS_UI.alterna("viento");
+               return off && !d.querySelector("#blqViento").hidden; })(),
+      "conmuta", "oculta y vuelve");
+
+  /* ===== R · TARJETA ADOPTAR RELATIVO (v1.29.0) ======================= */
+  const setA = (id, val) => { const e = d.querySelector(id); e.value = val;
+                              e.dispatchEvent(new w.Event("input", { bubbles: true })); };
+  setA("#aDem", "270"); setA("#aVel", "20"); setA("#aM1", "030"); setA("#aM2", "060");
+  setA("#aVmin", "15"); setA("#aVmax", "25"); setA("#aSoMin", "4"); setA("#aSoMax", "12");
+  const outR = d.querySelector("#aOut").textContent;
+  add("R01 da rumbo, velocidad y el relativo que resultaría",
+      /Co \d{3}/.test(outR) && /kn/.test(outR) && /daría/.test(outR),
+      outR.replace(/\s+/g, " ").slice(0, 70), "Co, So y relativo resultante");
+  const filasR = [...d.querySelectorAll("#aTabla tr")].slice(1);
+  add("R02 una fila por velocidad propia del intervalo", filasR.length === 9,
+      filasR.length + " filas", "9 (de 4 a 12 kn)");
+  add("R03 cada fila da su arco de rumbos",
+      filasR.every(r => /\d{3}–\d{3}/.test(r.children[1].textContent)),
+      filasR[0].textContent.replace(/\s+/g, " "), "arco por fila");
+  /* Lo que canta la tabla tiene que cumplirse de verdad. */
+  let malR = 0;
+  filasR.forEach(r => {
+    const so = parseFloat(r.children[0].textContent);
+    const m = r.children[1].textContent.match(/(\d{3})–(\d{3})/);
+    [+m[1], +m[2]].forEach(co => {
+      if (!w.TMA.VIENTO.cumple(w.TMA.VIENTO.relativo(co, so, 270, 20),
+          { m1: 30, m2: 60, banda: "Er", vmin: 15, vmax: 25 })) malR++;
+    });
+  });
+  add("R04 los rumbos de la tabla cumplen lo exigido", malR === 0, malR + " incumplen", 0);
+  [...d.querySelectorAll("#aBanda button")].find(b => b.dataset.v === "AMBAS").click();
+  add("R05 con las dos bandas, la tabla las distingue",
+      /\(Er\)/.test(d.querySelector("#aTabla").textContent) && /\(Br\)/.test(d.querySelector("#aTabla").textContent),
+      [...d.querySelectorAll("#aTabla tr")][1].textContent.replace(/\s+/g, " "), "Er y Br rotuladas");
+  [...d.querySelectorAll("#aBanda button")].find(b => b.dataset.v === "Er").click();
+  setA("#aVel", "5"); setA("#aVmin", "25"); setA("#aVmax", "35");
+  add("R06 sin solución: se explica y no se deja tabla engañosa",
+      /SIN SOLUCIÓN/.test(d.querySelector("#aOut").textContent) &&
+      d.querySelector("#aTabla").innerHTML === "",
+      d.querySelector("#aOut").textContent.replace(/\s+/g, " ").slice(0, 50), "aviso y tabla vacía");
+  setA("#aVel", "20"); setA("#aVmin", "15"); setA("#aVmax", "25");
+  setA("#aSoMin", "12"); setA("#aSoMax", "4");
+  add("R07 intervalos al revés: se avisa en vez de calcular",
+      /revisa los intervalos/.test(d.querySelector("#aOut").textContent),
+      d.querySelector("#aOut").textContent.replace(/\s+/g, " ").slice(0, 50), "aviso de intervalos");
+  setA("#aSoMin", "4"); setA("#aSoMax", "12");
+  setW("#wCo", "090"); setW("#wSo", "10"); setW("#wMarc", "045"); setW("#wVel", "20");
+  d.querySelector("#btnAdopTraer").click();
+  add("R08 TRAER EL DE ARRIBA vuelca el real recién calculado",
+      d.querySelector("#aDem").value === "164" && d.querySelector("#aVel").value === "14,7",
+      d.querySelector("#aDem").value + " / " + d.querySelector("#aVel").value, "164 / 14,7");
+
+  /* ===== S · MAQUETACIÓN DE LOS DIBUJOS (v1.29.1) ===================== */
+  /* La rosa de viento salió a pantalla completa y con los círculos en
+     negro porque cada rosa lleva sus estilos colgados de su id y a la
+     nueva se le olvidaron. Esto lo caza para cualquier dibujo futuro. */
+  /* Se mide el estilo aplicado de verdad, no el texto del CSS: la app usa
+     dos convenciones (por id y por contenedor) y ambas son válidas. */
+  const svgsId = [...d.querySelectorAll("section.vista svg[id]")];
+  const sinTam = [], rellenos = [];
+  svgsId.forEach(sv => {
+    const cs = w.getComputedStyle(sv);
+    if (!/\d/.test(cs.maxWidth || "")) sinTam.push(sv.id);
+    sv.querySelectorAll("circle, path.aro, path.anillo").forEach(c => {
+      const f = w.getComputedStyle(c).fill || "";
+      const opaco = f && !/none|rgba\(0, 0, 0, 0\)/.test(f);
+      const r = parseFloat(c.getAttribute("r") || "0");
+      if (opaco && r > 20) rellenos.push(sv.id + " r=" + r + " fill=" + f);
+    });
+  });
+  add("S01 todo dibujo tiene su ancho acotado", sinTam.length === 0,
+      sinTam.join(", ") || "todos acotados", "ninguno a tamaño natural");
+  add("S02 ningún aro grande sale relleno", rellenos.length === 0,
+      rellenos.slice(0, 3).join(" | ") || "ninguno", "todos con fill transparente");
+  /* jsdom no resuelve la abreviatura font: con variables —le pasa igual a
+     las rosas que ya funcionaban—, así que aquí se comprueba que la regla
+     existe, que es lo que faltaba. */
+  const cssTodo = [...d.querySelectorAll("style")].map(x => x.textContent).join("\n");
+  const clasesW = new Set();
+  d.querySelectorAll("#rosaW *").forEach(x => (x.getAttribute("class") || "").split(/\s+/)
+    .filter(Boolean).forEach(c => clasesW.add(c)));
+  const huerfanas = [...clasesW].filter(c => !new RegExp("#rosaW\\s+\\." + c + "\\b").test(cssTodo));
+  add("S03 toda clase de la rosa de viento tiene su estilo", huerfanas.length === 0,
+      huerfanas.join(", ") || "todas definidas", "ninguna huérfana");
+  /* Botón de calcular en las dos tarjetas, como en CPA · MANIOBRA. */
+  add("S04 VIENTO REAL tiene botón de calcular",
+      !!d.querySelector("#btnViento") && /CALCULAR/.test(d.querySelector("#btnViento").textContent),
+      (d.querySelector("#btnViento") || {}).textContent, "botón CALCULAR");
+  add("S05 ADOPTAR RELATIVO tiene botón de calcular",
+      !!d.querySelector("#btnAdop") && /CALCULAR/.test(d.querySelector("#btnAdop").textContent),
+      (d.querySelector("#btnAdop") || {}).textContent, "botón CALCULAR");
+  setW("#wCo", "000"); setW("#wSo", "10"); setW("#wMarc", "045"); setW("#wVel", "20");
+  d.querySelector("#wOut").innerHTML = "";
+  d.querySelector("#btnViento").click();
+  add("S06 el botón recalcula de verdad", /\d{3}/.test(d.querySelector("#wOut").textContent),
+      d.querySelector("#wOut").textContent.replace(/\s+/g, " ").slice(0, 40), "resultado en pantalla");
 
   /* ==================== Z · MOTOR (banco embebido) ===================== */
   R.zGrupos = 0;

@@ -550,6 +550,16 @@ details.expl{border-left-color:var(--amber2)}
 .pdTramoFila:last-child{border-bottom:none}
 .pdTramoFila .r{font:700 15px var(--mono);color:var(--amber);min-width:44px}
 .pdTramoFila.act .r{color:var(--ok)}
+#rosaW{display:block;width:100%;max-width:330px;height:auto;margin:12px auto 2px;
+  background:var(--panel2);border:1px solid var(--line);border-radius:50%}
+#rosaW .aro{fill:none;stroke:var(--line);stroke-width:1}
+#rosaW .eje{stroke:var(--line);stroke-width:1;opacity:.55}
+#rosaW .rosaCard{fill:var(--faint);font:600 9px var(--sans);letter-spacing:.1em;text-anchor:middle}
+#rosaW .proa{fill:var(--faint)}
+#rosaW .vprop{stroke:var(--amber);stroke-width:1.8}
+#rosaW .vrel{stroke:var(--teal);stroke-width:1.8}
+#rosaW .vreal{stroke:var(--ink);stroke-width:1.8}
+#rosaW .et{font:600 8px var(--mono);text-anchor:middle;fill:var(--faint)}
 #rosaPD{width:100%;max-width:330px;height:auto}
 #rosaPD .aro{fill:none;stroke:var(--line);stroke-width:1}
 #rosaPD .aro2{fill:none;stroke:var(--line);stroke-width:1;stroke-dasharray:3 5;opacity:.7}
@@ -864,6 +874,7 @@ h2.plegable:hover{color:var(--amber)}
       <button type="button" data-v="dist" class="on">ESTADIMETRÍA</button>
       <button type="button" data-v="cronos" class="on">CRONOS</button>
       <button type="button" data-v="pd" class="on">SUBIDA PD</button>
+<button type="button" data-v="viento" class="on">VIENTO</button>
     </div>
     </div>
 
@@ -1081,6 +1092,60 @@ h2.plegable:hover{color:var(--amber)}
       </div>
       <p style="margin:14px 0 0"><button class="accion sec" id="btnPdReset" type="button">REINICIAR SUBIDA</button></p>
     </div>
+  </div>
+</div>
+
+<div class="calcBlq" id="blqViento">
+  <div class="intro-2"><b>VIENTO · REAL Y RELATIVO</b></div>
+  <div class="card" id="calcVientoReal">
+    <h2>VIENTO REAL</h2>
+    <p class="nota">Lo que se le pasa a la aeronave. El viento se nombra siempre por <b>de dónde sopla</b>: el relativo se mete en marcación desde la proa y el real sale en demora verdadera.</p>
+    <div class="cIn">
+      <div class="campo"><label>Rumbo propio</label>
+        <input id="wCo" type="text" inputmode="numeric" value="000"><span class="uni">°</span></div>
+      <div class="campo"><label>Velocidad propia</label>
+        <input id="wSo" type="text" inputmode="decimal" value="10"><span class="uni">kn</span></div>
+      <div class="campo"><label>Marcación del relativo</label>
+        <input id="wMarc" type="text" inputmode="numeric" value="045">
+        <div class="selGrp uniSel" id="wBanda"><button type="button" data-v="Er" class="on">Er</button><button type="button" data-v="Br">Br</button></div></div>
+      <div class="campo"><label>Velocidad del relativo</label>
+        <input id="wVel" type="text" inputmode="decimal" value="20"><span class="uni">kn</span></div>
+    </div>
+    <p><button class="accion" id="btnViento" type="button">CALCULAR VIENTO REAL</button></p>
+    <div class="salidas" id="wOut"></div>
+    <svg id="rosaW" viewBox="-116 -116 232 232" role="img" aria-label="Rosa de viento"></svg>
+    <div class="leyenda"><span><i style="background:#ffb454"></i>propio</span><span><i style="background:#5ad0c0"></i>relativo</span><span><i style="background:#eef3f8"></i>real</span></div>
+  </div>
+
+  <div class="card" id="calcVientoAdop">
+    <h2>ADOPTAR RELATIVO</h2>
+    <p class="nota">Nos exigen un viento relativo y hay que dar rumbo y velocidad. El real, en demora verdadera; el exigido, en marcación desde la proa.</p>
+    <div class="cIn">
+      <div class="campo"><label>Viento real (demora)</label>
+        <input id="aDem" type="text" inputmode="numeric" value="270"><span class="uni">°</span></div>
+      <div class="campo"><label>Viento real (velocidad)</label>
+        <input id="aVel" type="text" inputmode="decimal" value="20"><span class="uni">kn</span></div>
+    </div>
+    <p style="margin:6px 0 10px"><button class="accion sec" id="btnAdopTraer" type="button">TRAER EL DE ARRIBA</button></p>
+    <div class="cIn">
+      <div class="campo"><label>Marcación exigida, de</label>
+        <input id="aM1" type="text" inputmode="numeric" value="030"><span class="uni">°</span></div>
+      <div class="campo"><label>a</label>
+        <input id="aM2" type="text" inputmode="numeric" value="060"><span class="uni">°</span></div>
+      <div class="campo"><label>Banda</label>
+        <div class="selGrp uniSel" id="aBanda"><button type="button" data-v="Er" class="on">Er</button><button type="button" data-v="Br">Br</button><button type="button" data-v="AMBAS">ambas</button></div></div>
+      <div class="campo"><label>Velocidad relativa, de</label>
+        <input id="aVmin" type="text" inputmode="decimal" value="15"><span class="uni">kn</span></div>
+      <div class="campo"><label>a</label>
+        <input id="aVmax" type="text" inputmode="decimal" value="25"><span class="uni">kn</span></div>
+      <div class="campo"><label>Velocidad propia, de</label>
+        <input id="aSoMin" type="text" inputmode="decimal" value="4"><span class="uni">kn</span></div>
+      <div class="campo"><label>a</label>
+        <input id="aSoMax" type="text" inputmode="decimal" value="12"><span class="uni">kn</span></div>
+    </div>
+    <p><button class="accion" id="btnAdop" type="button">CALCULAR RUMBOS Y VELOCIDADES</button></p>
+    <div class="salidas" id="aOut"></div>
+    <table class="pnt" id="aTabla"></table>
   </div>
 </div>
 </section>
@@ -1340,7 +1405,7 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
   else root.TMA = factory();
 })(typeof self !== "undefined" ? self : this, function () {
   "use strict";
-  const TMA = { version: "1.26.4" };
+  const TMA = { version: "1.29.1" };
 
   /*---------------- UTIL ----------------*/
   const norm360 = a => ((a % 360) + 360) % 360;
@@ -2318,7 +2383,9 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
           rosa: [VC(O, b, "b"), LN(add2(b, mul2(uD, -dRel * 0.15)), add2(b, mul2(uD, dRel * 0.3)), true)], mesa: [] },
         { tit: "Círculo de So: las soluciones", txt: sols.length ? ("Pincha en el centro con radio tu So (" + f1(d.So) + " kn, 12'). Corta la paralela en " + sols.length + (sols.length > 1 ? " puntos: solución RÁPIDA Co " + gg(sols[0].co) + " (SRM " + f1(sols[0].srm) + ") y LENTA Co " + gg(sols[1].co) + " (SRM " + f1(sols[1].srm) + ")." : " punto: Co " + gg(sols[0].co) + " (SRM " + f1(sols[0].srm) + ")."))
             : "El círculo de tu So (" + f1(d.So) + " kn) NO corta la paralela: " + (it.motivo || "sin solución") + ".",
-          rosa: [CI(O, ydm(d.So) * VE)].concat(oS.map((p, i) => VC(O, p, "p"))).concat(oS.map((p, i) => LN(p, b, "r"))), mesa: [] },
+          rosa: [CI(O, ydm(d.So) * VE)].concat(oS.map((p, i) => VC(O, p, "p")))
+            .concat(oS.map((p, i) => PT(p, sols.length > 1 ? (i === 0 ? "RÁPIDA" : "LENTA") : "Co")))
+            .concat(oS.map((p, i) => LN(p, b, "r"))), mesa: [] },
         { tit: "Velocidad mínima (tangencia)", txt: it.soMin.co !== null ? "La perpendicular del centro a la paralela da la So mínima: " + f1(it.soMin.so) + " kn al " + gg(it.soMin.co) + " (llegarías en " + f1(it.soMin.tmin) + "')." : "β del punto > 90°: la mínima es igualar la velocidad del blanco (" + f1(d.St) + " kn).",
           rosa: it.soMin.co !== null ? [VC(O, oMin, "x"), PT(oMin, "So mín")] : [], mesa: [] },
         { tit: "Tiempos y verificación en la mesa", txt: (sols.length ? sols.map(sx => "Con SRM " + f1(sx.srm) + ": t = " + f1(dRel / 1000) + "K / SRM ≈ " + f1(sx.tmin) + "' → hora " + hhmm(d.h, sx.tmin) + " (" + sx.tipo + ").").join(" ") : "—") + " En la mesa: traza tu derrota a cada rumbo; en la hora de llegada, tu posición y la del blanco distan exactamente " + f1(d.X / 1000) + " K.",
@@ -2360,8 +2427,8 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
           mesa: [LN(pos2, pieDT, true), PT(pieDT, "DT")] }
       ];
       return { meta: { ct: r.ct, st: r.st, srm: r.srm, drm: r.drm, C1, C2, dcpa: r.dcpa, tcpa2: r.tcpa2, dtDerr },
-        res: { campos: [{ k: "ct", label: "Ct", uni: "°", tipo: "num" }, { k: "st", label: "St", uni: "kn", tipo: "num" }, { k: "dc", label: "DCPA", uni: "yds", tipo: "num" }],
-          sol: { ct: r.ct, st: r.st, dc: r.dcpa }, tol: { ct: "a", st: "v", dc: "d" } }, pasos };
+        res: { campos: [{ k: "ct", label: "Ct", uni: "°", tipo: "num" }, { k: "st", label: "St", uni: "kn", tipo: "num" }, { k: "dc", label: "DCPA", uni: "yds", tipo: "num" }, { k: "dt", label: "DT a derrota", uni: "yds", tipo: "num" }],
+          sol: { ct: r.ct, st: r.st, dc: r.dcpa, dt: dtDerr }, tol: { ct: "a", st: "v", dc: "d", dt: "d" } }, pasos };
     }
 
     /* ---------- TZ4: interceptación (colisión) ---------- */
@@ -2458,7 +2525,7 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
         d.So = Math.round((soMin + 0.8 + r() * 6) * 2) / 2;
         const it = TMA.interceptE2(pv.dv, pv.rv, d.Ct, d.St, d.So);
         if (!it.soluciones.length || pv.rv < 2000) return this.gen(r);
-        d.enun = "Son las " + String(Math.floor(d.h / 60)).padStart(2, "0") + String(d.h % 60).padStart(2, "0") + ". Contacto al " + gg(d.D) + " – " + f1(d.R / 1000) + " Kyds, a rumbo " + gg(d.Ct) + " y " + d.St + " nudos. Rumbo para situarnos por su " + d.nombrePos + " a " + f1(d.X / 1000) + " Kyds, con velocidad propia de " + f1(d.So) + " nudos. ¿Tiempo? ¿Velocidad mínima?";
+        d.enun = "Son las " + String(Math.floor(d.h / 60)).padStart(2, "0") + String(d.h % 60).padStart(2, "0") + ". Contacto al " + gg(d.D) + " – " + f1(d.R / 1000) + " Kyds, a rumbo " + gg(d.Ct) + " y " + d.St + " nudos. Rumbo para situarnos por su " + d.nombrePos + " a " + f1(d.X / 1000) + " Kyds, con velocidad propia de " + f1(d.So) + " nudos. ¿Rumbo y tiempo por la solución RÁPIDA? ¿Velocidad mínima?";
         return d; } });
     T({ id: "TZ3", nombre: "Ct/St por dos observaciones", build: buildDosObs,
       gen(r) { const d = { h: 600 + Math.floor(r() * 840), Co: Math.floor(r() * 360), So: 3 + Math.round(r() * 7),
@@ -2490,7 +2557,7 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
       { id: "DOC1b", nombre: "Ej. doctrina 1 · Situarse", tipo: "TZ2",
         datos: { h: 17 * 60 + 45, Co: 120, So: 6, D: 290, R: 18000, Ct: 100, St: 13,
           m: 90, banda: "Br", nombrePos: "TRAVÉS de Br", X: 3000,
-          enun: "Mismo contacto (290 – 18 Kyds, rumbo 100 a 13 nudos). Rumbo para situarnos a 3000 yds por su través de Br con velocidad de 6 nudos. ¿Tiempo? ¿Velocidad mínima?" } },
+          enun: "Mismo contacto (290 – 18 Kyds, rumbo 100 a 13 nudos). Rumbo para situarnos a 3000 yds por su través de Br con velocidad de 6 nudos. ¿Rumbo y tiempo por la solución RÁPIDA? ¿Velocidad mínima?" } },
       { id: "DOC2", nombre: "Ej. doctrina 2 · Dos observaciones", tipo: "TZ3",
         datos: { h: 14 * 60, Co: 250, So: 5, dt: 6, D1: 240, R1: 15000, D2: 250, R2: 13000, Ct: 0, St: 0,
           enun: "Navegamos a rumbo 250 y 5 nudos. A 1400 observamos un contacto en demora 240 a 15 Kyds. A 1406, en demora 250 a 13 Kyds. Calcular rumbo y velocidad del contacto, CPA y distancia a su derrota." } }
@@ -4343,7 +4410,203 @@ SUPUESTOS: ver bloque SUPUESTOS al final de este módulo.
         TMA.ekelundPD({ rumbo: 0, vel: 5, dem: 0, ley: 0.6 }, t2, 1), null);
     })();
 
+    /* G28 — VIENTO: real, relativo y adopción de un relativo exigido. */
+    (function () {
+      const V = TMA.VIENTO;
+      /* Caso resuelto a mano: Co 090 a 10 kn, relativo 045 Er a 20 kn. */
+      const r1 = V.real(90, 10, 45, "Er", 20);
+      add("G28 viento", "real desde relativo · demora", okTol(r1.dem, 163.7, 0.5), r2(r1.dem * 10) / 10, 163.7);
+      add("G28 viento", "real desde relativo · velocidad", okTol(r1.vel, 14.73, 0.05), r2(r1.vel * 100) / 100, 14.73);
+      /* Ida y vuelta: el relativo recuperado es el de partida. */
+      let malRec = 0, peor = 0;
+      for (let co = 0; co < 360; co += 11) for (let so = 0; so <= 14; so += 2)
+        for (let m = 0; m <= 180; m += 20) for (const b of ["Er", "Br"]) for (const va of [4, 12, 25]) {
+          const R2c = V.real(co, so, m, b, va); if (R2c.calma) continue;
+          const A = V.relativo(co, so, R2c.dem, R2c.vel);
+          const dm = Math.abs(A.marc - m) + ((m > 0 && m < 180 && A.banda !== b) ? 180 : 0);
+          const dv = Math.abs(A.vel - va);
+          if (dm > 0.01 || dv > 0.01) { malRec++; peor = Math.max(peor, dm + dv); }
+        }
+      add("G28 viento", "ida y vuelta real↔relativo", malRec === 0, malRec + " desvíos (peor " + (r2(peor * 100) / 100) + ")", 0);
+      /* Casos de puente comprobables de cabeza. */
+      const proa = V.relativo(0, 8, 0, 20), popa = V.relativo(0, 8, 180, 20);
+      add("G28 viento", "proa al viento suma velocidades", okTol(proa.vel, 28, 0.01) && okTol(proa.marc, 0, 0.01), r2(proa.vel * 10) / 10, 28);
+      add("G28 viento", "viento en popa resta velocidades", okTol(popa.vel, 12, 0.01) && okTol(popa.marc, 180, 0.01), r2(popa.vel * 10) / 10, 12);
+      const par = V.relativo(0, 0, 270, 15);
+      add("G28 viento", "barco parado: relativo = real", okTol(par.dem, 270, 0.01) && okTol(par.vel, 15, 0.01), r2(par.dem) + "/" + r2(par.vel), "270/15");
+      add("G28 viento", "calma total se declara, no se inventa demora",
+        V.relativo(0, 0, 0, 0).calma === true && V.relativo(0, 0, 0, 0).dem === null, V.relativo(0, 0, 0, 0).dem, null);
+      /* Adoptar: los extremos de cada arco cumplen y justo fuera no. */
+      const exig = { m1: 30, m2: 60, banda: "Er", vmin: 15, vmax: 25 };
+      const AD = V.adoptar(270, 20, exig, 4, 12);
+      let malArco = 0;
+      AD.filas.forEach(f => f.arcos.forEach(a => {
+        [a.de, a.a].forEach(co => { if (!V.cumple(V.relativo(co, f.so, 270, 20), exig)) malArco++; });
+        [norm360(a.de - 1), norm360(a.a + 1)].forEach(co => { if (V.cumple(V.relativo(co, f.so, 270, 20), exig)) malArco++; });
+      }));
+      add("G28 viento", "arcos de rumbo exactos en sus extremos", malArco === 0, malArco, 0);
+      add("G28 viento", "una fila por velocidad del intervalo",
+        AD.filas.length === 9 && AD.filas[0].so === 4 && AD.filas[8].so === 12,
+        AD.filas.length + " filas", "9 filas (4…12)");
+      add("G28 viento", "la recomendada cumple lo exigido",
+        AD.recomendada.length > 0 && AD.recomendada.every(x => V.cumple(x.rel, exig)), AD.recomendada.length, "≥1 y todas válidas");
+      /* Imposible: se dice por qué, no se devuelve una solución falsa. */
+      const IM = V.adoptar(270, 5, { m1: 30, m2: 60, banda: "Er", vmin: 25, vmax: 35 }, 4, 12);
+      add("G28 viento", "sin solución se declara y se razona",
+        IM.imposible === true && /no llega/.test(IM.motivo || ""), IM.motivo, "motivo explicado");
+      /* Dos bandas: un arco a cada lado. */
+      const AM = V.adoptar(0, 18, { m1: 20, m2: 40, banda: "AMBAS", vmin: 18, vmax: 28 }, 6, 8);
+      const f0 = AM.filas[0];
+      add("G28 viento", "banda AMBAS da un arco a cada lado",
+        f0.arcos.length === 2 && f0.arcos.some(a => a.banda === "Er") && f0.arcos.some(a => a.banda === "Br"),
+        f0.arcos.map(a => a.banda).join(","), "Er y Br");
+      const SB = V.adoptar(0, 18, { m1: 20, m2: 40, banda: "Br", vmin: 18, vmax: 28 }, 6, 8);
+      add("G28 viento", "pedir una banda excluye la contraria",
+        SB.filas.every(f => f.arcos.every(a => a.banda === "Br")), "todas Br", "todas Br");
+      /* La recomendada es la más robusta: ninguna otra solución válida
+         queda más lejos de salirse por su lado más débil. */
+      const AD2 = V.adoptar(270, 20, exig, 4, 12), rc = AD2.recomendada[0];
+      let mejorQue = true;
+      for (let so = 4; so <= 12; so += 0.5) for (let co = 0; co < 360; co += 1) {
+        const rl = V.relativo(co, so, 270, 20);
+        if (!V.cumple(rl, exig)) continue;
+        if (V.robustez(rl) > rc.margen + 1e-6) mejorQue = false;
+      }
+      add("G28 viento", "la recomendada es la de mayor margen", mejorQue, "óptima", "óptima");
+      add("G28 viento", "y su margen queda dentro de lo exigido",
+        rc.margen > 0 && rc.margen <= 1 && V.cumple(rc.rel, exig), r2(rc.margen * 1000) / 1000, "0 < margen ≤ 1");
+      /* Desempate: con el mismo margen no puede haber otra solución más
+         lenta que la recomendada. */
+      let masLenta = null;
+      for (let so = 4; so < rc.so - 1e-9; so += 0.1) for (let co = 0; co < 360; co += 1) {
+        const rl = V.relativo(co, so, 270, 20);
+        if (V.cumple(rl, exig) && V.robustez(rl) >= rc.margen - 1e-9) masLenta = so;
+      }
+      add("G28 viento", "con el mismo margen, ninguna solución más lenta",
+        masLenta === null, masLenta === null ? "ninguna" : "hay una a " + r2(masLenta * 10) / 10 + " kn", "ninguna");
+      /* La marcación devuelta concuerda con la demora devuelta. */
+      let malMarc = 0;
+      for (let co = 0; co < 360; co += 13) {
+        const A = V.relativo(co, 7, 200, 16);
+        if (Math.abs(sgn180(A.dem - co) - (A.banda === "Br" ? -A.marc : A.marc)) > 0.01) malMarc++;
+      }
+      add("G28 viento", "marcación y demora concuerdan entre sí", malMarc === 0, malMarc, 0);
+    })();
+
     return R;
+  };
+
+  /*=========================== VIENTO (V1) ===============================
+    Cálculo de viento real y relativo en superficie, para pasar datos a la
+    aeronave y para adoptar un relativo exigido.
+
+    CONVENIOS (los del puente, y los que pidió Javi):
+    · El viento se nombra siempre por DE DÓNDE SOPLA, no hacia dónde va.
+    · El relativo se INTRODUCE en marcación: 3 cifras y banda (045 Er).
+    · El real se DA en demora verdadera: 3 cifras al norte.
+    · El relativo se DEVUELVE en las dos: marcación (proa) y demora (norte).
+    · Ángulos en grados, velocidades en nudos.
+
+    Vectorialmente, con "hacia dónde va" el aire:
+        real_hacia = relativo_hacia + velocidad_del_barco
+    y de ahí el resto por despeje. -------------------------------------- */
+  TMA.VIENTO = {};
+  const vHacia = (deDonde, vel) => ({ x: vel * senE(deDonde + 180), y: vel * Math.cos((deDonde + 180) * Math.PI / 180) });
+  const vDeDonde = v => norm360(Math.atan2(v.x, v.y) * 180 / Math.PI + 180);
+  const vMod = v => Math.hypot(v.x, v.y);
+  const vBarco = (Co, So) => ({ x: So * senE(Co), y: So * Math.cos(Co * Math.PI / 180) });
+  /* Marcación con signo: Er positiva, Br negativa. */
+  TMA.VIENTO.marcSgn = (marc, banda) => (String(banda).toUpperCase() === "BR" ? -Math.abs(marc) : Math.abs(marc));
+  TMA.VIENTO.aMarc = ang => { const m = sgn180(ang); return { marc: Math.abs(m), banda: m >= 0 ? "Er" : "Br" }; };
+
+  /* Viento REAL desde el relativo observado. Entrada del relativo en
+     marcación + banda; salida del real en demora verdadera. */
+  TMA.VIENTO.real = (Co, So, marc, banda, velRel) => {
+    const demRel = norm360(Co + TMA.VIENTO.marcSgn(marc, banda));
+    const R = { x: vHacia(demRel, velRel).x + vBarco(Co, So).x,
+                y: vHacia(demRel, velRel).y + vBarco(Co, So).y };
+    const vel = vMod(R);
+    return { dem: vel < 1e-9 ? null : vDeDonde(R), vel, demRel,
+              calma: vel < 1e-9 };            // calma: la demora no significa nada
+  };
+
+  /* Viento RELATIVO que resulta de un rumbo y una velocidad propios.
+     Se devuelve en marcación (proa) y en demora (norte), como se pidió. */
+  TMA.VIENTO.relativo = (Co, So, demReal, velReal) => {
+    const A = { x: vHacia(demReal, velReal).x - vBarco(Co, So).x,
+                y: vHacia(demReal, velReal).y - vBarco(Co, So).y };
+    const vel = vMod(A);
+    if (vel < 1e-9) return { marc: null, banda: null, dem: null, vel: 0, calma: true };
+    const dem = vDeDonde(A), m = TMA.VIENTO.aMarc(dem - Co);
+    return { marc: m.marc, banda: m.banda, dem, vel, calma: false };
+  };
+
+  /* ¿Cumple este rumbo/velocidad el relativo exigido?
+     exig = { m1, m2, banda:"Er"|"Br"|"AMBAS", vmin, vmax } */
+  TMA.VIENTO.cumple = (rel, exig) => {
+    if (rel.calma) return false;
+    if (!(rel.vel >= exig.vmin - 1e-9 && rel.vel <= exig.vmax + 1e-9)) return false;
+    const b = String(exig.banda).toUpperCase();
+    if (b !== "AMBAS" && rel.banda.toUpperCase() !== b) return false;
+    const lo = Math.min(exig.m1, exig.m2), hi = Math.max(exig.m1, exig.m2);
+    return rel.marc >= lo - 1e-9 && rel.marc <= hi + 1e-9;
+  };
+
+  /* ADOPTAR un relativo exigido: qué rumbo y velocidad tomar.
+     Devuelve la solución recomendada (centro del arco pedido y velocidad
+     relativa al centro del rango) y, para cada velocidad propia entera del
+     intervalo del usuario, los arcos de rumbo que cumplen lo exigido. */
+  TMA.VIENTO.adoptar = (demReal, velReal, exig, soMin, soMax) => {
+    const lo = Math.min(exig.m1, exig.m2), hi = Math.max(exig.m1, exig.m2);
+    const bandas = String(exig.banda).toUpperCase() === "AMBAS" ? ["Er", "Br"] : [String(exig.banda)];
+    const filas = [];
+    const soIni = Math.max(0, Math.ceil(soMin - 1e-9)), soFin = Math.floor(soMax + 1e-9);
+    for (let so = soIni; so <= soFin; so++) {
+      const arcos = [];
+      let ini = null, prevBanda = null;
+      for (let co = 0; co <= 360; co++) {
+        const c = norm360(co);
+        const rel = TMA.VIENTO.relativo(c, so, demReal, velReal);
+        const ok = TMA.VIENTO.cumple(rel, exig) && bandas.some(b => rel.banda === b);
+        if (ok && ini === null) { ini = c; prevBanda = rel.banda; }
+        if ((!ok || co === 360) && ini !== null) {
+          arcos.push({ de: ini, a: norm360(c - 1), banda: prevBanda }); ini = null; prevBanda = null;
+        }
+      }
+      if (arcos.length) filas.push({ so, arcos });
+    }
+    /* Recomendada: la MÁS ROBUSTA, no la más centrada de cualquier manera.
+       Se mide lo lejos que queda cada solución de salirse por su lado más
+       débil —el arco de marcación o el rango de velocidad—, cada margen
+       normalizado a su propia semiamplitud para no sumar grados con nudos.
+       Se maximiza ese mínimo: así un rolido, un cambio de viento o un
+       error de gobierno no te sacan de lo exigido. A igualdad de robustez,
+       la velocidad propia más baja. */
+    const rec = [];
+    const semiM = Math.max((hi - lo) / 2, 1e-9), semiV = Math.max((exig.vmax - exig.vmin) / 2, 1e-9);
+    TMA.VIENTO.robustez = rel => {
+      if (rel.calma) return -1;
+      const dM = Math.min(rel.marc - lo, hi - rel.marc) / semiM;
+      const dV = Math.min(rel.vel - exig.vmin, exig.vmax - rel.vel) / semiV;
+      return Math.min(dM, dV);
+    };
+    bandas.forEach(b => {
+      let mejor = null;
+      for (let so = soMin; so <= soMax + 1e-9; so += 0.1) {
+        for (let co = 0; co < 360; co += 0.5) {
+          const rel = TMA.VIENTO.relativo(co, so, demReal, velReal);
+          if (rel.calma || rel.banda !== b || !TMA.VIENTO.cumple(rel, exig)) continue;
+          const q = TMA.VIENTO.robustez(rel);
+          if (mejor === null || q > mejor.q + 1e-9 || (Math.abs(q - mejor.q) <= 1e-9 && so < mejor.so))
+            mejor = { co: norm360(co), so: Math.round(so * 10) / 10, rel, q };
+        }
+      }
+      if (mejor) rec.push({ co: Math.round(mejor.co), so: mejor.so, rel: mejor.rel, banda: b, margen: mejor.q });
+    });
+    return { filas, recomendada: rec,
+      imposible: filas.length === 0,
+      motivo: filas.length === 0 ? (velReal < exig.vmin ? "el viento real (" + Math.round(velReal) + " kn) no llega a la velocidad relativa pedida a ninguna velocidad del intervalo"
+                                                        : "no hay rumbo ni velocidad en el intervalo que cumpla lo exigido") : null };
   };
 
   TMA.resumen = function () {
@@ -5804,15 +6067,124 @@ $("#btnMan").addEventListener("click",calcMan);
   }
   periCalc();
 })();
+/*---------------- VIENTO · tarjeta de viento real -------------------
+  Entra el relativo en marcación y banda; sale el real en demora
+  verdadera, que es como se le pasa a la aeronave. La rosa dibuja los
+  vectores con el convenio de "hacia dónde va" el aire, que es lo que se
+  suma; los rótulos, en cambio, nombran de dónde sopla. */
+(function(){
+  var $=function(q){return document.querySelector(q);};
+  if(!$("#calcVientoReal")) return;
+  var NSW="http://www.w3.org/2000/svg";
+  function elW(t,a){ var e=document.createElementNS(NSW,t); for(var k in a) e.setAttribute(k,a[k]); return e; }
+  var banda="Er";
+  function num(id,def){ var v=parseFloat(String(($(id)||{}).value||"").replace(",",".")); return isFinite(v)?v:def; }
+  function gg(a){ return String(Math.round(((a%360)+360)%360)).padStart(3,"0"); }
+  function f1(x){ return (Math.round(x*10)/10).toString().replace(".",","); }
+  function pinta(){
+    var Co=num("#wCo",0), So=num("#wSo",0), m=Math.abs(num("#wMarc",0)), va=num("#wVel",0);
+    if(m>180) m=180;
+    var R=TMA.VIENTO.real(Co,So,m,banda,va);
+    var o=$("#wOut");
+    if(R.calma) o.innerHTML="<span>VIENTO REAL <b class='res'>CALMA</b></span>";
+    else o.innerHTML="<span>VIENTO REAL <b class='res'>"+gg(R.dem)+" \u00b7 "+f1(R.vel)+" kn</b></span>"+
+                     "<span>demora del relativo <b class='res'>"+gg(R.demRel)+"</b></span>";
+    var svg=$("#rosaW"); svg.innerHTML="";
+    var vmax=Math.max(So,va,R.vel,1)*1.2, esc=88/vmax;
+    for(var i=1;i<=3;i++) svg.appendChild(elW("circle",{cx:0,cy:0,r:88*i/3,"class":"aro"}));
+    for(var ga=0;ga<360;ga+=30){ var gr=ga*Math.PI/180;
+      svg.appendChild(elW("line",{x1:(ga%90===0?83:86)*Math.sin(gr),y1:-(ga%90===0?83:86)*Math.cos(gr),
+                                  x2:88*Math.sin(gr),y2:-88*Math.cos(gr),"class":"eje"})); }
+    var tN=elW("text",{x:0,y:-97,"text-anchor":"middle","class":"rosaCard"}); tN.textContent="N"; svg.appendChild(tN);
+    var tE=elW("text",{x:0,y:-70,"text-anchor":"middle","class":"et"}); tE.textContent=f1(vmax)+" kn"; svg.appendChild(tE);
+    svg.appendChild(elW("path",{d:"M0,-7 L5,6 L-5,6 Z","class":"proa",transform:"rotate("+Co+")"}));
+    function vect(demDeDonde,vel,cl,lbl){
+      if(vel<0.05) return;
+      var a=(demDeDonde+180)*Math.PI/180;
+      var x=vel*esc*Math.sin(a), y=-vel*esc*Math.cos(a);
+      svg.appendChild(elW("line",{x1:0,y1:0,x2:x,y2:y,"class":cl}));
+      var t=elW("text",{x:x*1.14,y:y*1.14+4,"text-anchor":"middle","class":"et"}); t.textContent=lbl; svg.appendChild(t);
+    }
+    if(So>0.05){ var ap=Co*Math.PI/180, px=So*esc*Math.sin(ap), py=-So*esc*Math.cos(ap);
+      svg.appendChild(elW("line",{x1:0,y1:0,x2:px,y2:py,"class":"vprop"}));
+      var tp=elW("text",{x:px*1.14,y:py*1.14+4,"text-anchor":"middle","class":"et"});
+      tp.textContent="propio"; svg.appendChild(tp); }
+    vect(R.demRel,va,"vrel","relativo");
+    if(!R.calma) vect(R.dem,R.vel,"vreal","real");
+  }
+  /* Se recalcula solo al escribir, y además hay botón: en el puente se
+     dicta el dato y se pulsa, sin fiarse de que la pantalla ya esté al día. */
+  ["#wCo","#wSo","#wMarc","#wVel"].forEach(function(q){ var e=$(q); if(e) e.addEventListener("input",pinta); });
+  if($("#btnViento")) $("#btnViento").addEventListener("click",pinta);
+  document.querySelectorAll("#wBanda button").forEach(function(b){
+    b.addEventListener("click",function(){
+      document.querySelectorAll("#wBanda button").forEach(function(x){x.classList.remove("on");});
+      b.classList.add("on"); banda=b.dataset.v; pinta();
+    });});
+  /*---------------- VIENTO · adoptar un relativo exigido --------------
+    Dos niveles de salida, como se pidió: la solución recomendada y la
+    tabla de arcos por velocidad, que es lo que se canta en el puente. */
+  var bandaA="Er";
+  function numA(id,def){ var v=parseFloat(String(($(id)||{}).value||"").replace(",",".")); return isFinite(v)?v:def; }
+  function pintaAdop(){
+    if(!$("#calcVientoAdop")) return;
+    var dem=numA("#aDem",0), vel=numA("#aVel",0);
+    var exig={ m1:Math.abs(numA("#aM1",0)), m2:Math.abs(numA("#aM2",0)), banda:bandaA,
+               vmin:numA("#aVmin",0), vmax:numA("#aVmax",0) };
+    var soMin=numA("#aSoMin",0), soMax=numA("#aSoMax",0);
+    var o=$("#aOut"), tb=$("#aTabla");
+    if(soMax<soMin || exig.vmax<exig.vmin){
+      o.innerHTML="<span class='res'>revisa los intervalos: el máximo va detrás del mínimo</span>";
+      tb.innerHTML=""; return;
+    }
+    var A=TMA.VIENTO.adoptar(dem,vel,exig,soMin,soMax);
+    if(A.imposible){
+      o.innerHTML="<span>SIN SOLUCIÓN <b class='res'>"+A.motivo+"</b></span>";
+      tb.innerHTML=""; return;
+    }
+    o.innerHTML=A.recomendada.map(function(r){
+      return "<span>RECOMENDADO"+(A.recomendada.length>1?" ("+r.banda+")":"")+
+             " <b class='res'>Co "+gg(r.co)+" a "+f1(r.so)+" kn</b></span>"+
+             "<span>daría <b class='res'>"+gg(r.rel.marc)+" "+r.rel.banda+" \u00b7 "+f1(r.rel.vel)+" kn</b></span>";
+    }).join("");
+    var h="<tr><th>SO</th><th>RUMBOS QUE VALEN</th></tr>";
+    A.filas.forEach(function(f){
+      h+="<tr><td>"+f1(f.so)+" kn</td><td>"+f.arcos.map(function(a){
+        return gg(a.de)+"\u2013"+gg(a.a)+(exig.banda==="AMBAS"?" ("+a.banda+")":"");
+      }).join(" \u00b7 ")+"</td></tr>";
+    });
+    tb.innerHTML=h;
+  }
+  ["#aDem","#aVel","#aM1","#aM2","#aVmin","#aVmax","#aSoMin","#aSoMax"].forEach(function(q){
+    var e=$(q); if(e) e.addEventListener("input",pintaAdop); });
+  if($("#btnAdop")) $("#btnAdop").addEventListener("click",pintaAdop);
+  document.querySelectorAll("#aBanda button").forEach(function(b){
+    b.addEventListener("click",function(){
+      document.querySelectorAll("#aBanda button").forEach(function(x){x.classList.remove("on");});
+      b.classList.add("on"); bandaA=b.dataset.v; pintaAdop();
+    });});
+  if($("#btnAdopTraer")) $("#btnAdopTraer").addEventListener("click",function(){
+    /* Vuelca el real que acaba de salir arriba: el enlace entre las dos
+       tarjetas, para no copiar a mano lo que ya está calculado. */
+    var Co=num("#wCo",0), So=num("#wSo",0), m=Math.abs(num("#wMarc",0)), va=num("#wVel",0);
+    var R=TMA.VIENTO.real(Co,So,m>180?180:m,banda,va);
+    if(R.calma){ $("#aOut").innerHTML="<span class='res'>arriba hay calma: no hay viento real que traer</span>"; return; }
+    $("#aDem").value=gg(R.dem); $("#aVel").value=f1(R.vel); pintaAdop();
+  });
+  window.VIENTO_UI={ pinta:pinta, pintaAdop:pintaAdop, banda:function(){return banda;},
+    bandaAdop:function(){return bandaA;},
+    lee:function(){ return { Co:num("#wCo",0), So:num("#wSo",0), marc:Math.abs(num("#wMarc",0)), banda:banda, vel:num("#wVel",0) }; } };
+  pinta(); pintaAdop();
+})();
 /* --- selector de sub-calculadora --- */
 (function(){
   /* Cada herramienta se enciende o se apaga por su cuenta: se pueden tener
      varias a la vez, o solo las dos que interesen. La elección se guarda. */
   var grid=$("#calcGrid"), PANEL={ brc:$("#blqBrc"), cpa:$("#blqCpa"),
-    dist:$("#blqDist"), cronos:$("#blqCronos"), pd:$("#blqPd") };
+    dist:$("#blqDist"), cronos:$("#blqCronos"), pd:$("#blqPd"), viento:$("#blqViento") };
   /* Ninguna de partida: se abre limpio y eliges qué quieres a la vista.
      Lo que guardaste la última vez manda sobre esto. */
-  var LSC="tma_calc_vis_v1", VIS={brc:false,cpa:false,dist:false,cronos:false,pd:false};
+  var LSC="tma_calc_vis_v1", VIS={brc:false,cpa:false,dist:false,cronos:false,pd:false,viento:false};
   try{ var gv=localStorage.getItem(LSC);
     if(gv){ var ov=JSON.parse(gv); Object.keys(VIS).forEach(function(k){
       if(typeof ov[k]==="boolean") VIS[k]=ov[k]; }); } }catch(e){}
@@ -5873,6 +6245,11 @@ document.querySelectorAll("#trzTipo button").forEach(function(b){
   b.addEventListener("click",function(){
     document.querySelectorAll("#trzTipo button").forEach(function(x){x.classList.remove("on")});
     b.classList.add("on"); S.tipo=b.dataset.v;
+    /* Con un ejercicio en pantalla, cambiar de tipo carga uno nuevo del
+       tipo elegido — como en APUNTES. Si no, lo que se ve (enunciado,
+       pasos, corrección) seguiría siendo del tipo anterior con el botón
+       nuevo resaltado: el «pulso CPA y me sale un situarse». */
+    if(S.ej) carga(TRZ.nuevo(S.tipo,(Date.now()%2147483647)>>>0));
   });});
 document.querySelectorAll("#trzMedio button").forEach(function(b){
   b.addEventListener("click",function(){
